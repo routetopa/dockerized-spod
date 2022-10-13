@@ -84,7 +84,7 @@ Containers expose the following ports, so you need to make sure that they are no
 ### All-in-one machine
 To install SPOD on a single machine, you need to clone the [SPOD Docker repository](no-url-yet).
 
-Before deploying the application, you need to configure the environment variables in the `.cenv.example` file in `/docker` directory.
+Before deploying the application, you need to configure the environment variables in the `.env.example` file in `/docker` directory.
 The following table shows the environment variables and their description:
 | Variable | Description |
 | --- | --- |
@@ -100,7 +100,7 @@ Set `HOST_URL` is the most importabt. It is the URL of the machine where the SPO
 127.0.0.1 spod.local
 ```
 
-You also needt to configure the CKAN environment variables in the `.ckan-env.example` file in `/docker/ckan` directory. You have to change `sysadmin` infos. The following table shows the environment variables and their description:
+You also need to configure the CKAN environment variables in the `.ckan-env.example` file in `/docker/ckan` directory. You have to change `sysadmin` infos. The following table shows the environment variables and their description:
 | Variable | Description |
 | --- | --- |
 | CKAN_SYSADMIN__NAME | The name of the sysadmin user. |
@@ -116,12 +116,11 @@ It's required because SPOD plugins use the CKAN API to retrieve data from CKAN, 
 
  ---
 
-
 You can install the whole SPOD application using the following command:
 ```bash
 sudo bash deploy.sh
 ```
-It downloads CKAN repository, builds the Docker images, starts the containers using environment variables and create admin users. The installation process can take a while, depending on your machine.
+It downloads CKAN repository, builds the Docker images, starts containers using environment variables and create admin users. The installation process can take a while, depending on your machine.
 
 ## Post-installation
 
