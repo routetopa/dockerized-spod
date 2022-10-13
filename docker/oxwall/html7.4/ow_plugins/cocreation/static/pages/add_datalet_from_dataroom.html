@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base target="_parent" />
+
+    <title></title>
+
+    <script>
+
+        var addedJs = 0;
+        var dynamicAddedJs = [];
+        //dynamicAddedJs.push(parent.ODE.ode_datalet_polyfill);
+        dynamicAddedJs.push(parent.ODE.ode_webcomponents_js);
+        dynamicAddedJs.push(parent.ODE.ode_deep_client.substring(0, parent.ODE.ode_deep_client.lastIndexOf("/")) + "/jquery-2.1.0.min.js");
+        dynamicAddedJs.push(parent.ODE.ode_deep_client);
+
+        function loadScript(sScriptSrc, oCallback)
+        {
+            var oHead = document.getElementsByTagName("head")[0];
+            var oScript = document.createElement('script');
+            oScript.type = 'text/javascript';
+            oScript.src = sScriptSrc;
+
+            // most browsers
+            oScript.onload = oCallback;
+
+            // IE 6 & 7
+            oScript.onreadystatechange = function() {
+                if (this.readyState == 'complete') {
+                    oCallback();
+                }
+            };
+
+            oHead.appendChild(oScript);
+        }
+
+        var onLoadCallback = function ()
+        {
+            if(addedJs == (dynamicAddedJs.length-1))
+            {
+                ComponentService.components_url = parent.ODE.deep_components;
+
+                var params =
+                {
+                    'deep-url'          : parent.ODE.deep_url,
+                    'data-url'          : parent.ODE.ajax_coocreation_room_get_array_sheetdata,
+                    'datalets-list-url' : parent.ODE.deep_datalet_list,
+                    'localization'      : parent.ODE.user_language,
+                    'components-url'    : parent.ODE.deep_components
+                };
+
+                //var iframe = parent.document.getElementById("co-datalets-creator-controllet_float");
+
+                ComponentService.getComponentHTML({
+                    component   : "co-datalets-creator-controllet",
+                    params      : params,
+                    fields      : Array(),
+                    placeHolder : "co-datalets-creator-controllet_float"
+                });
+
+                return;
+            }
+
+            addedJs++;
+            loadScript(dynamicAddedJs[addedJs], onLoadCallback);
+
+            window.addEventListener("data-sevc-controllet.dataletCreated", function(e){
+                parent.ODE.savedDataletListener(e);
+            });
+
+            /*$(document).ready(function(){
+                window.addEventListener("data-sevc-controllet.dataletCreated", function(e){
+                    parent.ODE.savedDataletListener(e);
+                });
+            });*/
+        };
+
+        loadScript(dynamicAddedJs[addedJs], onLoadCallback);
+
+
+    </script>
+</head>
+<body style="overflow: hidden">
+
+<div id="co-datalets-creator-controllet_float" style="width: 100%; height: 100%"></div>
+
+</body>
+</html>

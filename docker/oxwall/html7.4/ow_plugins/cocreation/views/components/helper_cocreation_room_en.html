@@ -1,0 +1,202 @@
+<link rel="import" href="{$components_url}bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="{$components_url}bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="{$components_url}bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="{$components_url}bower_components/paper-styles/color.html">
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<style>
+    .floatbox_header{
+        display: none;
+    }
+
+    .floatbox_body{
+        font-family: 'Roboto', sans-serif;
+        background-color: #eeeeee;
+        padding : 3px;
+    }
+
+    paper-fab.opinion-button{
+        background:#5B646A;
+        left: 15px;
+    }
+
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+
+    paper-scroll-header-panel {
+        /*position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;*/
+        height: 70vh;
+    }
+
+    .tall {
+        background-color: #2196F3;
+    }
+
+    .tall .title {
+        padding: 20px;
+        font-size: 40px;
+        color: #ffffff;
+        /*width: 30%;*/
+        position: relative;
+        float: left;
+    }
+
+    .tall .description{
+        padding: 20px;
+        font-size: 15px;
+        color: #ffffff;
+        /*width: 70%;*/
+        position: relative;
+        float: left;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+</style>
+
+<div class="layout vertical">
+
+    <div class="tall">
+        <div class="title">Cocreation helper</div>
+        <div class="description">
+            Agora is where each moderator  can create a “Public room” to start a new
+            discussion/debate that is open to all the users. Once a room is created,
+            only the administrator can delete the room. Each room is
+            represented by a "tile" that has three characteristics (colour, height
+            and width) that are related to the discussion in it (more details
+            below).
+        </div>
+    </div>
+
+    <div class="content" id="scroll_content">
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/agora_creation.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">1</div>
+                        <div class="section-title">Room creation</div>
+                    </div>
+                    <div>
+                        To <b>create a new room</b>, just press the big "+" (Add) button on the
+                        bottom right, and insert the subject and a brief description of the
+                        room.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/agora_search.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">2</div>
+                        <div class="section-title">Room search</div>
+                    </div>
+                    <div>
+                        Just press the button on the bottom right, and type the name of the room.
+                        As you type, only the rooms whose titles match the string will be shown.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/agora_suggested_datasets.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">3</div>
+                        <div class="section-title">Add suggested datasets to room</div>
+                    </div>
+                    <div>
+                        The user that created a Public Room can also add a set of recommended
+                        datasets, that are easily accessible by the participants in that
+                        Public Room (via the Controllet). To add recommended datasets, click
+                        on the list to the left (to show "My Public Rooms") and select the
+                        room).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/agora2.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">4</div>
+                        <div class="section-title">About rooms</div>
+                    </div>
+                    <div>
+                        <p>
+                            The tile of each Public Room shows a synthetic visualisation of its
+                            discussion by using colour, height and width as visual metaphors.
+
+                            <ul class="cell-list">
+                                <li>
+                                    The <b>colour</b> of the tile goes from blue (only few visits by users, i.e.
+                                    a "cold" topic) to red (many visits by users, i.e. a "hot" topic). The
+                                    colour is picked from a blue-to-red gradient proportionally to the
+                                    number of visits.
+                                </li>
+                                <li>
+                                    The <b>width</b> of a tile also can have only two values, i.e. narrow
+                                    (strict) or wide (large)  depending on the number of distinct datalets
+                                    that are used.
+                                </li>
+                                <li>
+                                    To set the <b>height</b>, the median of the number of comments for all the
+                                    rooms is calculated, and the rooms about the median are "tall" and
+                                    those below are "short". The same happes for the width with respect to
+                                    the number of distinct datalets.
+                                </li>
+                            </ul>
+                        </p>
+                        <p>
+                            To set the height, the median of the number of comments for all the
+                            rooms is calculated, and the rooms about the median are "tall" and
+                            those below are "short". The same happes for the width with respect to
+                            the number of distinct datalets.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

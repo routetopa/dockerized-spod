@@ -1,0 +1,311 @@
+<link rel="import" href="{$components_url}controllets/cocreation-paper-card-controllet/cocreation-paper-card-controllet.html">
+<link rel="import" href="{$components_url}controllets/search-panel-controllet/search-panel-controllet.html"/>
+
+<link rel="import" href="{$components_url}bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/image-icons.html">
+<link rel="import" href="{$components_url}bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="{$components_url}bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="{$components_url}bower_components/paper-date-picker/paper-date-picker.html">
+<link rel="import" href="{$components_url}bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="{$components_url}bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="{$components_url}bower_components/paper-fab-transitions/paper-fab-speed-dial.html">
+
+{literal}
+<style is="custom-style">
+
+
+
+    body .floatbox_canvas .floatbox_container{ margin-top:110px; }
+
+    cocreation-paper-card-controllet{
+        /*margin: 20px;
+        padding: 20px;*/
+    }
+
+    /*.blue-button {*/
+        /*text-transform: none;*/
+        /*color: #2196F3;*/
+        /*margin-top: 8px;*/
+    /*}*/
+
+    #submit_overlay{
+        z-index: 1;
+        position:absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    /*.dataset-list {*/
+        /*position: absolute;*/
+        /*top: 64px;*/
+        /*right: 103px;*/
+    /*}*/
+
+    .room_container {
+        position: relative;
+        /*min-height: calc(100vh - 56px);*/
+        margin-bottom: 24px;
+    }
+
+    .buttons_container {
+        position: fixed;
+        bottom: calc(32px + 25px);
+        right: 32px;
+
+        height: 56px;
+        /*width: 104px;*/
+        width: 120px;
+        background: transparent;
+        z-index: 11;
+        /*float: right;*/
+        display: flex;
+        flex-direction: row;
+    }
+
+    paper-fab
+    {
+        --paper-fab-background:#2196F3;
+        /*--paper-fab-background:#00BCD4;*/
+    }
+
+    paper-fab#assessment_fab
+    {
+        --paper-fab-background:#4CAF50;
+    }
+
+    paper-fab#media_fab
+    {
+        --paper-fab-background:#FF9800;
+    }
+
+    paper-fab#description_fab
+    {
+        /*--paper-fab-background:#2196F3;*/
+    }
+
+    paper-fab#chrome_reader_fab
+    {
+        --paper-fab-background:#FF0206;
+    }
+
+    paper-fab#view_datasets {
+        padding: 8px;
+        margin: 8px;
+    }
+
+    paper-fab-speed-dial#add_dataset {
+        margin-left: 8px;
+    }
+
+    paper-toast {
+        opacity: 0.8;
+        background: #000000;
+    }
+
+    #infoToast br {
+        display: block;
+        margin-top: 8px;
+        content: " ";
+    }
+
+    #infoToast p {
+        margin: 0;
+        padding: 0;
+
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    #infoToast p .title{
+        font-size: 24px;
+        color: #2196F3;
+        padding-right: 56px;
+    }
+
+    #infoToast b {
+        font-weight: 700;
+        color: #00BCD4;
+
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    #infoToast div {
+        line-height: 36px;
+        height: 36px;
+
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+    }
+
+    .confirm_button{
+        float: right;
+    }
+
+    #card_container p .description{
+    }
+
+    paper-icon-button.clear {
+        /*width: 24px;*/
+        /*height: 24px;*/
+        /*padding: 0px 4px;*/
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #F44336;
+        --paper-icon-button-ink-color: #FFFFFF;
+    }
+
+    search-panel-controllet#search_room
+    {
+        --paper-fab-background:#2196F3;
+        --search-box-container-color: #2196F3;
+        position: absolute;
+        right: 10px;
+        top: 70px;
+        z-index: 100;
+    }
+
+</style>
+{/literal}
+
+<style>
+    search-panel-controllet#search_room paper-input-container{
+        padding: 8px 8px;
+        background: #e8e8e8;
+        border-radius: 6px;
+    }
+</style>
+
+{literal}
+<script type="text/javascript">
+
+    function addCocreationRoom(room_type)
+    {
+        previewFloatBox = OW.ajaxFloatBox('COCREATION_CMP_CreateRoom', {room_type : room_type} , {top: '56px', width:'600px', height:'', iconClass: 'ow_ic_add', title: ''});
+    }
+
+    setTimeout(function(){
+                var roomList = document.querySelector('template[is="dom-bind"]');
+                if(roomList.$.infoToast != undefined)
+                   roomList.$.infoToast.show();
+            }
+            ,1000);
+
+    $(document).ready(function(){
+        window.addEventListener('cocreation-paper-card-controllet_delete', function(e){
+            var c = confirm(OW.getLanguageText('cocreation', 'confirm_delete_room'));
+            if(c == true) {
+                $.post(ODE.ajax_coocreation_delete_room,
+                        {
+                            roomId: e.detail.roomId
+                        },
+                        function (data, status) {
+                            data = JSON.parse(data);
+                            if (data.status == "ok") {
+                                OW.info(OW.getLanguageText('cocreation', 'room_delete_successful'));
+                                location.reload();
+                            } else {
+                                OW.info(OW.getLanguageText('cocreation', 'room_delete_fail'));
+                            }
+                        }
+                );
+            }
+        });
+
+        document.addEventListener('search-panel-controllet_content-changed', function (e) {
+            var rooms = document.querySelectorAll('paper-card');
+            for(var i=0; i < rooms.length; i++)
+            {
+                var name = $(rooms[i]).find(".name").html().toLowerCase();
+                if( name.indexOf(e.detail.searchKey) >= 0 || e.detail.searchKey == "")
+                    rooms[i].style.display = "inline-block";
+                else
+                    rooms[i].style.display = "none";
+            }
+        });
+    });
+
+</script>
+{/literal}
+
+<template id="list" is="dom-bind">
+
+    {if $isActive == false}
+        <div id="submit_overlay">
+            <h1 style="position: relative; top: 25%; left: 10%;">{text key="cocreation+concreation_not_active"}</h1>
+        </div>
+    {/if}
+
+    <search-panel-controllet id="search_room" paperfab></search-panel-controllet>
+
+    <div class=" room_container">
+        {foreach $cocreation_rooms as $room}
+        <cocreation-paper-card-controllet
+                room-id="{$room->id}"
+                name="{$room->name}"
+                description="{$room->description}"
+                owner="{$room->owner}"
+                owner-src="{$room->ownerSrc}"
+                owner-url="{$room->ownerUrl}"
+                from="{$room->from}"
+                to="{$room->to}"
+                goal="{$room->goal}"
+                room-type="{$room->type}"
+                {if $userId == $room->ownerId}
+                is-owner
+                {/if}
+                room-url="{$room->url}">
+         </cocreation-paper-card-controllet>
+        {/foreach}
+
+        <div class="buttons_container">
+            <paper-fab id="view_datasets" title ='{text key="cocreation+view_all_datasets"}' mini icon="view-list" onclick="window.location='{$urlHome}cocreation/data-room-list'"></paper-fab>
+
+            <paper-fab-speed-dial id="add_dataset" direction="top" class="bottom-right add-paper-fab">
+                <paper-fab id="add_fab" icon="add" title='' class="dropdown-trigger"></paper-fab>
+                <div class="dropdown-content">
+                    <paper-fab id="chrome_reader_fab" title='{text key="cocreation+room_add_commentarium_room"}' mini icon="chrome-reader-mode" onclick="addCocreationRoom('commentarium')"></paper-fab>
+                    <paper-fab id="assessment_fab" title='{text key="cocreation+room_add_data_room"}' mini icon="assessment" onclick="addCocreationRoom('data')"></paper-fab>
+                    <paper-fab id="description_fab" title='{text key="cocreation+room_add_knowledge_room"}' mini icon="description" onclick="addCocreationRoom('knowledge')"></paper-fab>
+                    <paper-fab id="media_fab" title='{text key="cocreation+room_add_media_room"}' mini icon="image:collections" onclick="addCocreationRoom('media')"></paper-fab>
+                </div>
+            </paper-fab-speed-dial>
+        </div>
+    </div>
+
+
+    {if {$invitations|@count} > 0}
+        <paper-toast id="infoToast"  duration="0">
+            <p>
+                <span class="title">{text key="cocreation+room_info_toast"}</span>
+                {foreach $invitations as $invitation}
+                    <br>
+                    <div>{$invitation}</div>
+                {/foreach}
+            </p>
+            <paper-icon-button class="clear" suffix onclick="infoToast.toggle()" icon="clear"></paper-icon-button>
+        </paper-toast>
+
+
+        <!--<paper-toast id="infoToast" duration="0" text="">-->
+            <!--<div class="layout horizontal">-->
+                <!--<h5>{text key="cocreation+room_info_toast"}</h5>-->
+                <!--<paper-button onclick="infoToast.toggle()" class="blue-button"><b>x</b></paper-button>-->
+            <!--</div>-->
+            <!--<div class="layout vertical">-->
+                <!--{foreach $invitations as $invitation}-->
+                <!--<p>{$invitation}</p>-->
+                <!--{/foreach}-->
+            <!--</div>-->
+        <!--</paper-toast>-->
+    {/if}
+
+</template>

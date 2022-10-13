@@ -1,0 +1,21 @@
+{
+  "name": "lucavicidomini/blade-materialize",
+  "type": "library",
+  "description": "Integrate Materialize CSS into Laravel's Blade templating engine.",
+  "keywords": ["materialize", "css", "laravel", "blade"],
+  "homepage": "https://github.com/lucavicidomini/blade-materialize",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Luca Vicidomini",
+      "email": "lvicido@libero.it",
+      "homepage": "https://about.me/lucavicidomini"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "LucaVicidomini\\BladeMaterialize\\": "src/"
+    }
+  },
+  "require": {}
+}

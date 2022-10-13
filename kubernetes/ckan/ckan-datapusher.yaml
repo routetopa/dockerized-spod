@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datapusher-deployment
+  labels:
+    app: datapusher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datapusher
+  template:
+    metadata:
+      labels:
+        app: datapusher
+    spec:
+      containers:
+      - name: datapusher
+        image: clementmouchet/datapusher
+        ports:
+        - containerPort: 8800
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: datapusher
+spec:
+  selector:
+    app: datapusher
+  ports:
+    - protocol: TCP
+      port: 8800
+      targetPort: 8800

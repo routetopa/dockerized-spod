@@ -1,0 +1,221 @@
+<!--
+<link rel="import" href="{$components_url}bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="{$components_url}bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="{$components_url}bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="{$components_url}bower_components/paper-styles/color.html">
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/iron-flex-layout.html">
+-->
+
+<style>
+    .floatbox_header{
+        display: none;
+    }
+
+    .floatbox_body{
+        font-family: 'Roboto', sans-serif;
+        background-color: #eeeeee;
+        padding : 3px;
+    }
+
+
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+
+    .tall {
+        background-color: #2196F3;
+    }
+
+    .tall .title {
+        padding: 20px;
+        font-size: 40px;
+        color: #ffffff;
+        /*width: 30%;*/
+        position: relative;
+        float: left;
+    }
+
+    .tall .description{
+        padding: 20px;
+        font-size: 15px;
+        color: #ffffff;
+        /*width: 70%;*/
+        position: relative;
+        float: left;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+    .section-paragraph{
+        font-size: 18px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+
+</style>
+
+<div class="layout vertical">
+
+    <div class="tall">
+        <div class="title">Cocreation helper</div>
+        <div class="description">
+            The CoCreation is a collaborative space to guide users to collaborate in the construction of knowledge or data.
+            The space is meant to be used by small groups, where user are invited to participate by the creator of the room.
+            There are two kinds of room: the Cocreation knowledge room, where the group is invited to reflect on Open Data to
+            answer problems and create awareness of data, and a Cocreation data room, where it is possible to cocreate datasets.
+        </div>
+    </div>
+
+    <div class="content" id="scroll_content">
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/cocreationroom_en.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">1</div>
+                        <div class="section-title">Cocreation</div>
+                    </div>
+                    <div>
+                        <p>
+                            In the Cocreation you can find:</p>
+                    </div>
+
+                    <div class="horizontal layout cell">
+                        <paper-fab id="description_fab" mini="" icon="description"></paper-fab>
+                        <p>Cocreation knowledge room</p>
+                    </div>
+
+                    <div class="horizontal layout cell">
+                        <paper-fab id="assessment_fab"  mini="" icon="assessment"  ></paper-fab>
+                        <p> Cocreation data room<p>
+                    </div>
+
+                    <div class="horizontal layout cell">
+                        <paper-fab id="view_datasets"  mini icon="view-list"> </paper-fab>
+                        <p>View all datasets</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/viewalldatasets_en.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                        <div class="horizontal layout cell">
+                            <div class="section-number">2</div>
+                            <paper-fab id="view_datasets"  mini icon="view-list"> </paper-fab>
+                            <div class="section-title">All datasets</div>
+                        </div>
+                        <div>
+                            <p>
+                            This button shows all the datasets cocreated in the data rooms.
+                            For each dataset you can:</p>
+                        </div>
+
+                        <ul class="cell-list">
+                            <li> Show the dataset  published  in the Cocreation data room, </li>
+                            <li> Download the dataset as CSV file,</li>
+                            <li> Copy (to be later pasted) the address (URL) of the dataset,</li>
+                            <li> download the notes of the dataset as html file.</li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/createroom_en.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">3</div>
+                        <div class="section-title">Create a room</div>
+                    </div>
+                    <div>
+                        <p>
+                        To create a new room, just press the big "+" (Add) button on the bottom right,
+                        and insert the required information:
+                        <ul class="cell-list">
+                            <li> Name of the room, </li>
+                            <li> Subject,</li>
+                            <li> Description, </li>
+                            <li> Period: it is just an indication of the expected activity of the room, not a prescription,</li>
+                            <li> Goal,</li>
+                            <li> Invitation text to be sent to the members invited,</li>
+                            <li> Initial members (you will be able to add more in the room).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/explore_en.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">4</div>
+                        <div class="section-title">Explore button</div>
+                    </div>
+                    <div>
+                        This button allows to open a room.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/aboutroom_it.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">5</div>
+                        <div class="section-title">All features</div>
+                    </div>
+
+                    <ul class="cell-list">
+                        <li>
+                            <paper-icon-button icon="menu" style=" width: 50px; height: 50px;"></paper-icon-button>
+                            allows to select all features such as create a dataset, datalets, add metadata, notes, start a discussion etc..)
+                        </li>
+
+                        <li>
+                            <paper-icon-button id="info_room_button" icon="info" on-tap="_openInfo"  style="color: #212121; width: 50px; height: 50px;"></paper-icon-button>
+                            shows information of the room</p>
+                        </li>
+
+                        <li>
+                            <paper-icon-button   icon="add" style="color: #00BCD4;" ></paper-icon-button> allows to invite a new member in the room.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+</div>
+</div>

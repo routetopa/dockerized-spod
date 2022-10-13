@@ -1,0 +1,93 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'cookie-parser' ]
+2 info using npm@1.3.10
+3 info using node@v0.10.25
+4 verbose cache add [ 'cookie-parser', null ]
+5 verbose cache add name=undefined spec="cookie-parser" args=["cookie-parser",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'cookie-parser',
+6 verbose parsed url   path: 'cookie-parser',
+6 verbose parsed url   href: 'cookie-parser' }
+7 silly lockFile 558682e9-cookie-parser cookie-parser
+8 verbose lock cookie-parser /home/rended/.npm/558682e9-cookie-parser.lock
+9 silly lockFile 558682e9-cookie-parser cookie-parser
+10 silly lockFile 558682e9-cookie-parser cookie-parser
+11 verbose addNamed [ 'cookie-parser', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 96095670-cookie-parser cookie-parser@
+14 verbose lock cookie-parser@ /home/rended/.npm/96095670-cookie-parser.lock
+15 silly addNameRange { name: 'cookie-parser', range: '*', hasData: false }
+16 verbose url raw cookie-parser
+17 verbose url resolving [ 'https://registry.npmjs.org/', './cookie-parser' ]
+18 verbose url resolved https://registry.npmjs.org/cookie-parser
+19 info trying registry request attempt 1 at 12:13:03
+20 verbose etag "71GPGQZ1I5ELZW0XIVLDL5JSQ"
+21 http GET https://registry.npmjs.org/cookie-parser
+22 http 304 https://registry.npmjs.org/cookie-parser
+23 silly registry.get cb [ 304,
+23 silly registry.get   { date: 'Mon, 31 Oct 2016 11:12:36 GMT',
+23 silly registry.get     via: '1.1 varnish',
+23 silly registry.get     'cache-control': 'max-age=300',
+23 silly registry.get     etag: '"71GPGQZ1I5ELZW0XIVLDL5JSQ"',
+23 silly registry.get     age: '213',
+23 silly registry.get     connection: 'keep-alive',
+23 silly registry.get     'x-served-by': 'cache-cdg8732-CDG',
+23 silly registry.get     'x-cache': 'HIT',
+23 silly registry.get     'x-cache-hits': '1',
+23 silly registry.get     'x-timer': 'S1477912356.640346,VS0,VE0',
+23 silly registry.get     vary: 'Accept-Encoding' } ]
+24 verbose etag cookie-parser from cache
+25 silly addNameRange number 2 { name: 'cookie-parser', range: '*', hasData: true }
+26 silly addNameRange versions [ 'cookie-parser',
+26 silly addNameRange   [ '1.0.0',
+26 silly addNameRange     '1.0.1',
+26 silly addNameRange     '1.1.0',
+26 silly addNameRange     '1.2.0',
+26 silly addNameRange     '1.3.0',
+26 silly addNameRange     '1.3.1',
+26 silly addNameRange     '1.3.2',
+26 silly addNameRange     '1.3.3',
+26 silly addNameRange     '1.3.4',
+26 silly addNameRange     '1.3.5',
+26 silly addNameRange     '1.4.0',
+26 silly addNameRange     '1.4.1',
+26 silly addNameRange     '1.4.2',
+26 silly addNameRange     '1.4.3' ] ]
+27 verbose addNamed [ 'cookie-parser', '1.4.3' ]
+28 verbose addNamed [ '1.4.3', '1.4.3' ]
+29 silly lockFile fa8c12b2-cookie-parser-1-4-3 cookie-parser@1.4.3
+30 verbose lock cookie-parser@1.4.3 /home/rended/.npm/fa8c12b2-cookie-parser-1-4-3.lock
+31 silly lockFile d74c1f58-e-parser-cookie-parser-1-4-3-tgz https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.3.tgz
+32 verbose lock https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.3.tgz /home/rended/.npm/d74c1f58-e-parser-cookie-parser-1-4-3-tgz.lock
+33 verbose addRemoteTarball [ 'https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.3.tgz',
+33 verbose addRemoteTarball   '0fe31fa19d000b95f4aadf1f53fdc2b8a203baa5' ]
+34 silly lockFile d74c1f58-e-parser-cookie-parser-1-4-3-tgz https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.3.tgz
+35 silly lockFile d74c1f58-e-parser-cookie-parser-1-4-3-tgz https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.3.tgz
+36 silly lockFile fa8c12b2-cookie-parser-1-4-3 cookie-parser@1.4.3
+37 silly lockFile fa8c12b2-cookie-parser-1-4-3 cookie-parser@1.4.3
+38 silly lockFile 96095670-cookie-parser cookie-parser@
+39 silly lockFile 96095670-cookie-parser cookie-parser@
+40 error Error: EACCES, mkdir '/home/rended/tmp/npm-20113--cfXTr1K'
+40 error  { [Error: EACCES, mkdir '/home/rended/tmp/npm-20113--cfXTr1K']
+40 error   errno: 3,
+40 error   code: 'EACCES',
+40 error   path: '/home/rended/tmp/npm-20113--cfXTr1K' }
+41 error Please try running this command again as root/Administrator.
+42 error System Linux 4.4.0-45-generic
+43 error command "/usr/bin/nodejs" "/usr/bin/npm" "install" "cookie-parser"
+44 error cwd /var/www/html/ow_plugins/cocreation/static/scripts/ethersheet
+45 error node -v v0.10.25
+46 error npm -v 1.3.10
+47 error path /home/rended/tmp/npm-20113--cfXTr1K
+48 error code EACCES
+49 error errno 3
+50 error stack Error: EACCES, mkdir '/home/rended/tmp/npm-20113--cfXTr1K'
+51 verbose exit [ 3, true ]

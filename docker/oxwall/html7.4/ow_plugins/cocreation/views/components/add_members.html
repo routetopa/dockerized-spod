@@ -1,0 +1,210 @@
+{style}
+body .floatbox_header
+{
+display: none;
+}
+
+body .floatbox_bottom
+{
+display: none;
+}
+
+body .floatbox_body
+{
+padding: 0;
+position: relative;
+<!--overflow:hidden;-->
+}
+
+#added_suggested_contact_container:after
+{
+margin-bottom: 0px;
+content:"";
+display:block;
+clear:both;
+}
+
+#suggested_friends
+{
+display:none;
+box-shadow:1px 3px 1px #d4d4d5;
+border:1px solid #cacacb;
+width: 300px;
+max-height: calc(100% - 48px - 56px - 50px - 16px);
+overflow-y: auto;
+overflow-x: hidden;
+}
+
+#suggested_friends table { width:300px; }
+#suggested_friends table td:nth-child(odd) { width:30px }
+#suggested_friends table td > * {  vertical-align : middle;  }
+#suggested_friends table tr { background-color:#ffffff; cursor:pointer }
+#suggested_friends table tr:hover { background-color: #ececed }
+
+.suggested_name
+{
+margin-top:10px;
+}
+
+.suggested_email
+{
+color: #8b7683;
+font-size: 14px;
+}
+
+.added_suggested_contact
+{
+display: inline;
+float: left;
+margin-right: 5px;
+background-color: #f5f5f5;
+border: 1px solid #d9d9d9;
+cursor: default;
+height: 23px;
+white-space: nowrap;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+}
+
+.added_suggested_contact_text
+{
+padding: 3px 0px 0px 3px;
+display: inline-block;
+}
+
+.added_suggested_contact:hover {
+border-color: #b9b9b9;
+}
+
+.remove_suggested_contact
+{
+display: inline-block;
+width: 12px;
+height: 20px;
+background: no-repeat url(/ow_static/themes/spod_theme_matter/images/contactarea_sprite_2.gif) -4px 2px;
+opacity: .6;
+vertical-align: top;
+cursor: pointer;
+}
+#parent input
+{
+/*width: 70%;*/
+/*height: 15px;*/
+}
+.submit_button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}
+
+{/style}
+
+<style is="custom-style">
+
+    .date_period
+    {
+        float:left;
+        width:40%;
+        margin-right: 20px;
+        margin-left: 30px;
+    }
+
+    .cocoreation_add_members {
+        width: 100%;
+        height: 24px;
+        padding: 12px 0;
+        background-color: #2196F3;
+        text-align: center;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #FFFFFF;
+
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .title {
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+
+        text-transform: uppercase;
+        color: #2196F3;
+        font-weight: 700;
+        padding: 32px 0 0 32px;
+    }
+
+    .input
+    {
+        width: calc(100% - 64px);
+        margin-left: 32px;
+    }
+
+</style>
+
+<div class="ow_superwide ow_automargin" id="parent">
+
+    <div class="cocoreation_add_members">{text key="cocreation+add_members"}</div>
+
+    <div class="title">
+        <span>{text key="cocreation+creation_form_members"}</span>
+    </div>
+
+    <input type="hidden" id="friends_info" value='{$friends_info}' />
+
+    {form name='CoCreationAddMembersForm'}
+    <div class="input">
+        <!--<div id="parent">-->
+            <div id="added_suggested_contact_container"></div>
+            <input type="text" id="members" name="members" autocomplete="off"
+                   onkeyup="COCREATION.autocomplete()"
+                   onblur="COCREATION.hideAutocomplete()"
+                   onfocus="COCREATION.autocomplete()">
+        <!--</div>-->
+    </div>
+
+    <!--<table class="ow_table_1 ow_form">-->
+        <!--<tr class="ow_alt1">-->
+            <!--<td class="ow_label" id="add_label">{text key="cocreation+creation_form_members"}</td>-->
+            <!--<td class="ow_value" >-->
+                <!--<div id="added_suggested_contact_container"></div>-->
+                <!--<input type="text" id="members" name="members" autocomplete="off"-->
+                       <!--onkeyup="COCREATION.autocomplete()"-->
+                       <!--onbsssslur="COCREATION.hideAutocomplete()"-->
+                       <!--onfocus="COCREATION.autocomplete()"-->
+                <!--&gt;-->
+            <!--</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <div class="clearfix ow_stdmargin"><div class="submit_button">{submit name='submit' class='ow_ic_new'}</div></div>
+    {/form}
+
+    <!-- suggested -->
+    <div id="suggested_friends">
+        <table id="suggested_friends_table">
+        </table>
+    </div>
+
+    <table style="display:none">
+        <tr id="suggested_friends_tr_template" onmousedown="COCREATION.addSuggestedUser(this)">
+            <td>
+                <div class="ow_avatar">
+                    <a href="" target="_blank"><img alt="" src="" style="max-width: 100%;"></a>
+                </div>
+            </td>
+            <td>
+                <div class="suggested_name"></div>
+                <div class="suggested_email"></div>
+            </td>
+        </tr>
+    </table>
+
+    <div style="display:none">
+        <div id="added_suggested_contact_template" class="added_suggested_contact">
+            <div class="added_suggested_contact_text"></div>
+            <div class="remove_suggested_contact" onclick="COCREATION.removeFromSuggestionList(this)"></div>
+        </div>
+    </div>
+
+</div>

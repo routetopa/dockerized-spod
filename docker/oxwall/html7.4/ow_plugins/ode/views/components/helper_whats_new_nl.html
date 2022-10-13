@@ -1,0 +1,203 @@
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+
+<style>
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+
+
+    .helper_content {
+        background-color: #2196f3;
+        color: #FFFFFF;
+    }
+
+    .helper_title {
+        padding: 20px 20px 0px 20px;
+        font-size: 40px;
+        color: #ffffff;
+        position: relative;
+    }
+
+    .helper_description_spacer {
+        padding: 20px 10px 0px 20px;
+    }
+
+    .helper_description{
+        height: 72px;
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+
+    .section-title{
+        font-size: 22px;
+        color: #888;
+    }
+</style>
+
+<div class="layout vertical">
+
+    <div class="helper_content">
+        <div class="helper_title">What's New helper</div>
+        <div class="helper_description_spacer">
+            <div class="helper_description">
+                "What's new" page shows all the activities (e.g. posts, likes, photos etc...) to everybody, in chronological order,
+                from all users (included those that are not my friends). You can filter only the activities of your friends in the network,
+                clicking on button "Show only my friends' activities".
+                You can interact like in a traditional social network, by writing your status or commenting others' status.
+                The main difference is that you can attach to your comments a "Datalet", i.e. a component that interactively
+                loads Open datasets and visualise them. You can choose to insert a new Datalet, or to reuse one that you saved in your personal "My space".
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="scroll_content">
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_posting_datalet_en.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">1</div>
+                        <div class="section-title">Choose to attach a Datalet to a comment </div>
+                    </div>
+                    <div> By Datalet button (circled in Figure.) near the post creation control, you can attach to your comment/post a new Datalet.
+                        Everyone, even without technical expertise, can create and share visualisation of a chosen dataset with few simply steps using
+                        the wizard that assists you step-by-step, through the creation (or modification) of a Datalet.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_datalet_creator1_en.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">2</div>
+                        <div class="section-title">Wizard first step: select the dataset </div>
+                    </div>
+                    <div>
+                        The first step of the wizard is the Dataset selection  from a compatible provider.
+                        There are three methods the user can choose a dataset (with increasing complexity):
+                        <ul class="cell-list">
+                            <li>It can be searched by using the search text box in the bottom right. When user types in a string, only the datasets whose title or metadata contains the string are shown.</li>
+                            <li>It can be selected from a "FROM PROVIDERS" section, which shows the datasets available the associated data providers.</li>
+                            <li>It can be selected from a "FROM COCREATED" section, which shows the datasets created by SPOD users in the cocreation process</li>
+                            <li>It can be selected by using the “EXTENDED SEARCH” tab, that allows a search for a string also in the content of a table in the datasets of the associated datasets providers.</li>
+                            <li>By manually entering the URL at the bottom (for advanced users).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_datalet_creator2_en.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">3</div>
+                        <div class="section-title">Wizard second step: select the fields to show </div>
+                    </div>
+                    <div>
+                        Once you have chosen a dataset, you move to the second step (by using the arrows on top right) for selecting the fields.
+                        On the left, you can find the fields that are available. As you choose which field to select, a preview of the data is
+                        shown on the table to the right. An expert mode, by clicking on  the right bottom (circled in Figure), allows to filter and group data.
+                        When you are done with the field selection you can move forward by clicking on the arrow
+                        on the top right (or if you wish you can go back to the previous step with the arrow to the top left).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_datalet_creator3_en.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">4</div>
+                        <div class="section-title">Wizard third step: select the visualization </div>
+                    </div>
+                    <div>
+                        Different charts are available, and are shown on the left, in a list that includes details like the name,
+                        type and description of inputs and settings supported by each chart.  Once a chart is selected, you must choose,
+                        for each input required by the chart, the corresponding field from the set you selected in step two (“INPUTS” section).
+                        You can also customize the chart by setting a title, comments (“BASE INFO” section), labels on the axes, theme,
+                        legend and so on (“OPTIONS” section). While you make changes, the preview is shown on the right (“DATALET PREVIEW”),
+                        so that you can control the effect of your choice right away. When you are satisfied, you can add the Datalet
+                        by clicking on the "Add" button.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_post_datalet2_en.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">5</div>
+                        <div class="section-title">You can post Datalets also when you reply </div>
+                    </div>
+                    <div>
+                        The same feature is available when the user replies with a comment. Simply use the same small button shown in the figure
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_myspace_import_en.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">6</div>
+                        <div class="section-title">Datalets coming from "My Space" </div>
+                    </div>
+                    <div>
+                        You can also re-use the Datalets that you placed in "My Space".
+                        By clicking on the button  <img src="{$staticResourcesUrl}images/myspace-button.svg" style="width: 20px; height: 20px; background-color: #2196F3; border-radius: 18px;"> ,
+                        a pop-up shows all the existing Datalets that you can choose from.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

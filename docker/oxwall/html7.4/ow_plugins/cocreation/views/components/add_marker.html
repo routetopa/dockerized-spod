@@ -1,0 +1,46 @@
+<link rel="import" href="{$components_url}bower_components/paper-button/paper-button.html">
+<!--<link rel="import" href="{$components_url}controllets/select-marker-map-controllet/select-marker-map-controllet.html"/>-->
+
+<style>
+    div.clearfix.floatbox_cap{
+        display: none;
+    }
+
+    #add_button{
+        position: absolute;
+        top: 10px;
+        right: 7vw;
+        background: #2196F3;
+        color: #ffffff;
+        z-index: 1;
+
+    }
+</style>
+
+{literal}
+<script>
+    $(document).ready(function(){
+        $('#add_button').click(function(){
+            debugger;
+            var map = document.getElementById("map_iframe").contentDocument.querySelector("select-marker-map-controllet");
+            var data = "";
+            if(map.selected_interaction == 0) {
+               data =  map.coordinate.join(",");
+            }else{
+                data = map.getGeoJSON();
+            }
+            $("iframe")[0].contentWindow.postMessage(data, 'http://' + window.location.hostname + ":" + COCREATION.spreadsheet_server_port);
+            previewFloatBox.close();
+        });
+    });
+</script>
+{/literal}
+
+<paper-button id="add_button" raised>{text key="cocreation+addmarker_button_label"}</paper-button>
+<iframe id="map_iframe" src="/ow_static/plugins/cocreation/pages/marker_selection.html" height="100%" width="100%"></iframe>
+<!--
+<select-marker-map-controllet id="map_controllet"></select-marker-map-controllet>
+-->
+
+
+

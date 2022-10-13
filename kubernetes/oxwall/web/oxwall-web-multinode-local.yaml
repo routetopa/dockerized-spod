@@ -1,0 +1,141 @@
+#esempio molteplici nodi con storage locale sincronizzato
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: oxwall-web #darà il nome ai pod: oxwall-web-0, oxwall-web-1, ecc.
+spec:
+  selector:
+    matchLabels:
+      app: oxwall-web
+  serviceName: oxwall-web-headless #deve essere lo stesso dell'headless service
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: oxwall-web
+    spec:
+      initContainers:
+      - name: init-oxwall
+        image: davideacanfora/oxwall:220601
+        command: ["cp", "-a", "/var/www/html/.", "/tmp/html/"] #mv per risparmiare spazio?
+        volumeMounts:
+        - name: web-data
+          mountPath: /tmp/html
+
+      - name: init-rsync
+        image: instrumentisto/rsync-ssh
+        command: #sincronizza web-data dal nodo predecessore (ordinal-1)
+        - sh
+        - -c
+        - |
+          HOSTNAME=$(uname -n)
+          ordinal=${HOSTNAME##*-}
+          if [ $ordinal -gt 0 ]
+          then
+            ordinal=$(($ordinal-1))
+            rsync -aP --delete --exclude '.sync' rsync://$RSYNC_USERNAME@oxwall-web-$ordinal.oxwall-web-headless:873/data/web/ /data/web/
+          else
+            echo "first"
+          fi
+        env:
+        - name: RSYNC_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: oxwall-config
+              key: RSYNC_USERNAME
+        - name: RSYNC_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: oxwall-config
+              key: RSYNC_PASSWORD
+        volumeMounts:
+        - name: web-data
+          mountPath: /data/web
+
+      containers:
+      - name: oxwall
+        image: davideacanfora/oxwall:220601
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts: #dati sincronizzati dagli initCointainers
+        - name: web-data
+          mountPath: /var/www/html
+
+      - name: resilio
+        image: resilio/sync
+        env:
+        #PUID e PGID di www-data nel container oxwall
+        - name: PUID 
+          value: "33"
+        - name: PGID
+          value: "33"
+        ports:
+        - name: sync
+          containerPort: 55555     
+        volumeMounts:
+        - name: web-data
+          mountPath: /data/web
+        - name: config-map #mount file di configurazione
+          mountPath: /mnt/sync/sync.conf
+          subPath: sync.conf
+        
+      - name: rsyncd
+        image: apnar/rsync-server
+        ports:
+        - name: rsyncd
+          containerPort: 873
+        env:
+        - name: USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: oxwall-config
+              key: RSYNC_USERNAME
+        - name: PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: oxwall-config
+              key: RSYNC_PASSWORD
+        volumeMounts:
+        - name: web-data
+          mountPath: /data/web
+
+      volumes:
+      - name: web-data
+        emptyDir: {}
+      - name: config-map
+        configMap:
+          name: oxwall-config
+---
+# Servizio headless per avere entry DNS stabili per i pod dello StatefulSet
+# Può essere utilizzato per accedere ai singoli pod. Nome composto da NOME_STATEFULSET-ID.NOME_SERVIZIO
+# Es. oxwall-web-0.oxwall-web-headless sarà il primo pod
+apiVersion: v1
+kind: Service
+metadata:
+  name: oxwall-web-headless
+  labels:
+    app: oxwall-web
+spec:
+  clusterIP: None
+  ports:
+  - name: http
+    port: 80
+  - name: sync
+    port: 55555
+  selector:
+    app: oxwall-web
+---
+# Servizio standard che distribuisce il carico
+apiVersion: v1
+kind: Service
+metadata:
+  name: oxwall-web-service
+spec:
+  type: ClusterIP
+  selector:
+    app: oxwall-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

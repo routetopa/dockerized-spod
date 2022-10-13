@@ -1,0 +1,108 @@
+<div class="notification_container">
+
+    <div class="notification_left">
+
+        {foreach from=$actions  key=pluginKey item=plugin name="plugins"}
+        <div class="notification_section">
+
+            <div class="notification_plugin">
+                {$plugin.label}
+            </div>
+
+            <div class="notification_settings">
+                {foreach from=$plugin.actions item=action name="actions"}
+                <div class="notification_setting_container">
+                    <div class="notification_setting_panel">
+                        <div class="notification_info_container">
+                            <div class="notification_action_text">{$action.description}</div>
+                            <div class="notification_stepper" data-plugin="{$action.section}" data-action="{$action.action}" data-frequency-selected="{$action.frequency}">
+                                <div class="notification_step tooltips off" data-value="0"><span>Off</span></div>
+                                <div class="notification_step tooltips month" data-value="3"><span>Every month</span></div>
+                                <div class="notification_step tooltips day" data-value="2"><span>Every day</span></div>
+                                <div class="notification_step tooltips now" data-value="1"><span>Everytime</span></div>
+                            </div>
+                            <div class="notification_right_arrow" {if !isset($action.subAction)} style="visibility:hidden" {/if} ></div>
+                        </div>
+                    </div>
+                    {if isset($action.subAction)}
+                    {foreach from=$action.subAction item=subAction name="subAction"}
+                    <div class="notification_setting_subaction_panel">
+                        <div class="notification_info_subaction_container" data-plugin="{$subAction.section}" data-action="{$subAction.action}">
+                            <div class="notification_action_text">{$subAction.description}</div>
+                            <div class="notification_subaction_frequency"></div>
+                            <div class="notification_info_subaction_delete"></div>
+                        </div>
+                    </div>
+                    {/foreach}
+                    {/if}
+                </div>
+                {/foreach}
+            </div>
+
+        </div>
+        {/foreach}
+
+    </div> <!-- NOTIFICATION LEFT -->
+
+    <div class="notification_right">
+
+        <!--<div class="right_panel">
+            <div class="right_panel_header">
+                <div class="right_panel_icon link"></div>
+                <div class="right_panel_title">Quick link</div>
+            </div>
+        </div>-->
+
+        <div class="right_panel">
+            <div class="right_panel_header">
+                <div class="right_panel_icon agora"></div>
+                <div class="right_panel_title">Agora</div>
+            </div>
+            <div class="right_panel_content">
+                {foreach from=$agoras item=agora name="agora"}
+                <div class="right_panel_content_row">
+                    <a href="{$spod_home}agora/{$agora->id}" target="_blank"> {$agora->subject} - {$agora->body} </a>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="right_panel">
+            <div class="right_panel_header">
+                <div class="right_panel_icon cocreation"></div>
+                <div class="right_panel_title">Cocreation</div>
+            </div>
+            <div class="right_panel_content">
+                {foreach from=$cocreations item=cocreation name="cocreation"}
+                <div class="right_panel_content_row">
+                    <a href="{$spod_home}cocreation/{$cocreation->type}-room/{$cocreation->id}" target="_blank"> {$cocreation->name} - {$cocreation->subject} </a>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="right_panel">
+            <div class="right_panel_header">
+                <div class="right_panel_icon agora"></div>
+                <div class="right_panel_title">Agora Live</div>
+            </div>
+            <div id="live_panel">
+            </div>
+            <div class="right_panel_content" style="display: none" id="live_template">
+                <div class="right_panel_live_content_row">
+                    <div class="ow_avatar style-scope neutral">
+                        <a class="style-scope" href=""><img src=""></a>
+                    </div>
+                    <div class="right_panel_live_content_text">
+
+                    </div>
+                    <div class="right_panel_live_content_agora">
+                        <a href="" target="_blank" class="agora_link"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- NOTIFICATION RIGHT -->
+
+</div>

@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oxwall-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    #STICKY SESSIONS
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "84e4b40dabf5a021c8fc5f0b08e92d9a" #md5(OW_URL_NAME) <= http://oxwall.it/
+spec:
+  rules:
+  - host: oxwall.it #dominio con il quale è raggiungibile il cluster dall'esterno
+    http:
+      paths:
+        - path: / #da quale path in poi associamo l'ingress al service
+          pathType: Prefix
+          backend:
+            service:
+              name: oxwall-web-service #nome del service che fa da load balancer
+              port:
+                number: 80

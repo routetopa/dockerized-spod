@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ckan-deployment
+  labels:
+    app: ckan-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ckan-web
+  template:
+    metadata:
+      labels:
+        app: ckan-web
+    spec:
+      containers:
+      - name: ckan
+        image: ckan/ckan
+        ports:
+        - containerPort: 5000
+        env:
+        - name: CKAN_SITE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: ckan-config
+              key: CKAN_SITE_URL
+        - name: CKAN_MAX_UPLOAD_SIZE_MB
+          value: ${CKAN_MAX_UPLOAD_SIZE_MB}
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: ckan-config
+              key: POSTGRES_PASSWORD
+        - name: DS_RO_PASS
+          valueFrom:
+            configMapKeyRef:
+              name: ckan-config
+              key: DATASTORE_READONLY_PASSWORD
+        - name: CKAN_SQLALCHEMY_URL
+          value: "postgresql://ckan:${POSTGRES_PASSWORD}@db/ckan"
+        - name: CKAN_DATASTORE_WRITE_URL
+          value: "postgresql://ckan:${POSTGRES_PASSWORD}@db/datastore"
+        - name: CKAN_DATASTORE_READ_URL
+          value: "postgresql://datastore_ro:${DATASTORE_READONLY_PASSWORD}@db/datastore"
+        - name: CKAN_SOLR_URL
+          value: http://solr:8983/solr/ckan
+        - name: CKAN_REDIS_URL
+          value: redis://redis:6379/1
+        - name: CKAN_DATAPUSHER_URL
+          value: http://datapusher:8800
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ckan-web-service
+spec:
+  type: NodePort
+  selector:
+    app: ckan-web
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30500

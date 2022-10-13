@@ -1,0 +1,196 @@
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+
+<style>
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+
+
+    .helper_content {
+        background-color: #2196f3;
+        color: #FFFFFF;
+    }
+
+    .helper_title {
+        padding: 20px 20px 0px 20px;
+        font-size: 40px;
+        color: #ffffff;
+        position: relative;
+    }
+
+    .helper_description_spacer {
+        padding: 20px 10px 0px 20px;
+    }
+
+    .helper_description{
+        height: 72px;
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+
+    .section-title{
+        font-size: 22px;
+        color: #888;
+    }
+</style>
+
+<div class="layout vertical">
+
+    <div class="helper_content">
+        <div class="helper_title">Quoi de nouveau dans l'assistance</div>
+        <div class="helper_description_spacer">
+            <div class="helper_description">
+                La page "Quoi de nouveau ?" montre toutes les activités (ex: posts, "likes", photos etc…) dans l'ordre chronologique,
+                pour tous les utilisateurs (incluant ceux qui ne sont pas vos amis). Vous pouvez filtrer uniquement les activités
+                de vos amis dans le réseau, en cliquant sur le bouton "Montrer seulement l'activité de mes amis" Laissez nous vous montrer comment associer un commentaire au datalet.
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="scroll_content">
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_posting_datalet_fr.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">1</div>
+                        <div class="section-title"> Choisir d'associer un datalet au commentaire </div>
+                    </div>
+                    <div>
+                        Grâce au bouton datalet (entouré dans la figure), à coté de la fonction de création des posts, vous pouvez associer vos commentaires/posts à un nouveau datalet.
+                        Vous n'avez besoin d'aucune expertise technique pour créer et partager des visualisations d'un jeu de données choisi.
+                        C'est simple, il vous suffit d'utiliser l'assistant "étape par étape", lors de la création (ou la modification) d'un datalet.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_datalet_creator1_fr.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">2</div>
+                        <div class="section-title"> Assistant Première étape: selectionner les jeux de données </div>
+                    </div>
+                    <div>
+                        La première étape de l'assistant est la selection des jeux de données à partir de fournisseurs compatibles.
+                        Il y a  méthodes qu'un utilisateur peut adopter dans le choix des jeux de données (complexité croissante):
+                        <ul class="cell-list">
+                            <li>Il peut être selectionné à partir d'une liste déroulante de jeux de données proposés par l'un des fournisseurs associés.</li>
+                            <li>Il peut être entré manuellement comme un URL (pour utilisateurs avancés).</li>
+                        </ul>
+                    </div>
+                </div>
+             </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_datalet_creator2_fr.png" style="width: 60%; height: 60%;">
+
+                    <div class="cell">
+                        <div class="horizontal layout cell">
+                            <div class="section-number">3</div>
+                            <div class="section-title"> Assistant deuxième étape: sélectionner les champs à montrer </div>
+                        </div>
+                        <div>
+                            Une fois que vous avez choisi un jeu de données, vous pouvez passer à la seconde étape (en utilisant
+                            les flèches en haut à droite) pour selectionner les champs que vous souhaitez. Sur la gauche, vous disposez
+                            des champs disponibles. Lorsque vous avez choisi le champ à selectionner, un aperçu des données est proposé
+                            sur le tableau à droite. Lorsque vous avez terminé vous pouvez passer à la suite en cliquant sur la flèche en haut
+                            à droite (ou si vous le souhaitez vous pouvez revenir à l'étape précédente avec la flèche en haut à gauche).
+                        </div>
+                    </div>
+            </div>
+         </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_datalet_creator3_fr.png" style="width: 60%; height: 60%;">
+
+                   <div class="cell">
+                        <div class="horizontal layout cell">
+                            <div class="section-number">4</div>
+                            <div class="section-title"> Assistant troisième étape: sélectionner la visualisation </div>
+                        </div>
+                        <div>
+                            Différents graphiques sont disponibles et sont présentés à gauche, dans une liste qui propose des
+                            informations détaillées comme le nom, le type et la présentation des contributions ainsi que les réglages
+                            pris en charge par chaque graphique. Une fois le graphique sélectionné, vous devez choisir, pour chaque contribution,
+                            les champs correspondants à partir des ensembles sélectionnés en étape 2. Vous pouvez également personnaliser les graphiques
+                            en ajoutant un titre, des commentaires, des légendes sur les axes etc.. Lorsque vous effectuez ces changements, l'aperçu apparait
+                            sur la droite, et ainsi vous pouvez contrôler les effets de vos choix tout de suite. Lorsque vous êtes satisfait, vous pouvez ajouter
+                            des "datalets" en cliquant sur le bouton "ajouter".
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div class="sect">
+                <div class= "horizontal layout cell">
+                    <img src="{$staticResourcesUrl}images/whatsnew_post_datalet2_fr.png" style="width: 60%; height: 60%;">
+
+                    <div class="cell">
+                        <div class="horizontal layout cell">
+                            <div class="section-number">5</div>
+                            <div class="section-title">Vous pouvez poster des "datalets" également lorsque vous répondez</div>
+                        </div>
+                        <div>
+                            Les mêmes caractéristiques sont disponibles lorsque l'utilisateur repond avec un commentaire.
+                            Il faut simplement utiliser le même bouton qui est présenté sur la figure.
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div class="sect">
+                 <div class= "horizontal layout cell">
+                    <img src="{$staticResourcesUrl}images/whatsnew_myspace_import_fr.gif" style="width: 60%; height: 60%;">
+
+                    <div class="cell">
+                        <div class="horizontal layout cell">
+                            <div class="section-number">6</div>
+                            <div class="section-title">Datalets issus de "Mon espace"</div>
+                        </div>
+                        <div>
+                            Vous pouvez également ré-utiliser des "datalets" que vous avez placé dans "mon espace".
+                            En cliquant sur le bouton présenté <img src="{$staticResourcesUrl}images/myspace-button.svg" style="width: 20px; height: 20px; background-color: #2196F3; border-radius: 18px;">, une fenêtre pop-up révèle l'ensemble des datalets existants que vous pouvez choisir.
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

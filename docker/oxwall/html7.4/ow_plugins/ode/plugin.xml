@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+    <name>SPOD Open Data Enabler</name>
+    <key>ode</key>
+    <description>OPEN DATA OXWALL ENABLER</description>
+    <author>ISISLab</author>
+    <authorEmail>isislab@routetopa.eu</authorEmail>
+    <authorUrl>http://www.isislab.it/</authorUrl>
+    <developerKey>2b810a795fa9b5b5d138ac0652de1a7e</developerKey>
+    <build>1111</build>
+    <copyright>The ROUTE-TO-PA Project</copyright>
+    <license>The MIT License</license>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+</plugin>

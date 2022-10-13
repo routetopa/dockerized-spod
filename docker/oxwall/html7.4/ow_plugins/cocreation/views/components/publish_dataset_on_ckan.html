@@ -1,0 +1,1043 @@
+<link rel="import" href="{$components_url}controllets/data-table-controllet/data-table-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/metadata-list-controllet/metadata-view-controllet.html"/>
+<link rel="import" href="{$components_url}bower_components/paper-button/paper-button.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="{$components_url}bower_components/paper-input/paper-input.html">
+<link rel="import" href="{$components_url}bower_components/paper-checkbox/paper-checkbox.html">
+
+<style>
+    div.clearfix.floatbox_cap{
+        display: none;
+    }
+
+    #validate_button{
+        position: absolute;
+        bottom: 8px;
+        right: 100px;
+        background: #00AABF;
+        color: #FFFFFF;
+        font-weight: 700;
+        z-index: 1;
+        height: 40px;
+        margin: 0;
+    }
+
+    body .floatbox_header
+    {
+        display: none;
+    }
+
+    body .floatbox_bottom
+    {
+        display: none;
+    }
+
+    body .floatbox_body
+    {
+        padding: 8px;
+        position: relative;
+    }
+
+    body .floatbox_canvas .floatbox_container {
+        margin-top: 60px;
+    }
+
+    /***********************************
+     * BUTTON.
+     **********************************/
+
+    .pbutton {
+        background: #00AABF;
+        color: #FFFFFF;
+        font-weight: 700;
+        z-index: 1;
+        height: 40px;
+    }
+
+    /***********************************
+     * CSS for SPINNER.
+     ***********************************/
+
+    .sk-cube-grid {
+        width: 40px;
+        height: 40px;
+        margin: 28px auto;
+    }
+
+    .sk-cube-grid .sk-cube {
+        width: 33%;
+        height: 33%;
+        background-color: #43a047;
+        float: left;
+        -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+        animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+        /*shadow*/
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    }
+    .sk-cube-grid .sk-cube1 {
+        -webkit-animation-delay: 0.2s;
+        animation-delay: 0.2s; }
+    .sk-cube-grid .sk-cube2 {
+        -webkit-animation-delay: 0.3s;
+        animation-delay: 0.3s; }
+    .sk-cube-grid .sk-cube3 {
+        -webkit-animation-delay: 0.4s;
+        animation-delay: 0.4s; }
+    .sk-cube-grid .sk-cube4 {
+        -webkit-animation-delay: 0.1s;
+        animation-delay: 0.1s; }
+    .sk-cube-grid .sk-cube5 {
+        -webkit-animation-delay: 0.2s;
+        animation-delay: 0.2s; }
+    .sk-cube-grid .sk-cube6 {
+        -webkit-animation-delay: 0.3s;
+        animation-delay: 0.3s; }
+    .sk-cube-grid .sk-cube7 {
+        -webkit-animation-delay: 0s;
+        animation-delay: 0s; }
+    .sk-cube-grid .sk-cube8 {
+        -webkit-animation-delay: 0.1s;
+        animation-delay: 0.1s; }
+    .sk-cube-grid .sk-cube9 {
+        -webkit-animation-delay: 0.2s;
+        animation-delay: 0.2s; }
+
+    @-webkit-keyframes sk-cubeGridScaleDelay {
+        0%, 70%, 100% {
+            -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+        } 35% {
+              -webkit-transform: scale3D(0, 0, 1);
+              transform: scale3D(0, 0, 1);
+          }
+    }
+
+    @keyframes sk-cubeGridScaleDelay {
+        0%, 70%, 100% {
+            -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+        } 35% {
+              -webkit-transform: scale3D(0, 0, 1);
+              transform: scale3D(0, 0, 1);
+          }
+    }
+
+    .waitMessage {
+        text-align: center;
+        font-style: italic;
+    }
+
+    .winHeader {
+        color: white;
+        background-color: #4CAF50;
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        font-size: 18px;
+        margin-bottom: 10px;
+        box-shadow: 2px 2px 5px #218851;
+        text-align: center;
+    }
+
+    .iconError {
+        display: flex;
+        float: left;
+        color: red;
+        margin: 10px;
+    }
+
+    .iconSuccess {
+        display: flex;
+        float: left;
+        color: green;
+        margin-left: 17px;
+    }
+
+    .iconSuccessText {
+        color: darkgreen;
+        line-height: 38px;
+    }
+
+    .error-box {
+        border: 1px solid red;
+        padding: 5px;
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        width: 80%;
+        color: red;
+        background: white;
+        box-shadow: 2px 2px 5px grey;
+    }
+
+    .error-box-list {
+        padding-left: 80px;
+        list-style-type: circle;
+    }
+
+    /* Metadata-box */
+    .left-bottom-box {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        font-weight: 700;
+        z-index: 1;
+        height: 40px;
+        margin: 0;
+        width: 50%;
+    }
+
+    .step-card {
+        display: none;
+
+    }
+
+</style>
+
+<style>
+    /*** CARDS STYLE ***/
+
+    .button-action, .button-prev, .button-next, .button-action {
+        float: left;
+        width: 110px;
+        text-align: center;
+
+        border-radius: 10px 5px;
+        height: 30px;
+        background-color: #4CAF50;
+        color: white;
+        line-height: 30px;
+        border: 1px solid #4CAF50;
+    }
+
+    .button-next {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        z-index: 1;
+        margin: 0;
+    }
+
+    .button-prev {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        z-index: 1;
+        margin: 0;
+    }
+
+    .button-prev:hover, .button-next:hover {
+        background-color: #76af00;
+        cursor: pointer;
+    }
+
+    .button-disabled, .button-disabled:hover {
+        color: #eaeaea;
+        border: 1px solid #eaeaea;
+        background-color: #ffffff;
+        cursor: default;
+    }
+
+    .button-action {
+        position: absolute;
+        bottom: 8px;
+        z-index: 1;
+        left: calc(50% - 50px);
+    }
+
+    .card-title {
+        color: white;
+        background-color: #4CAF50;
+        width: calc(100%);
+        height: 32px;
+        line-height: 36px;
+        font-size: 18px;
+        border-radius: 5px 10px;
+        margin-left: 2px;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        text-align: center;
+    }
+
+    .card-content ul {
+        padding-left: 40px;
+        list-style-type: disc;
+    }
+
+    .card-content p {
+        padding-top: 20px;
+    }
+
+    .card-footer {
+        border-top: 1px solid #eaeaea;
+        position: absolute;
+        bottom: 8px;
+        width: 98%;
+        margin: 0px;
+        padding: 0px;
+        height: 54px;
+    }
+
+    .card-message {
+        margin-top: 10px;
+    }
+
+    .text-box-style {
+        border: 1px solid darkgray;
+        height: calc(100% - 80px);
+        box-shadow: 0px 5px 5px #AAAAAA;
+    }
+
+</style>
+
+{literal}
+<script type="text/javascript">
+
+    uiLoading('checking dataset ...');
+
+    $(document).ready(function() {
+
+        /**
+         * Next and Prev buttons.
+         **/
+
+        var current_step = 1;
+        var current_direction = 'NEXT';
+        const LAST_STEP_NUMBER = 5;
+        var notesContentHTML = "";
+
+        room.publishOnCkanNotes = { doPublish: false, notesContentHTML: null };
+
+        $("#inputPlatformURL").focusout('', get_organization);
+        $("#inputPlatformURL").focusout('', get_groups);
+
+        $("#publish_metadata_iframe").attr('src', COCREATION.metadata_url);
+
+        get_organization();
+        get_groups();
+
+        $('#btnPrev').click(function (e) {
+
+            if ($(e.currentTarget).hasClass('button-disabled')) return;//Button disabled, no action.
+            var stepObject = null;
+
+            if (current_step == 1) return;
+
+            if (current_step == 3) { //Moving from step 3 to 2.
+                //Here you check the compatibility of the dataset with CKAN.
+                var dataset = room.current_dataset;
+
+                if(dataset[0]) {
+                    var _keys = Object.keys(dataset[0]);
+                }
+                else {
+                    showErrorDialog('Il dataset è vuoto', 'Il dataset è vuoto');
+                    return;
+                }
+
+                var _publishLogic = new PublishOnCkanLogic();
+                var validationReport = _publishLogic.validateCkanHeader(_keys);
+
+                var _isCompatible = validationReport.errors.length == 0 && validationReport.warnings.length == 0;
+                if (_isCompatible) current_step--;//Jump this step.
+                else stepObject = validationReport;
+            }
+
+            current_step--;
+            current_direction = "PREV";
+            uiStep(current_step, stepObject);
+        });
+        $('#btnPrev').mousedown(function(e){e.preventDefault();});//Remove double click selection.
+
+        $('#btnNext').click(function (e) {
+
+            if ($(e.currentTarget).hasClass('button-disabled')) return;//Button disabled, no action.
+            var stepObject = null;
+
+            if (current_step == LAST_STEP_NUMBER) return;
+
+            if (current_step == 1) {//Moving from STEP 1 to STEP 2.
+                //Here you check the compatibility of the dataset with CKAN.
+                var dataset = room.current_dataset;
+
+                if(dataset[0]) {
+                    var _keys = Object.keys(dataset[0]);
+                }
+                else {
+                    showErrorDialog('Il dataset è vuoto', 'Il dataset è vuoto');
+                    return;
+                }
+
+                var _publishLogic = new PublishOnCkanLogic();
+                var validationReport = _publishLogic.validateCkanHeader(_keys);
+
+                var _isCompatible = validationReport.errors.length == 0 && validationReport.warnings.length == 0;
+                if (_isCompatible) current_step++;//Jump this step.
+                else stepObject = validationReport;
+            }
+
+            //Here you check the metadata.
+            else if (current_step == 4) {
+                document.activeElement.blur();
+                var success = performCheckMetadata();
+                if (!success) return;
+
+                uiLoading("loading Co-creation notes");
+
+                //Get the id.
+                var notes_id = COCREATION.sheetName.replace('dataset_', 'notes_');
+
+                //Build the base url to request the notes.
+                //Example of base url = "http://192.168.20.138/cocreation/data-room/7"
+                var base_url = document.URL;
+                var indexOfCocreation = base_url.indexOf('cocreation') + 11;
+                var notes_url = base_url.substring(0, indexOfCocreation);
+                notes_url += "ajax/get-note-hTML-by-pad-iD-api-url/?noteUrl=" + notes_id;
+
+                //Make the http request.
+                var jqxhr = $.get(notes_url, function (response) {
+                    var _html = "";
+
+                    var _jsonResponse = JSON.parse(response);
+                    if (_jsonResponse.status === 'error') {
+                        _html = _jsonResponse.message;
+                    } else {
+                        _html = _jsonResponse.data;
+                        notesContentHTML = _jsonResponse.data;
+                    }
+
+                    $('#iframeNotes').attr('src', "data:text/html;charset=utf-8," + _html);
+
+                });
+
+            }
+
+            current_step++;
+            current_direction = 'NEXT';
+            uiStep(current_step, stepObject);
+        });
+        $('#btnNext').mousedown(function(e){e.preventDefault();});//Remove double click selection.
+
+        /**
+         * It tests a value, if it is null or undefined, it sets an empty string "";
+         **/
+        function TestNullAndSetEmptyString(value) {
+            if (typeof value === 'undefined' || value === null) return "";
+            else return value;
+        };
+
+        function uiStep(step, stepObject) {
+            switch (step) {
+                case 1:
+                    $('#btnPrev').addClass('button-disabled');
+                    $('#btnNext').removeClass('button-disabled');
+                    uiChooseCKANServer();
+                    break;
+
+                case 2: //CKAN COMPATIBILITY CARD.
+                    uiShowCKANCompatibility();
+                    uiShowCompatibilityMessages(stepObject);
+                    $('#btnPrev').removeClass('button-disabled');
+
+                    if (stepObject.errors.length == 0) $('#btnNext').removeClass('button-disabled');
+                    else $('#btnNext').addClass('button-disabled');
+
+                    break;
+
+                case 3: //DATASET TABLE PREVIEW CARD.
+                    if (current_direction === 'NEXT') {
+                        COCREATION.ckan_platform_url_preference = document.querySelector('#inputPlatformURL').value;
+                        COCREATION.ckan_api_key_preference = document.querySelector('#inputCkanAPIKey').value;
+                        COCREATION.ckan_def_organisation_preference = document.querySelector('#inputDefOrganisation').value;
+//                        COCREATION.ckan_def_groups_preference = $('#inputDefGroups').val();
+                        COCREATION.ckan_def_groups_preference = $('#inputDefGroups input:checkbox:checked');
+                    }
+
+                    const $dataTablePreview = document.querySelector("#data_table_controllet");
+                    $dataTablePreview.setData(room.current_dataset);
+                    uiShowTable();
+                    $('#btnPrev').removeClass('button-disabled');
+                    break;
+
+                case 4: //METADATA CARD.
+                    $('#btnNext').removeClass('button-disabled');
+                    $('#publish_button').addClass('button-disabled');
+                    uiShowMetadata();
+                    break;
+
+                case 5:
+                    uiShowNotes();
+                    break;
+                /*case 5:
+                    uiShowSummary();
+                    break;*/
+            }
+        };//EndFunction.
+
+        function getCocreationMetadataAsString() {
+            var metadata = COCREATION.metadata;
+            if (typeof metadata === "object") metadata = JSON.stringify(metadata);
+            return metadata;
+        };//EndFunction.
+
+        function getCocreationMetadataAsObject() {
+            var metadata = COCREATION.metadata;
+            if (typeof metadata === "object") return metadata;
+            if (typeof metadata === "string") return JSON.parse(metadata);
+        };//EndFunction.
+
+        function setCocreationMetadataAsObject(metadata) {
+            room.persistMetadata(metadata);
+        };//EndFunction.
+
+        function getWizardMetadataAsObject() {
+            return (typeof COCREATION.metadata === 'string' ? JSON.parse(COCREATION.metadata) : COCREATION.metadata);
+        };//EndFunction.
+
+        function getWizardMetadataAsString() {
+            var $metadataList = document.querySelector('#publishCKANMetadataList');
+            var metadata = $metadataList.getMetadata();
+            if (typeof metadata === "object") return metadata;
+            if (typeof metadata === "string") return JSON.parse(metadata);
+        };//EndFunction.
+
+        //Register the events.
+        $('#publish_button').click(function(e) {
+            if ($(e.currentTarget).hasClass('button-disabled')) return;//Button disabled, no action.
+
+            uiLoading('uploading dataset on CKAN ...');
+
+            var dataset = room.current_dataset;
+            var metadata = getWizardMetadataAsObject();
+
+            //Get the license key and saves it in the metadata.
+            /*const _licenseLabel = metadata.CC_RAF.license;
+            const $metadata_component = document.querySelector('#metadata_component');
+            $metadata_component.licenses.forEach(function (license_item) {
+                if (license_item.label === _licenseLabel)
+                    metadata.license_id = license_item.value;
+            });
+
+            //Get the language key and saves it in the metadata.
+            const _languageLabel = metadata.EF.language;
+            $metadata_component.languages.forEach(function (item) {
+                if (item.label === _languageLabel)
+                    metadata.language_id = item.value;
+            });*/
+
+            //Decide whether to publish notes.
+            var notes = null;
+            if (room.publishOnCkanNotes.doPublish) {
+                var notes = {
+                    content: notesContentHTML,
+                    filename: "notes",
+                    format: "txt",
+                    content_type: "text/plain"
+                };
+            }
+
+            //Check whether the dataset already exists on CKAN.
+            const $dataset_key = COCREATION.sheetName;
+            room.showPackage($dataset_key, function(response) {
+                const _jsonResponse = JSON.parse(response);
+
+                if (_jsonResponse === null) {
+                    uiShowError({ errors: ["Cannot access to the CKAN platform. Check that it is working..."] });
+                    return;
+                }
+
+                if (_jsonResponse.success == true) {
+
+                    if (typeof _jsonResponse.result !== 'undefined' && typeof _jsonResponse.result.state !== 'undefined'
+                        && _jsonResponse.result.state === 'deleted') {
+                        uiShowError({ errors: ["The dataset already exists in CKAN. You cannot see it because it is in the trash bin."] });
+                        return;
+                    }
+
+                    $.confirm({
+                        title: 'Dataset already exists.',
+                        content: 'The dataset already exists on CKAN! Do you desire to update it?',
+                        buttons: {
+                            confirm: function () {
+                                room.updateOnCkan($dataset_key, dataset, metadata, notes, function(response) {
+                                    if (response.success) {
+                                        var _packageid = _jsonResponse.result.id;
+                                        $('#btnOpenDatasetOnCKAN').attr("package_id", _packageid);
+                                        uiPublished();
+
+                                        //room._closeDialogPublishOnCKAN();
+                                        return;
+                                    }
+
+                                    uiShowError(response);
+                                });
+                            },
+                            cancel: function () {
+                                room._closeDialogPublishOnCKAN();
+                                return;
+                            }
+                        }
+                    });
+
+                    return;
+                }
+
+                //The dataset is new on CKAN.
+                room.uploadOnCkan(dataset, metadata, notes, function(result) {
+                    if (result.success == false) {
+                        uiShowError(result);
+                    } else {
+                        var _packageid = result.package_id;
+                        $('#btnOpenDatasetOnCKAN').attr("package_id", _packageid);
+                        uiPublished();
+                    }
+                });
+            });
+
+        });
+
+        $('#btnOpenDatasetOnCKAN').click(function () {
+            debugger
+            var _url = COCREATION.ckan_platform_url_preference;
+            //todo
+            if (_url.indexOf('.regione.campania') > -1)
+                _url = 'http://test.dati.regione.campania.it/catalogo/datasetdetail/' + $('#btnOpenDatasetOnCKAN').attr("package_id");
+            else
+                _url += "/dataset/" + $('#btnOpenDatasetOnCKAN').attr("package_id");
+
+            //const targetUrl = $txt_platform.value + '/dataset/edit/' + createdPackageName;
+            window.open(_url, "_blank");
+        });
+
+        /*$('#btnEditDatasetMetadata').click(function() {
+            const $txt_platform = document.getElementById("txt_platform");
+            const targetUrl = $txt_platform.value + '/dataset/edit/' + createdPackageName;
+            window.open(targetUrl, "_blank");
+        });
+
+        $('btnEditResourceMetadata').click(function() {
+            const $txt_platform = document.getElementById("txt_platform");
+            var targetUrl = $txt_platform.value + '/dataset/' + createdPackageName;
+            targetUrl += '/resource_edit/' + uploadedPackageId;
+            window.open(targetUrl, "_blank");
+        });*/
+
+        //Loads the dataset from ethersheet.
+        $.post(ODE.ajax_coocreation_room_get_array_sheetdata,
+            { sheetName: COCREATION.sheetName },
+            function (data, status) {
+                const _jsonData = JSON.parse(data);
+                room.current_dataset = _jsonData;
+
+                uiChooseCKANServer();
+            }
+        );//EndPost.
+
+    });//EndFunctionReady.
+
+    function uiHideAll() {
+        $('#cardWaiting').hide();
+        $('#cardFooter').hide();
+        $('#cardChooseServer').hide();
+        $('#cardCKANCompatibility').hide();
+        $('#cardPreview').hide();
+        $('#cardMetadata').hide();
+        $('#cardNotes').hide();
+        $('#cardSummary').hide();
+        $('#cardPublished').hide();
+        $('#cardErrors').hide();
+    };//EndFunction.
+
+    function uiLoading(message) {
+        uiHideAll();
+        $('#cardWaiting').show();
+        $('#wait_message').text(message);
+    };//EndFunction.
+
+    function uiChooseCKANServer() {
+        uiHideAll();
+        $('#cardChooseServer').show();
+        $('#cardFooter').show();
+    };//EndFunction.
+
+    function uiShowCKANCompatibility() {
+        uiHideAll();
+        $('#cardCKANCompatibility').show();
+        $('#cardFooter').show();
+    };//EndFunction.
+
+    function uiShowTable() {
+        uiHideAll();
+        $('#cardPreview').show();
+        $('#cardFooter').show();
+    };//EndFunction.
+
+    function uiShowMetadata() {
+        uiHideAll();
+        $('#cardMetadata').show();
+        $('#cardFooter').show();
+    };//EndFunction.
+
+    function uiShowNotes() {
+        uiHideAll();
+        $('#cardNotes').show();
+        $('#cardFooter').show();
+
+        $('#btnNext').addClass('button-disabled');
+        $('#publish_button').removeClass('button-disabled');
+    };//EndFunction.
+
+    function uiPublished() {
+        uiHideAll();
+        $('#cardPublished').show();
+    };//EndFunction.
+
+    function uiShowError(result) {
+        uiHideAll();
+        uiShowNotes();
+
+        const $errorMessage = document.getElementById("errorMessage");
+        $errorMessage.innerText = "Error from CKAN while exporting the dataset:";
+        const $errorList = $('#errorList');
+
+        var errorMessage = result.errors;
+        if (errorMessage instanceof Array == false)
+            errorMessage = [ errorMessage ];
+
+        $errorList.empty();
+        var sError = "";
+        for (var i=0; i<errorMessage.length; i++) {
+            var errMsg = errorMessage[i];
+            sError += errMsg;
+            $errorList.append('<li>' + errMsg + '</li>');
+        }//EndFor.
+
+        $.confirm({
+            title: 'Error while uploading dataset on CKAN.',
+            content: sError,
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                close: function () { }
+            }
+        });
+    };//EndFunction.
+
+    function uiShowCompatibilityMessages(report) {
+        const $errTitle = $('#ckanCompatibilityErrsTitle');
+        const $errs = $('#ckanCompatibilityErrsList');
+        const $warnTitle = $('#ckanCompatibilityWarnsTitle');
+        const $warns = $('#ckanCompatibilityWarnsList');
+
+        //Cleans the lists.
+        $errs.empty();
+        $warns.empty();
+        $errTitle.hide();
+        $warnTitle.hide();
+
+        if (report.errors.length > 0) {
+            $errTitle.show();
+            for (let i=0, serr; i<report.errors.length && (serr = report.errors[i]); i++)
+                $errs.append('<li>' + serr + '</li>');
+        }
+
+        if (report.warnings.length > 0) {
+            $warnTitle.show();
+            for (let i=0, swarn; i<report.warnings.length && (swarn = report.warnings[i]); i++)
+                $warns.append('<li>' + swarn + '</li>')
+        }
+    };//EndFunction.
+
+    function uiShowSummary() {
+        uiHideAll();
+        $('#cardSummary').show();
+        $('#cardFooter').show();
+    };//EndFunction.
+
+    function publishNotesChanged(e) {
+        var isChecked = e.target.checked;
+        if (isChecked) {
+            $('#txtCocreationNotes').show();
+            $('#iframeNotes').show();
+            room.publishOnCkanNotes = { doPublish: true };
+        } else {
+            $('#txtCocreationNotes').hide();
+            $('#iframeNotes').hide();
+            room.publishOnCkanNotes = { doPublish: false };
+        }
+    };//EndFuntion.
+
+    /**
+     * It checks the presence of the title metadata and description.
+     * @returns {boolean}
+     */
+    function performCheckMetadata()
+    {
+        if(!COCREATION.metadata || (typeof COCREATION.metadata === 'string' && COCREATION.metadata.trim().length === 0)) {
+            showErrorDialog('Metadata error', 'Metadata are empty');
+            return false;
+        }
+
+        let metadata = (typeof COCREATION.metadata === 'string' ? JSON.parse(COCREATION.metadata) : COCREATION.metadata);
+
+        switch(COCREATION.metadata_type)
+        {
+            case "1" : return performCOMMONCORECheckMetadata(metadata); break;
+            case "2" : return performDCATCheckMetadata(metadata); break;
+        }
+
+        return false;
+
+    };//EndFunction.
+
+    function performDCATCheckMetadata(metadata)
+    {
+        if (isMetadataEmpty(metadata.dct_title)) {
+            showErrorDialog('The title is mandatory.', 'Please provide the title in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.dct_description)) {
+            showErrorDialog('The description is mandatory.', 'Please provide description in the metadata.');
+            return false;
+        } else if (metadata['dcat_theme-dct_subject'].length === 0) {
+            showErrorDialog('The theme is mandatory.', 'Please provide theme in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.dct_accrualPeriodicity)) {
+            showErrorDialog('The accrual periodicity is mandatory.', 'Please provide accrual periodicity in the metadata.');
+            return false;
+        } /*else if (isMetadataEmpty(metadata.dct_publisher)) {
+            showErrorDialog('The publisher is mandatory.', 'Please provide publisher in the metadata.');
+            return false;
+        }*/
+
+        return true;
+    }
+
+    function performCOMMONCORECheckMetadata(metadata)
+    {
+        if (isMetadataEmpty(metadata.title)) {
+            showErrorDialog('The title is mandatory.', 'Please provide the title in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.description)) {
+            showErrorDialog('The description is mandatory.', 'Please provide the description in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.license) || metadata.license === 'notspecified') {
+            showErrorDialog('The license is mandatory.', 'Please provide the license in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.contact_name)) {
+            showErrorDialog('The Contact Name is mandatory.', 'Please provide the Contact Name in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.contact_email)) {
+            showErrorDialog('The Contact  E-mail is mandatory.', 'Please provide the Contact E-mail in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.maintainer)) {
+            showErrorDialog('The maintainer is mandatory.', 'Please provide the maintainer in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.maintainer_email)) {
+            showErrorDialog('The maintainer email is mandatory.', 'Please provide the maintainer email in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.version)) {
+            showErrorDialog('The version is mandatory.', 'Please provide the version in the metadata.');
+            return false;
+        }  else if (isMetadataEmpty(metadata.language)) {
+            showErrorDialog('The language is mandatory.', 'Please provide the language in the metadata.');
+            return false;
+        } else if (isMetadataEmpty(metadata.origin)) {
+            showErrorDialog('The origin is mandatory.', 'Please provide the origin in the metadata.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function showErrorDialog(title, content) {
+        $.confirm({
+            title: title,
+            content: content,
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                close: function () { }
+            }
+        });
+    };//EndFunciton.
+
+    function isMetadataEmpty(field) {
+        return (typeof field === 'undefined' || field == null || field.length == 0);
+    };//EndFunction.
+
+    function get_organization()
+    {
+        let ckan_url = $("#inputPlatformURL").val() + '/api/3/action/organization_list';
+
+        $.get(ckan_url, (data)=>{
+            $("#inputDefOrganisation").empty();
+            data.result.forEach((e)=>{
+               $("#inputDefOrganisation").append(`<option value='${e}'>${e}</option>`);
+            });
+        });
+    }//EndFunction.
+
+    function get_groups()
+    {
+        $("#inputDefGroups").empty();
+        ["fondi", "lavoro", "spod", "turismo"].forEach((e)=>{
+//            $("#inputDefGroups").append(`<option value='${e}'>${e}</option>`);
+            $("#inputDefGroups").append(`<li><input type="checkbox" name="${e}" value="${e}">${e}</li>`);
+        });
+
+        return
+
+        let ckan_url = $("#inputPlatformURL").val() + '/api/3/action/group_list';
+
+        $.get(ckan_url, (data)=>{
+            $("#inputDefGroups").empty();
+            data.result.forEach((e)=>{
+//                // list
+                $("#inputDefGroups").append(`<option value='${e}'>${e}</option>`);
+//                // checkbox
+//                $("#inputDefGroups").append(`<li><input type="checkbox" name="${e}" value="${e}">${e}</li>`);
+            });
+        });
+    }//EndFunction.
+
+</script>
+{/literal}
+
+<!-- WAITING SECTION -->
+<div id='cardWaiting'>
+    <div class='sk-cube-grid'>
+        <div class='sk-cube sk-cube1'></div>
+        <div class='sk-cube sk-cube2'></div>
+        <div class='sk-cube sk-cube3'></div>
+        <div class='sk-cube sk-cube4'></div>
+        <div class='sk-cube sk-cube5'></div>
+        <div class='sk-cube sk-cube6'></div>
+        <div class='sk-cube sk-cube7'></div>
+        <div class='sk-cube sk-cube8'></div>
+        <div class='sk-cube sk-cube9'></div>
+    </div>
+    <p id="wait_message" class='waitMessage'>loading...</p>
+</div>
+
+<div id="cardFooter" class="card-footer">
+    <div id="btnPrev" class="button-prev button-disabled"><iron-icon icon="icons:chevron-left"></iron-icon>previous</div>
+    <paper-button id="publish_button" class="button-action button-disabled">PUBLISH</paper-button>
+    <div id="btnNext" class="button-next">next<iron-icon icon="icons:chevron-right"></iron-icon></div>
+</div>
+
+<!-- STEP 1 - CHOOSE THE SERVER -->
+<div id="cardChooseServer">
+    <div class="card-title">1. Choose on which CKAN to upload</div>
+    <div class="card-content" style="margin-left: 8px;">
+        {if $canPublishOnCKAN}
+        <paper-input id="inputPlatformURL" always-float-label label="CKAN Platform URL" value="{$PublishOnCKAN_platform_url}" style="width: 230px;"></paper-input>
+        <paper-input id="inputCkanAPIKey" type="password" always-float-label label="CKAN API Key" value="{$PublishOnCKAN_api_key}" style="width: 230px;"></paper-input>
+        <div style="font-family: 'Roboto', 'Noto', sans-serif; color: #737373; font-size: 12px; margin-bottom: 8px;">Organisation</div> <!--ID/Key spa-->
+        <select id="inputDefOrganisation"></select>
+        <div style="font-family: 'Roboto', 'Noto', sans-serif; color: #737373; font-size: 12px; margin: 8px 0;">Additional Groups</div>
+        <!--<select id="inputDefGroups" multiple style="width: 230px;"></select>-->
+        <ul id="inputDefGroups"></ul>
+        {else}
+        <p>You do not have permissions to upload a dataset on CKAN.</p>
+        {/if}
+    </div>
+</div>
+
+<!-- STEP 2 - Checking that the dataset content is compatible with CKAN. -->
+<div id="cardCKANCompatibility" style="height: calc(100% - 40px);">
+    <div class="card-title">2. Checking dataset compatibility with CKAN</div>
+    <div class="card-content" style="height: 100%;">
+        <div>
+            <p id="ckanCompatibilityErrsTitle"><span style="color: #F44336; font-weight: 700;">ERRORS</span> - The dataset contains the following issues in the cells of the header,
+            making the dataset incompatible with CKAN. Please fix the following issues:</p>
+            <ul id="ckanCompatibilityErrsList"></ul>
+        </div>
+        <div>
+            <p id="ckanCompatibilityWarnsTitle"><span style="color: #FF9800; font-weight: 700;">WARNINGS</span> - The following are suggestions to improve the dataset quality:</p>
+            <ul id="ckanCompatibilityWarnsList"></ul>
+        </div>
+    </div>
+</div>
+
+<!-- STEP 3 - CHECKING SECTION -->
+<div id="cardPreview" style="height: calc(100% - 40px);">
+    <div class="card-title">3. Review Dataset Content</div>
+    <div class="card-content" style="height: calc(100% - 60px);">
+        <data-table-controllet id="data_table_controllet" data='[]'></data-table-controllet>
+    </div>
+</div>
+
+<!-- STEP 4 - Edit METADATA -->
+<div id="cardMetadata" style="height: 100%;">
+    <div class="card-title">4. Review Metadata</div>
+    <div class="card-content" style="height: calc(100% - 40px); overflow-y: auto;">
+
+        <!--<div class="card-number">1</div>
+        <div class="matadata-name">Testo per i metadata</div>-->
+        <!--<metadata-view-controllet id="publishCKANMetadataList" style="height: calc(100% - 40px)"></metadata-view-controllet>-->
+        <iframe id="publish_metadata_iframe" style="height: calc(100% - 45px); width: 100%;" data-read-only="true"></iframe>
+
+    </div>
+</div>
+
+<!-- STEP 5 - NOTES -->
+<div id="cardNotes" style="height: calc(100% - 40px);">
+    <div class="card-title">5. Co-creation Methodology Notes</div>
+    <div class="card-content" style="height: calc(100% - 40px); padding: 10px;">
+        <p>You can publish the co-creation notes as additional resource within the dataset.</p>
+        <div style="float: left; display: inline-flex; margin-bottom: 10px;">
+            <paper-checkbox id="chkDoPublishNotes" style="margin: 20px 40px;" onchange="publishNotesChanged(event)">Publish notes</paper-checkbox>
+            <paper-input id="txtCocreationNotes" always-float-label label="File name" value="Notes" style="display: none;"></paper-input>
+        </div>
+
+        <!--<iron-autogrow-textarea id="txtNotes" label="File content"
+            style="height: calc(100% - 20px); width: calc(100% - 13px);"
+            placeholder=".... write notes here ...">
+        </iron-autogrow-textarea>-->
+        <iframe id="iframeNotes" src="" class="text-box-style" style="display: none;"></iframe>
+    </div>
+</div>
+
+<!-- STEP 6 - Publishing Message. -->
+<div id="cardPublished" style="height: calc(100% - 40px)">
+    <div class="card-title">Dataset Published on CKAN</div>
+    <div class="card-content" style="height: 100%;">
+        <div class="card-message">
+            <iron-icon icon="icons:done" class="iconSuccess"></iron-icon>
+            <p class="iconSuccessText" style="width: 286px">Dataset successfully published!</p>
+        </div>
+        <paper-button id="btnOpenDatasetOnCKAN" class="pbutton">Open Dataset</paper-button>
+
+        <!--<paper-button id="btnEditDatasetMetadata" class="pbutton">Edit Dataset Metadata</paper-button>
+        <paper-button id="btnEditResourceMetadata" class="pbutton">Edit Resource Metadata</paper-button>-->
+    </div>
+</div>
+
+<!-- STEP 6 - SUMMARY -->
+<div id="cardSummary" style="height: calc(100% - 40px)">
+    <div class="card-title">5. Summary</div>
+    <div class="card-content" style="height: 100%;">
+
+    </div>
+</div>
+
+<!-- EDIT METADATA SECTION -->
+<!--<div id="cardPublished" class="card-left left-bottom-box">
+    <div class="cardTitle" style="float: left;">
+        <iron-icon icon="icons:done" class="iconSuccess"></iron-icon>
+        <p class="iconSuccessText" style="width: 286px">Dataset successfully published!</p>
+    </div>
+    <paper-button id="btnOpenDatasetOnCKAN" class="pbutton">Open the Dataset</paper-button>
+</div>-->
+
+<!-- SHOW ERROR MESSAGE -->
+<div id="cardErrors" class="card-center error-box">
+    <iron-icon icon="icons:error" class="iconError"></iron-icon>
+    <p id="errorMessage">Check the following:</p>
+
+    <ul id="errorList" class="error-box-list">
+
+    </ul>
+</div>
+

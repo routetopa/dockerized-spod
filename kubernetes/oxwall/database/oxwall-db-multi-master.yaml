@@ -1,0 +1,120 @@
+#esempio configurazione multi-master con MariaDB Galera Cluster
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: oxwall-db #darà il nome ai pod: oxwall-db-0, oxwall-db-1, ecc.
+spec:
+  selector:
+    matchLabels:
+      app: oxwall-db
+  serviceName: oxwall-db-headless #deve essere lo stesso dell'headless service
+  #minimo numero di nodi consigliato: 3, altrimenti sarebbe impossibile eleggere un leader se non con intervento manuale
+  #https://galeracluster.com/library/training/tutorials/galera-installation.html
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: oxwall-db
+    spec:
+      containers:
+      - name: mariadb
+        image: bitnami/mariadb-galera:10.4
+        command:
+        - bash
+        - "-c"
+        - |
+          #Ottieni l'id del pod dall'hostname
+          #[[ `hostname` =~ -([0-9]+)$ ]] || exit 1
+          #ordinal=${BASH_REMATCH[1]}
+          MARIADB_GALERA_CLUSTER_ADDRESS=""
+          for X in $(seq 3)
+            do MARIADB_GALERA_CLUSTER_ADDRESS="${MARIADB_GALERA_CLUSTER_ADDRESS}gcomm://oxwall-db-$(($X-1)).oxwall-db-headless,"
+          done
+          export MARIADB_GALERA_CLUSTER_ADDRESS=${MARIADB_GALERA_CLUSTER_ADDRESS%?}
+          /opt/bitnami/scripts/mariadb-galera/entrypoint.sh /opt/bitnami/scripts/mariadb-galera/run.sh
+        env:
+        - name: ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        - name: MARIADB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: oxwall-config
+              key: MYSQL_DATABASE
+        #flag necessario quando si usa l'engine MyISAM per attivare la replica (sperimentale)
+        #https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_replicate_myisam
+        #- name: MARIADB_EXTRA_FLAGS
+        #  value: --wsrep_replicate_myisam=1
+        #- name: MARIADB_GALERA_CLUSTER_BOOTSTRAP #differenziare per i nodi diversi dal primo
+        #  value: "yes"
+        ports:
+        - name: mariadb
+          containerPort: 3306
+        - name: sst
+          containerPort: 4444
+        - name: ist
+          containerPort: 4568
+        - name: replication-tcp
+          containerPort: 4567
+          protocol: TCP
+        - name: replication-udp
+          containerPort: 4567
+          protocol: UDP
+        #volumeMounts:
+        #- name: data
+        #  mountPath: /var/lib/mysql
+        #  subPath: mysql
+        #livenessProbe:
+        #  exec:
+        #    command: ["mysqladmin", "ping"]
+        #  initialDelaySeconds: 30
+        #  periodSeconds: 10
+        #  timeoutSeconds: 5
+        #readinessProbe:
+        #  exec:
+        #    #Controlla se lo stato del nodo è Primary o Synced
+        #    command: 
+        #    - sh
+        #    - -c
+        #    - mariadb -uroot -e "SHOW GLOBAL STATUS LIKE 'wsrep_cluster_status';" | grep -w 'Primary\|Synced'
+        #  initialDelaySeconds: 5
+        #  periodSeconds: 3
+  #volumeClaimTemplates:
+  #- metadata:
+  #    name: data
+  #  spec:
+  #    accessModes: ["ReadWriteOnce"]
+  #    resources:
+  #      requests:
+  #        storage: 500M
+
+---
+# Servizio headless per avere entry DNS stabili per i pod dello StatefulSet
+# Può essere utilizzato per accedere ai singoli pod. Nome composto da NOME_STATEFULSET-ID.NOME_SERVIZIO
+# Es. oxwall-db-0.oxwall-db-headless sarà il primo pod
+apiVersion: v1
+kind: Service
+metadata:
+  name: oxwall-db-headless
+  labels:
+    app: oxwall-db
+spec:
+  clusterIP: None
+  ports:
+  - name: mariadb
+    port: 3306
+  selector:
+    app: oxwall-db
+---
+# Servizio standard che distribuisce il carico (in questo caso da usare solo per le letture)
+apiVersion: v1
+kind: Service
+metadata:
+  name: oxwall-db-service
+  labels:
+    app: oxwall-db
+spec:
+  ports:
+  - name: mariadb
+    port: 3306
+  selector:
+    app: oxwall-db

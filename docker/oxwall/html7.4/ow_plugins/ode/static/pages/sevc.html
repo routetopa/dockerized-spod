@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base target="_blank" />
+
+    <title></title>
+
+    <script>
+
+        var addedJs = 0;
+        var dynamicAddedJs = [];
+        // dynamicAddedJs.push(parent.ODE.ode_datalet_polyfill);
+        dynamicAddedJs.push(parent.ODE.ode_webcomponents_js);
+        dynamicAddedJs.push(parent.ODE.ode_deep_client.substring(0, parent.ODE.ode_deep_client.lastIndexOf("/")) + "/jquery-2.1.0.min.js");
+        dynamicAddedJs.push(parent.ODE.ode_deep_client);
+
+        function loadScript(sScriptSrc, oCallback)
+        {
+            var oHead = document.getElementsByTagName("head")[0];
+            var oScript = document.createElement('script');
+            oScript.type = 'text/javascript';
+            oScript.src = sScriptSrc;
+
+            // most browsers
+            oScript.onload = oCallback;
+
+            // IE 6 & 7
+            oScript.onreadystatechange = function() {
+                if (this.readyState == 'complete') {
+                    oCallback();
+                }
+            };
+
+            oHead.appendChild(oScript);
+        }
+
+        var onLoadCallback = function ()
+        {
+            if(addedJs == (dynamicAddedJs.length-1))
+            {
+                ComponentService.components_url = parent.ODE.deep_components;
+                ComponentService.deep_url       = parent.ODE.deep_url;
+
+                var params =
+                {
+                    'deep-url'          : parent.ODE.deep_url,
+                    'datalets-list-url' : parent.ODE.deep_datalet_list,
+                    'datasets'          : parent.ODE.ode_dataset_list.value,
+                    'localization'      : parent.ODE.user_language,
+                    'components-url'    : parent.ODE.deep_components
+                };
+
+                // Modify existing datalet
+                if(parent.SPODPR != undefined && parent.SPODPR.ControlletPresets != undefined)
+                {
+                  params["selected-datalet"] = parent.SPODPR.ControlletPresets["selected-datalet"];
+//                  params["selected-fields"]  = '[' + parent.SPODPR.ControlletPresets["selectedfields"].replace("'", "&#39;") + ']';
+                  params["datalet-preset"]   = parent.SPODPR.ControlletPresets["datalet-preset"];
+
+                  //Reset controllet presets
+                  parent.SPODPR.ControlletPresets = undefined;
+                }
+
+                if(parent.AGORA != undefined && parent.AGORA.suggested_datasets != undefined)
+                {
+                    params["suggested-datasets"] = JSON.stringify(parent.AGORA.suggested_datasets);
+                }
+
+                if(parent.COCREATION != undefined && parent.COCREATION.suggested_datasets != undefined)
+                {
+                    params["suggested-datasets"] = JSON.stringify(parent.COCREATION.suggested_datasets);
+                }
+
+                var iframe = parent.document.getElementById("ode_controllet_iframe_placeholder");
+                var component  = iframe.attributes["component"].value;
+//                params["data"] = iframe.attributes["cache"].value;
+
+                ComponentService.getComponentHTML({
+                    component   : component,
+                    params      : params,
+                    fields      : Array(),
+                    placeHolder : "ode_controllet_placeholder_float"
+                });
+
+                window.addEventListener('data-sevc-controllet.dataletCreated', function(e){
+                    parent.ODE.savedDataletListener(e);
+                });
+
+                return;
+            }
+
+            addedJs++;
+            loadScript(dynamicAddedJs[addedJs], onLoadCallback);
+        };
+
+        loadScript(dynamicAddedJs[addedJs], onLoadCallback);
+
+    </script>
+
+</head>
+<body style="overflow: hidden">
+
+<div id="ode_controllet_placeholder_float"></div>
+
+</body>
+</html>

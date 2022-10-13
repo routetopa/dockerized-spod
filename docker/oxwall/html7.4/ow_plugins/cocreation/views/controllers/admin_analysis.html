@@ -1,0 +1,33 @@
+{$menu}
+
+<table class="ow_table_1 ow_automargin">
+    <thead>
+    <tr class="ow_alt1">
+        <th></th>
+        <th class="ow_value">NAME</th>
+        <th class="ow_value">SUBJECT</th>
+        <th class="ow_value">DESCRIPTION</th>
+        <th class="ow_value">GOAL</th>
+        <th class="ow_value">TIMESTAMP</th>
+        <th class="ow_value">TYPE</th>
+    </tr>
+    </thead>
+    {foreach from=$cocreation_rooms item=ti name=tn key=id}
+    <tr class="{cycle values='ow_alt1,ow_alt2'} {if $smarty.foreach.tn.last}ow_tr_last{/if} {if $smarty.foreach.tn.first}ow_tr_first{/if}">
+        <td><a href="{$exportUrl}?id={$ti->id}">DONWLOAD DISCUSSION</a></td>
+        <td>
+            {if $ti->type == "data"}
+               <a href="{$data_room_url}{$ti->id}">
+            {else}
+               <a href="{$knowledge_room_url}{$ti->id}">
+            {/if}
+            {$ti->name}</a>
+        </td>
+        <td>{$ti->subject}</td>
+        <td>{$ti->description}</td>
+        <td>{$ti->goal}</td>
+        <td>{$ti->timestamp}</td>
+        <td>{$ti->type}</td>
+    </tr>
+    {/foreach}
+</table>

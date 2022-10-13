@@ -1,0 +1,74 @@
+<link rel="import" href="{$components_url}controllets/data-table-controllet/data-table-controllet.html"/>
+<link rel="import" href="{$components_url}bower_components/paper-button/paper-button.html">
+
+<style>
+    div.clearfix.floatbox_cap{
+        display: none;
+    }
+
+    #publish_button{
+         position: absolute;
+         bottom: 8px;
+         right: 8px;
+         background: #00AABF;
+         color: #FFFFFF;
+         font-weight: 700;
+         z-index: 1;
+         height: 40px;
+         margin: 0;
+     }
+
+    #validate_button{
+        position: absolute;
+        bottom: 8px;
+        right: 100px;
+        background: #00AABF;
+        color: #FFFFFF;
+        font-weight: 700;
+        z-index: 1;
+        height: 40px;
+        margin: 0;
+    }
+
+    body .floatbox_header
+    {
+        display: none;
+    }
+
+    body .floatbox_bottom
+    {
+        display: none;
+    }
+
+    body .floatbox_body
+    {
+        padding: 8px;
+        padding-bottom: 64px;
+        position: relative;
+    }
+
+    body .floatbox_canvas .floatbox_container {
+        margin-top: 60px;
+    }
+</style>
+
+{literal}
+<script>
+    $(document).ready(function(){
+        $('#publish_button').click(function(){
+            room.confirmDatasetPublication();
+        });
+
+        setTimeout(function() {
+           document.querySelector("#data_table_controllet")._resize();
+        }, 1000);
+    });
+</script>
+{/literal}
+
+<!--<paper-button id="validate_button" title='{text key="cocreation+validate_dataset_button_tooltip"}'>{text key="cocreation+validate_dataset_button_label"}</paper-button>-->
+<paper-button id="publish_button">{text key="cocreation+publish_dataset_button_label"}</paper-button>
+
+<data-table-controllet id="data_table_controllet" data='{$data}'>
+</data-table-controllet>
+

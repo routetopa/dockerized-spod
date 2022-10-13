@@ -1,0 +1,4 @@
+CREATE DATABASE oauth2;
+CREATE USER 'oauth2'@'%' IDENTIFIED BY '@password';
+GRANT ALL PRIVILEGES ON oauth2.* TO 'oauth2'@'%';
+FLUSH PRIVILEGES;

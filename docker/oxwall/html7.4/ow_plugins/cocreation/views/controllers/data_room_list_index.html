@@ -1,0 +1,52 @@
+{style}
+
+
+
+div.ow_page_wrap
+{
+    height: 100%;
+    width: 100%;
+    margin: 56px 0 0 0;
+    padding: 0;
+}
+
+div.ow_page_padding
+{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.ow_page_padding > .ow_page_container > .ow_canvas {
+    height: 100% !important;
+}
+
+div.ow_page.ow_bg_color.clearfix
+{
+    height: 100%;
+    width: 100%;
+    background: red;
+    margin: 0;
+    padding: 0;
+}
+
+div.ow_content {
+    height: 100%;
+    width: 100%;
+}
+
+div.dataset-list_container {
+    padding-top: 48px;
+    height: calc(100% - 146px - 48px);
+    width: 100%;
+}
+
+{/style}
+
+<link rel="import" href="{$components_url}controllets/dataset-table-controllet/dataset-table-controllet.html">
+<script src="{$components_url}locales/dataset_table_ln.js"></script>
+
+<div class="dataset-list_container">
+    <dataset-table-controllet data='{$datasets}' localization='{$language}'></dataset-table-controllet>
+</div>

@@ -1,0 +1,130 @@
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+
+<style>
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+
+    .helper_content {
+        background-color: #2196f3;
+        color: #FFFFFF;
+    }
+
+    .helper_title {
+        padding: 20px 20px 0px 20px;
+        font-size: 40px;
+        color: #ffffff;
+        position: relative;
+    }
+
+    .helper_description_spacer {
+        padding: 20px 10px 0px 20px;
+    }
+
+    .helper_description{
+        height: 72px;
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+
+    .section-title{
+        font-size: 22px;
+        color: #888;
+    }
+</style>
+
+<div class="layout vertical">
+
+    <div class="helper_content">
+        <div class="helper_title">Membri helper</div>
+        <div class="helper_description_spacer">
+            <div class="helper_description">
+                La pagina "Membri" permette di visualizzare o ricercare gli utenti presenti sulla piattaforma di SPOD.
+                Ci sono tre sezioni per visualizzare or ricercare gli utenti: <i> TUTTI</i>, <i>ONLINE </i> e <i>CERCA</i>.
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content" id="scroll_content">
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/members_it.png" style="width: 60%; height: 60%;">
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">1</div>
+                        <div class="section-title">TUTTI</div>
+                    </div>
+                    <div >
+                        La pagina  mostra l'elenco degli utenti che sono stati registrati sulla piattaforma.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/online_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">2</div>
+                        <div class="section-title">Online</div>
+                    </div>
+                    <div >
+                        La pagina "ONLINE" mostra solo gli utenti che sono online sulla piattaforma
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/search_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">3</div>
+                        <div class="section-title">CERCA</div>
+                    </div>
+                    <div >
+                        La pagina "Cerca" permette di ricercare utenti per nome o per genere.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

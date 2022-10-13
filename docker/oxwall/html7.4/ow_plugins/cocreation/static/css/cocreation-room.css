@@ -1,0 +1,54 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.site-content {
+    flex: 1;
+    position: relative;
+}
+
+.relative-content {
+    position: absolute;
+    width: 100%;
+    /*height: 100%;*/
+    min-height: 100%;
+}
+
+/* MAIN CSS OVERRIDE */
+body .ow_footer_menu
+{
+    padding: 0px;
+    margin: 0px;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+body .ow_footer
+{
+    padding:1px 0px;
+    color: #FFFFFF; /** OW_Control type:color, key:textIconsColor, section:2. Colors, label:4. Text/Icons **/
+    background: #1976D2; /** OW_Control type:color, key:darkPrimaryColor, section:2. Colors, label:1. Dark primary **/
+    height: 96px;
+    position: relative;
+    margin-top: 0px;
+    clear: both;
+}
+
+body .ow_footer .ow_copyright {
+    float: left;
+    padding-left: 10px;
+    font-size: 90%;
+    max-width: 280px;
+    padding-top: 10px;
+}
+/* MAIN CSS OVERRIDE */

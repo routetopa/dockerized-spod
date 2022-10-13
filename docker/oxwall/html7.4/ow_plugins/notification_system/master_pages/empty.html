@@ -1,0 +1,27 @@
+<!--<div class="site">
+
+
+    <div id="content" class="site-content">
+        <div class="relative-content">
+          qui va content
+        </div>
+    </div>
+
+</div>-->
+
+{$content}
+
+{decorator name='floatbox'}
+<script type="text/javascript">
+    $('.ow_nav_btn').click(function() {
+        if ($('body').hasClass('ow_menu_active')) {
+            $('body').removeClass('ow_menu_active');
+        }
+        else {
+            $('body').addClass('ow_menu_active');
+        }
+    })
+    $('.ow_menu_fullpage_wrap a').click(function() {
+        $('body').removeClass('ow_menu_active');
+    })
+</script>

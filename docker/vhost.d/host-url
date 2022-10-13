@@ -1,0 +1,3 @@
+location /es_client {
+	proxy_pass http://ethersheet:8001;
+}

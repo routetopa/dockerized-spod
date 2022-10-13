@@ -1,0 +1,64 @@
+{$menu}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#create_cache_link").click(function(event) {
+
+            $(event.currentTarget).attr('href', $(event.currentTarget).attr('href') +
+                    "?maxDataset=" +
+                    $("#max_dataset_value").val());
+        });
+    });
+
+</script>
+
+<style>
+    .ow_ic_delete {
+        width:16px;
+        height:16px;
+        display:block;
+        margin:0 auto;
+        background-repeat:no-repeat;
+        background-position: 50% 50%;
+    }
+</style>
+
+{form name='providers'}
+<table class="ow_table_1 ow_form ow_automargin">
+    <tr class="ow_alt1">
+        <td class="ow_value">NAME</td>
+        <td class="ow_value">{input name='name'}</td>
+    </tr>
+    <tr class="ow_alt1">
+        <td class="ow_value">URL</td>
+        <td class="ow_value">{input name='url'}</td>
+    </tr>
+    <tr>
+        <td colspan="2" class="ow_center">{submit name='addProvider' class='ow_button ow_ic_save'}</td>
+    </tr>
+</table>
+{/form}
+
+<table class="ow_table_1 ow_automargin">
+    <thead>
+    <tr class="ow_alt1">
+        <th class="ow_value"></th>
+        <th class="ow_value">NAME</th>
+        <th class="ow_value">URL</th>
+    </tr>
+    </thead>
+    {foreach from=$providersList item=provider name=provider key=id}
+    <tr class="{cycle values='ow_alt1,ow_alt2'} {if $smarty.foreach.provider.last}ow_tr_last{/if} {if $smarty.foreach.provider.first}ow_tr_first{/if}">
+        <td><a href="{$deleteUrls[$id]}" onclick="return confirm('{text key="base+are_you_sure"}');" style="" class="ow_ic_delete"></a></td>
+        <td>{$provider.name}</td>
+        <td>{$provider.url}</td>
+    </tr>
+    {/foreach}
+    <tr>
+        <td colspan="5">
+            <input type="text" value="1000" maxlength="5" id="max_dataset_value" style="width: 64px" />
+            <a id="create_cache_link" href="{$createDatasetCache}"> CREATE CACHE </a>
+        </td>
+    </tr>
+</table>

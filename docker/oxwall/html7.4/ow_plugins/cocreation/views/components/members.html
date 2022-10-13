@@ -1,0 +1,40 @@
+<div id="members_container">
+    <div class="header">{text key="cocreation+room_members_label"}</div>
+    <div id="info_list">
+
+        <table class="members_list">
+            {foreach $members as $member}
+            <tr>
+                <td>
+                    <div class="{$member['role']} j{$member['isJoined']} ow_avatar style-scope" title="{$member['title']}"><a class="style-scope" href="{$member['url']}"><img alt="" style="max-width: 100%;" class="style-scope dataset-table-controllet" src="{$member['src']}"></a></div>
+                </td>
+                <td>
+                    <div class="user_name">{$member['title']}</div>
+                </td>
+                <td class="role">
+                    <span class="{$member['role']}">{$member['role']}</span>
+                </td>
+                <td>
+                    {if $member['isJoined'] eq "1"}
+                        <span class="isJoined">{text key="cocreation+room_members_is_joined_label"}</span>
+                    {else}
+                        <span class="pending">{text key="cocreation+room_members_pending_label"}</span>
+                    {/if}
+                </td>
+                <td>
+                    <div class="button_mod"></div>
+                </td>
+                <td>
+                    <div class="button_del"></div>
+                </td>
+            </tr>
+            <tr class="spacer"></tr>
+            {/foreach}
+            <tr>
+                <td><div class="button_add" disabled></div></td>
+                <td colspan="5"></td>
+            </tr>
+        </table>
+
+    </div>
+</div>

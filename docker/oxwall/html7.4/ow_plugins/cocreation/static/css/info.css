@@ -1,0 +1,46 @@
+#info_container {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+#info_container * {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#info_container .header {
+    height: 24px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 700;
+    background-color: #B6B6B6;
+}
+
+#info_container #info_list {
+    position: relative;
+    height: calc(100% - 48px - 32px);
+    width: calc(100% - 32px);
+    padding: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#info_container .info_name {
+    width: 100%;
+    height: 24px;
+    padding: 12px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #2196F3;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#info_container .info_value {
+    width: 100%;
+    min-height: 24px;
+    padding: 12px;
+    font-size: 16px;
+}

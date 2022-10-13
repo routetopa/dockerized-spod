@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oxwall-config
+data:
+  MYSQL_ADDRESS: oxwall-db-0.mysql
+  MYSQL_DATABASE: oxwall
+
+  RSYNC_USERNAME: user
+  RSYNC_PASSWORD: password123
+
+  #sostituire "known_hosts" con una variabile costruita e sostituita a runtime
+  #sostituire "device_name" con l'hostname a runtime
+  sync.conf: |
+    {
+      "device_name": "resilio",
+      "listening_port" : 55555,
+      "use_upnp" : false,
+      "download_limit" : 0,
+      "upload_limit" : 0,
+      "directory_root_policy" : "all",
+      "webui" : {},
+      "shared_folders" :
+      [
+        {
+          "secret" : "ABY3I6ZJJ7ILV3KBOE3IOMCLNAM34DAIU",
+          "dir" : "/data/web",
+          "use_relay_server" : false,
+          "use_tracker" : false,
+          "search_lan" : false,
+          "use_sync_trash" : false,
+          "overwrite_changes" : false,
+          "selective_sync" : false,
+          "known_hosts" : ["oxwall-web-0.oxwall-headless:55555"]
+        }
+      ],
+      "folder_rescan_interval" : 120,
+      "send_statistics" : false 
+    }
+
+  primary.cnf: |
+    # Apply this config only on the primary.
+    [mysqld]
+    log-bin
+    datadir=/var/lib/mysql/mysql
+
+  replica.cnf: |
+    # Apply this config only on replicas.
+    [mysqld]
+    super-read-only
+    datadir=/var/lib/mysql/mysql
+
+  master-master-common.cnf: |
+    [mysqld]
+    skip-host-cache
+    skip-name-resolve
+    log_bin = /var/log/mysql/mysql-bin.log
+    bind-address = 0.0.0.0
+    character_set_server = utf8
+    collation_server = utf8_general_ci
+    [mysql]
+    default_character_set = utf8
+  
+  master-master-init1.sql: |
+    use oxwall;
+    create user 'replicator'@'%' identified by 'replicatorpass';
+    grant replication slave on *.* to 'replicator'@'%';
+    FLUSH PRIVILEGES;
+    SHOW MASTER STATUS;
+    SHOW VARIABLES LIKE 'server_id';

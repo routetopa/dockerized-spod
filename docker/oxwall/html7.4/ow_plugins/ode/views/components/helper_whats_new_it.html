@@ -1,0 +1,260 @@
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+
+<style>
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+
+
+    .helper_content {
+        background-color: #2196f3;
+        color: #FFFFFF;
+    }
+
+    .helper_title {
+        padding: 20px 20px 0px 20px;
+        font-size: 40px;
+        color: #ffffff;
+        position: relative;
+    }
+
+    .helper_description_spacer {
+        padding: 20px 10px 0px 20px;
+    }
+
+    .helper_description{
+        height: 72px;
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+
+    .section-title{
+        font-size: 22px;
+        color: #888;
+    }
+
+</style>
+
+<div class="layout vertical">
+
+    <div class="helper_content">
+        <div class="helper_title">Novit&agrave; helper</div>
+        <div class="helper_description_spacer">
+            <div class="helper_description">
+                La pagina &#x201c;Novit&agrave;&#x201d; mostra le attivit&agrave; di tutti gli utenti (es. post, mi piace, foto, etc) in ordine cronologico
+                (comprese quelle di coloro che non sono miei amici) ma, &egrave; possibile filtrare i risultati, mostrando unicamente le attivit&agrave;
+                degli amici, cliccando il bottone &#x201c;Mostra solo le attivit&agrave; dei miei amici&#x201d;.
+
+                E&#x2019; possibile interagire come in un tradizionale social network, scrivendo uno stato personale o commentando lo stato di un altro utente.
+                La differenza principale &egrave; che &egrave; possibile allegare una &#x201c;Datalet&#x201d; al commento, ossia una componente che carica e
+                visualizza interattivamente Dataset. E&#x2019; possibile inserire una nuova Datalet o, utilizzare una Datalet precedentemente salvata nel proprio &#x201c;Spazio privato&#x201d;.
+                Vediamo come allegare una Datalet ad un commento.
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="scroll_content">
+
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_leftside_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">1</div>
+                        <div class="section-title">A sinistra, alcune informazioni utili </div>
+                    </div>
+                    <div> Sono disponibili alcune informazioni. ad esempio:
+                        <li><b>Attività in Agorà</b>: mostra ultima stanza di discussione creata</li>
+                        <li><b>Utenti</b>: mostra utenti on line e tutti gli utenti registrati </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_topside_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">2</div>
+                        <div class="section-title">Barra principale di navigazione </div>
+                    </div>
+                    <div> E' possibile navigare tra pagine:
+                        <li> <b>Novità</b>: chiunque può pubblicare commenti e visualizzazioni di datalets.</li>
+                        <li> <b> Community</b>: elenco e ricerca di utenti registrati ed online</li>
+                        <li> <b>Spazio privato</b>: spazio privato per ogni utente</li>
+                        <li> <b>Agorà</b>: spazio pubblico di discussione e collaborazione.</li>
+                        <li> <b>Cocreazione</b>: stanze, ad invito, con un certo tema di discussione, per cocreare, importare, modificare e pubblicare, sia internamente che esternamente datasets.</li>
+                        <li> <b>Aiuto</b>: video, documentazione etc. sono disponibili.</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_rightside_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">3</div>
+                        <div class="section-title">A destra, messaggi ricevuti, notifiche  </div>
+                    </div>
+                    <div>
+                        <li> <b>Messaggi ricevuti</b></li>
+                        <li> <b>Notifiche</b></li>
+                        <li>  Menù  per cambiare il proprio profilo, gestire le notifiche sulle attività della piattaforma etc.</li>
+                        <li> help rapido presente per ogni pagina</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_posting_datalet_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">4</div>
+                        <div class="section-title">Scegli di pubblicare una datalet ad un commento </div>
+                    </div>
+                    <div> Cliccando sul pulsante Datalet (cerchiato nella Figura), &egrave; possibile allegare al commento o al post una nuova Datalet.
+                        Chiunque, anche senza l&#x2019;aiuto di un esperto, pu&ograve; creare e condividere una visualizzazione di un dataset in pochi e semplici passaggi,
+                        usando il wizard che assiste l&#x2019;utente passo dopo passo durante la creazione (o la modifica) di una Datalet.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_datalet_creator1_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">5</div>
+                        <div class="section-title">Primo passo del wizard: selezionare il dataset </div>
+                    </div>
+                    <div> Il primo passo del wizard consiste nella selezione di un Dataset da un provider compatibile. I metodi che l&#x2019;utente pu&ograve;
+                        usare per scegliere un dataset (con una complessit&agrave; cresente) sono i seguenti:
+                        <ul class="cell-list">
+                            <li>Si può ricercare un dataset in basso a destra; quando si inizia a scrivere, si visualizzerà solo il dataset o il metadata ricercato. </li>
+                            <li>La sezione "DATASET DEI PROVIDERS" elenca i datasets dei providers specificati. </li>
+                            <li>La sezione "DATASET COCREATI" elenca tutti i datasets pubblicati nelle stanze di cocreazione.</li>
+                            <li>Un datset può essere selezionato manualmente inserendo l'URL del dataset (per utenti esperti).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_datalet_creator2_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">6</div>
+                        <div class="section-title">Secondo passo del wizard: la selezione dei campi da visualizzare </div>
+                    </div>
+                    <div> Una volta scelto il dataset, attraverso il secondo passo (raggiungibile solo se si seleziona un dataset valido e attraverso la freccia in alto a destra)
+                        sar&agrave; possibile scegliere i campi da utilizzare nella datalet. Questi saranno mostrati sulla parte sinistra.
+                        Quando si seleziona un campo, nella parte destra del wizard, sar&agrave; disponibile una visualizzazione tabellare che mostrer&agrave; i valori per i campi
+                        correntemente selezionati. Quando l&#x2019;operazione di selezione &egrave; stata terminata sar&agrave; possibile passare al passo successivo. In ogni momento
+                        &egrave; possibile tornare al passo precedente per fare eventuali modifiche.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_datalet_creator3_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">7</div>
+                        <div class="section-title">Terzo passo del wizard: la selezione della visualizzazione </div>
+                    </div>
+                    <div> Sono disponibili differenti grafici, mostrati nello slider a sinistra, corredati da una serie di informazioni come il nome,
+                        il tipo, le descrizioni degli input e settaggi supportati. Una volta selezionato il grafico, sar&agrave; necessario associare,
+                        per ognuno degli input, uno dei campi scelti al passo 2. Sar&agrave; possibile anche scegliere un titolo e una descrizione,
+                        ed eventualmente le etichette per le assi. Durante ogni cambiamento sui parametri del grafico, sulla parte destra sar&agrave;
+                        sempre disponibile una anteprima, al fine di controllare gli effetti dei settaggi ed aiutare l&#x2019;utente nella creazione della visualizzazione.
+                        Una volta terminata l&#x2019;operazione, sar&agrave; sufficiente cliccare su &#x201c;Aggiungi&#x201d; per aggiungere la visualizzazione al post.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_post_datalet2_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">8</div>
+                        <div class="section-title">Puoi usare le Datalet anche nelle risposte </div>
+                    </div>
+                    <div> La stessa funzionalit&agrave; &egrave; disponibile quando l'utente risponde ad un commento, semplicemente usando lo stesso bottone, come mostrato in figura.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class= "horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/whatsnew_myspace_import_it.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">9</div>
+                        <div class="section-title">Usare le Datalets dal proprio "Spazio privato" </div>
+                    </div>
+                    <div>
+                        Puoi anche riutilizzare le Datalets create nel &#x201c;Spazio privato&#x201d;
+                        cliccando sul pulsante  <img src="{$staticResourcesUrl}images/myspace-button.svg" style="width: 20px; height: 20px; background-color: #2196F3; border-radius: 18px;">.
+
+                        Una finestra mostrer&agrave; tutte quelle precedentemente create che potranno essere allegate ai post e ai commenti.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

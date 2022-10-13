@@ -1,0 +1,33 @@
+<!--<link rel="import" href="{$components_url}controllets2/qualicy-controllet/qualicy-controllet.html"/>-->
+
+<style>
+    div.clearfix.floatbox_cap {
+        display: none;
+    }
+
+    body .floatbox_header {
+        display: none;
+    }
+
+    body .floatbox_body {
+        padding: 0;
+    }
+
+    body .floatbox_bottom {
+        display: none;
+    }
+
+    /*body .floatbox_body {}*/
+
+    /*body .floatbox_canvas .floatbox_container {}*/
+    
+    iframe {
+        border: 0;
+    }
+</style>
+
+<div style="width: 100%; height: 100%;">
+    <iframe width="100%" height="100%" srcdoc="<link rel='import' href='{$components_url}controllets2/qualicy-controllet/qualicy-controllet.html'/> <style> body { height: 100vh; margin: 0; overflow: hidden; } </style> <qualicy-controllet id='data_table_controllet' data='{$data}'></qualicy-controllet>"></iframe>
+    <!--<qualicy-controllet id='data_table_controllet' data='{$data}'></qualicy-controllet> `-->
+</div>
+

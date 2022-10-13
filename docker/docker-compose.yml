@@ -1,0 +1,196 @@
+version: "3"
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./vhost.d:/etc/nginx/vhost.d:ro
+    container_name: nginx-proxy
+
+  oxwall:
+    image: isislab/oxwall:7.4
+    restart: always
+    environment:
+      TZ: "Europe/Rome"
+      VIRTUAL_HOST: ${HOST_URL}
+      VIRTUAL_PORT: 80
+      VIRTUAL_PATH: "/"
+    expose:
+      - "80"
+    container_name: oxwall
+
+  deep:
+    image: isislab/deep:1.0
+    restart: always
+    environment:
+      TZ: "Europe/Rome"
+      VIRTUAL_HOST: ${HOST_URL}
+      VIRTUAL_PORT: 80
+      VIRTUAL_PATH: "/DEEalerProvider/"
+      VIRTUAL_DEST: "/"
+    expose:
+      - "80"
+    container_name: deep
+
+  mysql:
+    image: mysql:latest
+    #image: mysql:5.7
+    #image: mariadb:latest
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      #MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: ${PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      TZ: "Europe/Rome"
+    ports:
+      - "3306:3306"
+    restart: always
+    tmpfs:
+      - /var/lib/mysql
+    container_name: mysql
+
+  oauth-server:
+    image: isislab/oauth2:1.0
+    environment:
+      TZ: "Europe/Rome"
+      VIRTUAL_HOST: ${HOST_URL}
+      VIRTUAL_PORT: 80
+      VIRTUAL_PATH: "/oauth2/"
+      # VIRTUAL_DEST: "/oauth2/"
+    expose:
+      - "80"
+    container_name: oauth
+
+  notification-service:
+    image: isislab/notification-service:1.0
+    environment:
+      VIRTUAL_HOST: ${HOST_URL}
+      VIRTUAL_PORT: 3000
+      VIRTUAL_PATH: "/realtime_notification/"
+      VIRTUAL_DEST: "/"
+    expose:
+      - 3000
+    restart: always
+    container_name: notification-service
+
+  etherpad:
+    image: isislab/etherpad:1.0
+    environment:
+      TZ: "Europe/Rome"
+      VIRTUAL_HOST: ${HOST_URL}isislab"
+      VIRTUAL_DEST: "/"
+    expose:
+      - 9001
+    restart: always
+    container_name: etherpad
+
+  ethersheet:
+    image: isislab/ethersheet:1.0
+    environment:
+      TZ: "Europe/Rome"
+      VIRTUAL_HOST: ${HOST_URL}
+      VIRTUAL_PORT: 8001
+      VIRTUAL_PATH: "/ethersheet/"
+      #VIRTUAL_PATH: ~^/(ethersheet|es_client)/
+      VIRTUAL_DEST: "/"
+    #ports:
+    #  - "8001:8001"
+    expose:
+      - 8001
+    restart: always
+    container_name: ethersheet
+
+  #redis:      TZ: "Europe/Rome"
+
+  #  container_name: redis
+
+  datapusher:
+    container_name: datapusher
+    image: ghcr.io/keitaroinc/datapusher:${DATAPUSHER_VERSION}
+    # networks:
+    #   - frontend
+    #   - backend
+    ports:
+      - "8000:8000"
+
+    environment:
+      - DATAPUSHER_MAX_CONTENT_LENGTH=${DATAPUSHER_MAX_CONTENT_LENGTH}
+      - DATAPUSHER_CHUNK_SIZE=${DATAPUSHER_CHUNK_SIZE}
+      - DATAPUSHER_CHUNK_INSERT_ROWS=${DATAPUSHER_CHUNK_INSERT_ROWS}
+      - DATAPUSHER_DOWNLOAD_TIMEOUT=${DATAPUSHER_DOWNLOAD_TIMEOUT}
+      - DATAPUSHER_SSL_VERIFY=${DATAPUSHER_SSL_VERIFY}
+      - DATAPUSHER_REWRITE_RESOURCES=${DATAPUSHER_REWRITE_RESOURCES}
+      - DATAPUSHER_REWRITE_URL=${DATAPUSHER_REWRITE_URL}
+
+
+  ckan-db:
+    container_name: ckan-db
+    build:
+      context: ./ckan/
+      dockerfile: postgresql/Dockerfile
+      args:
+        - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    # networks:
+      # - backend
+    environment:
+      - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PGDATA=/var/lib/postgresql/data/db
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "ckan"]
+
+
+  ckan:
+    container_name: ckan
+    image: isislab/ckan:2.9
+    # build:
+      # context: ./ckan/
+      # dockerfile: Dockerfile-ckan
+    depends_on:
+      - ckan-db
+    ports:
+      - "0.0.0.0:${CKAN_PORT}:5000"
+    env_file:
+      - ./ckan/.ckan-env
+    environment:
+      - CKAN_SQLALCHEMY_URL=postgresql://ckan:${POSTGRES_PASSWORD}@ckan-db/ckan
+      - CKAN_DATASTORE_WRITE_URL=postgresql://ckan:${POSTGRES_PASSWORD}@ckan-db/datastore
+      - CKAN_DATASTORE_READ_URL=postgresql://datastore_ro:${DATASTORE_READONLY_PASSWORD}@ckan-db/datastore
+      - CKAN_SOLR_URL=http://solr:8983/solr/ckan
+      - CKAN_REDIS_URL=redis://redis:6379/1
+      - CKAN_SITE_URL=${CKAN_SITE_URL}
+      - CKAN_MAX_UPLOAD_SIZE_MB=${CKAN_MAX_UPLOAD_SIZE_MB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
+
+    volumes:
+      - ckan_data:/srv/app/data
+    # expose:
+    #   - 5000
+    restart: always
+
+  solr:
+    container_name: solr
+    image: solr:8.11.1
+    env_file:
+      - ./ckan/.ckan-env
+    environment:
+      - CKAN_CORE_NAME=${CKAN_CORE_NAME}
+      - CKAN_VERSION=${CKAN_VERSION}
+    volumes:
+      - solr_data:/var/solr
+      - ./ckan/solr8/ckan_init_solr.sh:/docker-entrypoint-initdb.d/ckan_init_solr.sh
+
+  redis:
+    container_name: redis
+    image: redis:${REDIS_VERSION}
+
+volumes:
+  ckan_data:
+  pg_data:
+  solr_data:

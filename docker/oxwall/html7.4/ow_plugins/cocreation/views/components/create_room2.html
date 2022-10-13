@@ -1,0 +1,222 @@
+{style}
+body .floatbox_header
+{
+display: none;
+}
+
+body .floatbox_bottom
+{
+display: none;
+}
+
+body .floatbox_body
+{
+position: relative;
+}
+{/style}
+
+
+<style is="custom-style">
+
+    .date_period
+    {
+        margin-bottom: 30px;
+    }
+
+    #submit_overlay{
+        position:absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: none;
+    }
+    #base_datalet_spin{
+        position : absolute;
+        top: 30%;
+        left: 40%;
+    }
+
+</style>
+
+<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+
+<input type="hidden" id="friends_info" value='{$friends_info}' />
+
+<div class="cocoreation_create_room_container">
+
+    <div class="cocoreation_create_room_header">
+        {text key="cocreation+room_create_room_title"}
+    </div>
+
+    <div class="cocoreation_create_room_left_menu">
+        <ul>
+            <li class="step-1 cocoreation_create_room_left_menu_selected">{text key="cocreation+room_name_label"}</li>
+            <li class="step-2">{text key="cocreation+room_subject_label"}</li>
+            <li class="step-3">{text key="cocreation+room_description_label"}</li>
+            <li class="step-4">{text key="cocreation+room_metadata_label"}</li>
+            <li class="step-5">{text key="cocreation+room_period_label"}</li>
+            <li class="step-6">{text key="cocreation+room_goal_label"}</li>
+            <li class="step-7">{text key="cocreation+room_ivitation_label"}</li>
+            <li class="step-8">{text key="cocreation+room_members_label"}</li>
+        </ul>
+    </div>
+
+    {form name='CoCreationAddRoomForm'}
+    <div class="cocoreation_create_room_content">
+
+        <!-- ROOM NAME -->
+        <div class="step in-step-1 in-step-show">
+            <div class="title">
+                <span>{text key="cocreation+room_name"}</span>
+            </div>
+            <div class="input">
+                {input name='name' maxlength='128'}
+            </div>
+        </div>
+
+        <!-- ROOM  SUBJECT-->
+        <div class="step in-step-2">
+            <div class="title">
+                <span>{text key="cocreation+room_subject"}</span>
+            </div>
+            <div class="input">
+                {input name='subject' maxlength='256'}
+            </div>
+        </div>
+
+        <!-- ROOM  DESCRIPTION-->
+        <div class="step in-step-3">
+            <div class="title">
+                <span>{text key="cocreation+room_description"}</span>
+            </div>
+            <div class="input">
+                {input name='description' maxlength='2048'}
+            </div>
+        </div>
+
+        <!-- ROOM  METADATA-->
+        <div class="step in-step-4">
+            <div class="title">
+                <span>{text key="cocreation+room_metadata"}</span>
+            </div>
+            <div class="input">
+                {input name='metadata'}
+            </div>
+        </div>
+
+        <!-- ROOM PERIOD-->
+        <div class="step in-step-5">
+            <div class="title">
+                <span>{text key="cocreation+room_period"}</span>
+            </div>
+            <div class="input">
+                {literal}
+                <template is="dom-bind" id="scope">
+                    <section>
+                        <span class="data_picker_label">From : </span>
+                        <input class="date_period" id="data_from" name="data_from" type="text" on-tap="showDialog" data-args="from" raised value="{{dateFormat(dateFrom, 'LL')}}">
+                        <span class="data_picker_label">To : </span>
+                        <input class="date_period" name="data_to" type="text" on-tap="showDialog" data-args="to" raised value="{{dateFormat(dateTo, 'LL')}}">
+                        <paper-dialog id="dialog" class="paper-date-picker-dialog" on-iron-overlay-closed="dismissDialog">
+                            <paper-date-picker id="picker"></paper-date-picker>
+                            <div class="buttons">
+                                <paper-button dialog-dismiss>Cancel</paper-button>
+                                <paper-button dialog-confirm>OK</paper-button>
+                            </div>
+                        </paper-dialog>
+                    </section>
+                </template>
+                {/literal}
+            </div>
+
+            <div class="submit_container">
+                {submit name='submit' class='ow_ic_new'}
+            </div>
+        </div>
+
+        <!-- ROOM  GOAL -->
+        <div class="step in-step-6">
+            <div class="title">
+                <span>{text key="cocreation+room_goal"}</span>
+            </div>
+            <div class="input">
+                {input name='goal' maxlength='256'}
+            </div>
+
+            <div class="submit_container">
+                {submit name='submit' class='ow_ic_new'}
+            </div>
+        </div>
+
+        <!-- ROOM  INVITATION TEXT-->
+        <div class="step in-step-7">
+            <div class="title">
+                <span>{text key="cocreation+room_invitationText"}</span>
+            </div>
+            <div class="input">
+                {input name='invitation_text' maxlength='256'}
+            </div>
+
+            <div class="submit_container">
+                {submit name='submit' class='ow_ic_new'}
+            </div>
+        </div>
+
+        <!-- ROOM  MEMBERS/SUBMIT-->
+        <div class="step in-step-8">
+
+            <div class="title">
+                <span>{text key="cocreation+creation_form_members"}</span>
+            </div>
+            <div class="input">
+                <div id="parent">
+                    <div id="added_suggested_contact_container"></div>
+                    <input type="text" id="members" name="members" autocomplete="off"
+                           onkeyup="COCREATION.autocomplete()"
+                           onblur="COCREATION.hideAutocomplete()"
+                           onfocus="COCREATION.autocomplete()">
+                </div>
+            </div>
+            <div class="submit_container">
+                {submit name='submit' class='ow_ic_new'}
+            </div>
+
+        </div>
+
+    </div>
+    {/form}
+
+</div>
+
+<!-- suggested -->
+<div id="suggested_friends">
+    <table id="suggested_friends_table">
+    </table>
+</div>
+
+<!-- TEMPLATE -->
+<table style="display:none">
+    <tr id="suggested_friends_tr_template" onmousedown="COCREATION.addSuggestedUser(this)">
+        <td>
+            <div class="ow_avatar">
+                <a href="" target="_blank"><img alt="" src="" style="max-width: 100%;"></a>
+            </div>
+        </td>
+        <td>
+            <div class="suggested_name"></div>
+            <div class="suggested_email"></div>
+        </td>
+    </tr>
+</table>
+
+<div style="display:none">
+    <div id="added_suggested_contact_template" class="added_suggested_contact">
+        <div class="added_suggested_contact_text"></div>
+        <div class="remove_suggested_contact" onclick="COCREATION.removeFromSuggestionList(this)"></div>
+    </div>
+</div>
+<!-- TEMPLATE -->
+
+<!-- suggested -->

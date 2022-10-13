@@ -1,0 +1,58 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#dcat_ap_it_form {
+    padding: 15px 15px 0px 15px;
+}
+
+[role="tabpanel"] {
+    margin: 15px 0;
+    padding: 0 15px;
+    min-height: calc(100% - 121px);
+    /*min-height: calc(100% - 136px);*/
+    /*border-bottom: 1px solid #ddd;*/
+}
+
+.form-control {
+    /*max-width: 50%;*/
+}
+
+.formio-component-datagrid label:first-child
+{
+    display: none;
+}
+
+#dct_tab2 .formio-choices[data-type=select-one] .form-control {
+    height: 43px !important;
+    line-height: 29px;
+    min-width: 400px;
+}
+
+.datagrid-table .formio-button-remove-row {
+    height: 34px !important;
+}
+
+#dct_tab2 .datagrid-table .formio-button-remove-row {
+    height: 43px !important;
+}
+
+.datagrid-table, .table-bordered>tbody>tr>td, .table-bordered>thead>tr>th, .table-bordered>tfoot>tr>td {
+    border: none !important;
+}
+
+.datagrid-table.table-bordered>thead>tr>th {
+    font-size: 14px !important;
+}
+
+#tmp-submit {
+    position: relative;
+    bottom: 15px;
+    left: 15px;
+}
+
+button[name="data[submit]"] {
+    visibility: hidden;
+}

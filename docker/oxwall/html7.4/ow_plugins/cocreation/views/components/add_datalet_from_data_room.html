@@ -1,0 +1,62 @@
+<!--<link rel="import" href="{$components_url}controllets/data-sevc-controllet/co-datalets-creator-controllet.html"/>
+<script src="{$components_url}locales/controllet_ln.js" type="text/javascript"></script>
+<script src="{$components_url}locales/paper_card_controllet_ln.js" type="text/javascript"></script>-->
+
+{style}
+{literal}
+body .floatbox_header
+{
+display: none;
+}
+
+body .floatbox_bottom
+{
+display: none;
+}
+
+body .floatbox_body
+{
+padding: 0px 0px 0px 0px;
+}
+
+body .floatbox_canvas .floatbox_container{ margin-top:20px; }
+
+div.clearfix.floatbox_cap{
+display: none;
+}
+
+{/literal}
+{/style}
+
+<!--
+<iframe height="100%" width="100%" srcdoc='
+<link rel="import" href="{$components_url}controllets/data-sevc-controllet/co-datalets-creator-controllet.html"/>
+
+<script src="{$components_url}controllets/shared_js/jquery-1.11.2.min.js"></script>
+<script src="{$components_url}bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+<script src="{$components_url}controllets/shared_js/perfect-scrollbar/js/min/perfect-scrollbar.jquery.min.js"></script>
+<script>
+
+   $(document).ready(function(){
+        window.addEventListener("data-sevc-controllet.dataletCreated", function(e){
+               parent.ODE.savedDataletListener(e);
+            });
+        });
+
+</script>
+<link rel="stylesheet" href="{$components_url}controllets/shared_js/perfect-scrollbar/css/perfect-scrollbar.min.css">
+
+<script src="{$components_url}locales/controllet_ln.js" type="text/javascript"></script>
+<script src="{$components_url}locales/paper_card_controllet_ln.js" type="text/javascript"></script>
+<co-datalets-creator-controllet
+        deep-url="{$deepUrl}"
+        data-url={$dataUrl}
+        datalets-list-url="{$dataletListUrl}">
+</co-datalets-creator-controllet>'></iframe>-->
+
+<iframe id="add_datalet_iframe" src="{$base_url}/ow_static/plugins/cocreation/pages/add_datalet_from_dataroom.html" height="100%" width="100%"></iframe>
+
+
+
+
+

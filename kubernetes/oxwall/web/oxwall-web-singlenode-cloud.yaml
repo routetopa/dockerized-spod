@@ -1,0 +1,55 @@
+#esempio singolo nodo con storage cloud
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oxwall-web-deployment
+  labels:
+    app: oxwall-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oxwall-web
+  template:
+    metadata:
+      labels:
+        app: oxwall-web
+    spec:
+      containers:
+      - name: oxwall-web
+        image: davideacanfora/oxwall:220601
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: 80
+        volumeMounts: #il pod scarterà i file web contenuti nell'immagine ed monterà quelli nello storage shared al loro posto
+          - name: web-data
+            mountPath: /var/www/html
+
+      volumes:
+        #COMMENTARE UNO DEI DUE
+        - name: web-data #CLOUD
+          csi:
+            driver: file.csi.azure.com
+            volumeAttributes:
+              shareName: oxwall-share
+              secretName: azure-secret
+              mountOptions: "vers=3.0,dir_mode=0744,file_mode=0744,uid=33,gid=33,serverino,actimeo=30,nosharesock,nostrictsync"
+        - name: web-data #NFS
+          nfs:
+            server: 192.168.0.10
+            path: "/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oxwall-web-service
+spec:
+  type: NodePort
+  selector:
+    app: oxwall-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080

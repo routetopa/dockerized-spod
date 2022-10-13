@@ -1,0 +1,226 @@
+<link rel="import" href="{$components_url}bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="{$components_url}bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="{$components_url}bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="{$components_url}bower_components/paper-styles/color.html">
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<style>
+    .floatbox_header{
+        display: none;
+    }
+
+    .floatbox_body{
+        font-family: 'Roboto', sans-serif;
+        background-color: #eeeeee;
+        padding : 3px;
+    }
+
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+
+    .tall {
+        background-color: #2196F3;
+    }
+
+    .tall .title {
+        padding: 20px;
+        font-size: 40px;
+        color: #ffffff;
+        /*width: 30%;*/
+        position: relative;
+        float: left;
+    }
+
+    .tall .description{
+        padding: 20px;
+        font-size: 15px;
+        color: #ffffff;
+        /*width: 70%;*/
+        position: relative;
+        float: left;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+
+    .iron-icon-8 {
+        fill: #00BCD4;;
+
+    }
+    .paper-button-0 {
+        height: 20px;
+        margin-left: 16px;
+    }
+    .button-container.postit-container-controllet {
+        height: 10px;
+        width: 10px;
+    }
+</style>
+
+<div class="layout vertical">
+
+    <div class="tall">
+        <div class="title">Cocreation Data and Media Rooms helper</div>
+        <div class="description">
+            This type of room allows members to collaborate on a shared spreadsheets to create dataset. The process is supported
+            by writing shared notes (with a template that helps the community to write all the relevant information about the process) and shared metadata,
+            that are published with the dataset. Moreover, several validation heuristics are used to show warnings on apparently
+            wrong fields. When published, the dataset can be used (under “Co-created datasets” tab on the first step of the Controllet) by all SPOD users in their discussions.
+            There are two types of rooms: the data and the media room; the color recognizes the type of room, i.e the green identifies the data room and the orange that of the media room
+            The media room is synchronized to the same room of the SPOD mobile application. By using SPOD Mobile, the users will not only share content (i.e., photos)
+            but photos will also include automatically geolocation for each photo.
+
+        </div>
+    </div>
+
+    <div class="content" id="scroll_content">
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/cocreation_sync_en.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">1</div>
+                        <div class="section-title">A synchronization scenario</div>
+                    </div>
+                    <div>
+                        The synchronized data and media room show the same features, in contrast with data room,
+                        the media room  has a shared spreadsheet with fixed columns (named Title, Description, Image, Location, Date, User)
+                        that will be automatically filled when a picture is taken from the phone device.
+                        <br>
+                        SPOD Android app is actually available on Google Play Market at the address <a href="https://play.google.com/store/apps/details?id=eu.spod.isislab.spodapp&hl=en"  target="_blank"> SPOD mobile app</a>.
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/data_room_en.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">2</div>
+                        <div class="section-title">Features</div>
+                    </div>
+                    <div>
+                        <ul class="cell-list">
+                            <li><paper-icon-button id="publish_dataset_button"  icon="image:grid-on" style='color: #4CAF50' ></paper-icon-button>
+                                <b>Dataset</b>  allows to write a shared spreadsheet to enter data, to import and export a document in CSV format.
+                            </li>
+                            <li>
+                                <paper-icon-button   icon="maps:local-offer" style="color:#FF5722;" ></paper-icon-button>
+                                <b>Metadata</b>  allows to add metadata for the dataset.
+                            </li>
+                            <li>
+                                <paper-icon-button   icon="description" style="color: #2196F3;" ></paper-icon-button>
+                                <b>Note</b>  allows notes to teh dataset (e.g., fonts, bibliography etc...)
+                            </li>
+                            <li>
+                                <paper-icon-button  icon="communication:forum" style="color: #212121;" ></paper-icon-button>
+                                <b> Discussion room and notifications</b>: in discussion room, a new message is notified with an icon with the counter of number of received and unread message.
+                            </li>
+                            <li>
+                                <paper-icon-button   icon="assessment" style="color: #212121;" ></paper-icon-button>
+                                <b> Datalets</b> allows to create interactive map or others charts  (e.g., table, histogram etc. ) of a dataset (named datasets).
+                            </li>
+                            <li>
+                                <paper-icon-button   icon="info" style="color: #212121;" ></paper-icon-button>
+                                Shows details when a created room (e.g., name, description etc... of the room)
+                            </li>
+                            <li>
+                                <iron-icon id="screen_1" icon="av:airplay" class="x-scope iron-icon-8"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                                    <g class="style-scope iron-icon"><path d="M6 22h12l-6-6zM21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v-2H3V5h18v12h-4v2h4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" class="style-scope iron-icon"></path></g></svg>
+                                </iron-icon>
+                                <iron-icon id="screen_2" icon="av:airplay" class="x-scope iron-icon-8" style="color: #00BCD4;" >
+                                    <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M6 22h12l-6-6zM21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v-2H3V5h18v12h-4v2h4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" class="style-scope iron-icon"></path></g></svg>
+                                </iron-icon>
+                                Allows you to choose the type of display, i.e you can view a feature at a time (eg only the spreadsheet or two features at the same time (e.g. the spreadsheet and discussion).
+                            </li>
+                            <li>
+                                <paper-icon-button   icon="add" style="color: #00BCD4;" ></paper-icon-button>
+                                allows to invite new users to the room
+                            </li>
+                            <li>
+                                <paper-button raised="" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">PUBLISH DATASET ON SPOD</paper-button>
+                                allows the publication of the dataset created for all users SPOD platform.
+                            </li>
+                            <li>
+                                <paper-button raised="" class="menu_button x-scope paper-button-0" title="Import" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1"> IMPORT FROM SPOD </paper-button>
+                                allows importing  both  datasets created by all users SPOD platform that datasets stored in the CKAN portal.
+                            </li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/quick_tour_en.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">3</div>
+                        <div class="section-title">A quick tour</div>
+                    </div>
+                    <div>
+                        <p>
+                            A quick tour to create and publish a dataset:
+                        <ol>
+                        <li>1. <i> Create a dataset in the spreadsheet: </i>
+                            <ol style="list-style-type: lower-alpha; padding-bottom: 0;">
+                                <li style="margin-left:2em"> Create (or import) a new dataset in collaboration </li>
+                                <li style="margin-left:2em; padding-bottom: 0;"> Add notes to the dataset (e.g. sources etc.)</li>
+                                <li style="margin-left:2em; padding-bottom: 0;"> Add metadata to the dataset (such as title, description, tags, etc ..) to facilitate the research </li>
+                                <li style="margin-left:2em; padding-bottom: 0;"> The created dataset can be displayed in a chart (datalet)</li>
+                            </ol>
+                        </li>
+                        <br>
+                        <li> 2. <i>Publish the dataset: </i></br>
+                            Click the button <paper-button raised="" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">PUBLISH DATASET ON SPOD
+                            </paper-button> to make available the new created dataset for all users of SPOD platform and to make it available to create a datalet for discussions in the traditional ways,
+                            that you can share on the What's new page, in the discussion room of the Agora, etc. Note that each time the same dataset is published again, a new version is created.
+                        </li>
+                        <br>
+                        <li> 3. <i> View charts with created datasets:</i>  </br>
+                            The created dataset will be showed in the "FROM COCREATED" tab of the controllet of SPOD platform.
+                        </li>
+
+                        </ol>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

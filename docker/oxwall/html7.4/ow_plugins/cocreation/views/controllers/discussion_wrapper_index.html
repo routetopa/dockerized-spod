@@ -1,0 +1,41 @@
+<link rel="import" href="{$components_url}bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/social-icons.html">
+
+<link rel="import" href="{$components_url}bower_components/paper-fab/paper-fab.html">
+<script
+        src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+        integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".sentiment-button").live("click", function()
+        {
+            var id = $(this).attr('id');
+            switch($(this).attr('icon')){
+                case "face":
+                    $(this).attr('icon', 'social:mood');
+                    $(this).attr('sentiment', '2');
+                    break;
+                case "social:mood":
+                    $(this).attr('icon', 'social:mood-bad');
+                    $(this).attr('sentiment', '3');
+                    break;
+                case "social:mood-bad":
+                    $(this).attr('icon', 'face');
+                    $(this).attr('sentiment', '1');
+                    break;
+            }
+        });
+    });
+</script>
+{$comments}
+
+<!-- ODE PRIVATE-ROOM -->
+<div>
+    {if isset($private_room)}
+    {$private_room}
+    {/if}
+</div>
+<!-- ODE PRIVATE-ROOM -->

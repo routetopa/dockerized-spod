@@ -1,0 +1,133 @@
+<link rel="import" href="{$components_url}bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="{$components_url}bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="{$components_url}bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="{$components_url}bower_components/paper-styles/color.html">
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+
+<style>
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+
+    .helper_content {
+        background-color: #2196f3;
+        color: #FFFFFF;
+    }
+
+    .helper_title {
+        padding: 20px 20px 0px 20px;
+        font-size: 40px;
+        color: #ffffff;
+        position: relative;
+    }
+
+    .helper_description_spacer {
+        padding: 20px 10px 0px 20px;
+    }
+
+    .helper_description{
+        height: 72px;
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+
+    .section-title{
+        font-size: 22px;
+        color: #888;
+    }
+</style>
+
+<div class="layout vertical">
+
+    <div class="helper_content">
+        <div class="helper_title">Tutoriel de la section "Membres"</div>
+        <div class="helper_description_spacer">
+            <div class="helper_description">
+                La page "Membres" vous permet de visualiser les utilisateurs actives et de faire plusieurs recherches sur la plateforme SPOD.
+                Notamment, ici vous pouvez trouver 3 sections utiles à visualiser les autres utilisateurs : <i>Tous</i>, <i>En ligne </i> et <i>Chercher</i>.
+            </div>
+        </div>
+    </div>
+
+        <div class="content" id="scroll_content">
+
+                <div class="sect">
+                    <div class= "horizontal layout cell">
+                        <img src="{$staticResourcesUrl}images/members_fr.png" style="width: 60%; height: 60%;">
+
+                        <div class="cell">
+                            <div class="horizontal layout cell">
+                                <div class="section-number">1</div>
+                                <div class="section-title">Tous</div>
+                            </div>
+                            <div >
+                                La section "Tous" vous permet de visualiser tous les utilisateurs qui ont un compte sur la plateforme SPOD.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sect">
+                    <div class= "horizontal layout cell">
+                        <img src="{$staticResourcesUrl}images/online_fr.png" style="width: 60%; height: 60%;">
+
+                        <div class="cell">
+                            <div class="horizontal layout cell">
+                                <div class="section-number">2</div>
+                                <div class="section-title">En Ligne</div>
+                            </div>
+                            <div >
+                                La section "En ligne" vous permet de visualiser les utilisateurs qui sont en ligne sur la plateforme SPOD.
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+
+                <div class="sect">
+                    <div class= "horizontal layout cell">
+                        <img src="{$staticResourcesUrl}images/search_fr.png" style="width: 60%; height: 60%;">
+
+                        <div class="cell">
+                            <div class="horizontal layout cell">
+                                <div class="section-number">3</div>
+                                <div class="section-title">Chercher</div>
+                            </div>
+                            <div >
+                                La section "Chercher" vous permet de faire une recherche des utilisateurs par nom et par genre.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    </div>
+
+</div>

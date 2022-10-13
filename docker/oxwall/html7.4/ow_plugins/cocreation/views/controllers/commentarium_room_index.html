@@ -1,0 +1,530 @@
+<link rel="import" href="{$components_url}bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="{$components_url}bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="{$components_url}bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="{$components_url}bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="{$components_url}bower_components/paper-card/paper-card.html">
+<link rel="import" href="{$components_url}bower_components/paper-tabs/paper-tabs.html">
+
+<link rel="import" href="{$components_url}bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/image-icons.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/av-icons.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/social-icons.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/editor-icons.html">
+
+<link rel="import" href="{$components_url}bower_components/paper-button/paper-button.html">
+<link rel="import" href="{$components_url}bower_components/paper-checkbox/paper-checkbox.html">
+
+<link rel="import" href="{$components_url}datalets/leafletjs-datalet/leafletjs-datalet.html">
+
+<link rel="import" href="{$components_url}bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="{$components_url}bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="{$components_url}bower_components/paper-fab-transitions/paper-fab-speed-dial.html">
+<link rel="import" href="{$components_url}bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="{$components_url}bower_components/paper-item/paper-item.html">
+
+<link rel="import" href="{$components_url}controllets/paper-card-controllet/paper-card-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/search-panel-controllet/search-panel-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/animated-grid-controllet/animated-grid-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/fullsize-page-with-card-controllet/fullsize-page-with-card-controllet.html">
+<link rel="import" href="{$components_url}controllets/text-element-controllet/metadata-element-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/datalet-slider-controllet/datalet-slider-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/metadata-list-controllet/metadata-list-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/page-slider-controllet/page-slider-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/select-dataset-controllet/select-dataset-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/select-data-controllet/select-data-controllet.html"/>
+<link rel="import" href="{$components_url}controllets/info-list-controllet/info-list-controllet.html"/>
+
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="{$components_url}bower_components/paper-styles/color.html">
+
+
+<link rel="import" href="{$components_url}bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="{$components_url}bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="{$components_url}bower_components/neon-animation/neon-animations.html">
+
+<link rel="import" href="{$components_url}bower_components/polymer-element-catalog/app/elements/app-sidebar/app-sidebar.html">
+
+<!-- DATALET -->
+<link rel="import" href="{$components_url}datalets/areachart-datalet/areachart-datalet.html">
+<link rel="import" href="{$components_url}datalets/barchart-datalet/barchart-datalet.html">
+<link rel="import" href="{$components_url}datalets/bubblechart-datalet/bubblechart-datalet.html">
+<link rel="import" href="{$components_url}datalets/columnchart-datalet/columnchart-datalet.html">
+<link rel="import" href="{$components_url}datalets/datatable-datalet/datatable-datalet.html">
+<link rel="import" href="{$components_url}datalets/leafletjs-datalet/leafletjs-datalet.html">
+<link rel="import" href="{$components_url}datalets/linechart-datalet/linechart-datalet.html">
+<link rel="import" href="{$components_url}datalets/heatmap-datalet/heatmap-datalet.html">
+<link rel="import" href="{$components_url}datalets/piechart-datalet/piechart-datalet.html">
+<link rel="import" href="{$components_url}datalets/scatterchart-datalet/scatterchart-datalet.html">
+<link rel="import" href="{$components_url}datalets/treemap-datalet/treemap-datalet.html">
+
+
+<script src="{$components_url}locales/controllet_ln.js" type="text/javascript"></script>
+<script src="{$components_url}locales/paper_card_controllet_ln.js" type="text/javascript"></script>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+{literal}
+<style is="custom-style">
+    .separator
+    {
+        height: 1px;
+        background: #ddd;
+        margin: 12px 8px;
+    }
+
+    paper-item
+    {
+        cursor: pointer;
+    }
+
+    paper-drawer-panel {
+    --paper-drawer-panel-left-drawer-container: {
+         top: 56px;
+     };
+    }
+
+    paper-toolbar
+    {
+        --paper-toolbar-height: 56px;
+        --paper-toolbar-background: #FF0206;
+    }
+
+    #paperDrawerPanel
+    {
+        top: 60px;
+    }
+
+    paper-header-panel{
+        z-index:0;
+    }
+
+/*    #drawer
+    {
+        margin-top: 56px;
+        z-index:0;
+    }*/
+
+    iron-icon
+    {
+        --iron-icon-height : 32px;
+        --iron-icon-width : 32px;
+        /*--iron-icon-fill-color: #9E9E9E;*/
+    }
+
+
+    iron-icon#dataset_icon
+    {
+        --iron-icon-fill-color: #4CAF50;
+    }
+
+    iron-icon#metadata_icon
+    {
+        --iron-icon-fill-color: #FF5722;
+    }
+
+    iron-icon[icon="description"]
+    {
+        --iron-icon-fill-color: #2196F3;
+    }
+
+    iron-icon#discussion_icon
+    {
+    }
+
+    iron-icon[icon="assessment"]
+    {
+    }
+
+    iron-icon#screen_1
+    {
+        --iron-icon-height : 24px;
+        --iron-icon-width : 24px;
+        -o-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+
+        --iron-icon-fill-color: #00BCD4;
+    }
+
+    iron-icon#screen_2
+    {
+        --iron-icon-height : 24px;
+        --iron-icon-width : 24px;
+        -o-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+
+        --iron-icon-fill-color: #00BCD4;
+    }
+
+    paper-item-body
+    {
+        padding-left: 24px;
+    }
+
+    paper-item-body.no_padding_item
+    {
+        padding-left: 8px;
+    }
+
+    paper-checkbox.checkbox_splitscreen
+    {
+        position: absolute;
+        right: 32px;
+        top: 15px;
+        --paper-checkbox-checked-color: #4CAF50;
+    }
+
+    paper-fab
+    {
+        --paper-fab-background : #00BCD4;
+    --paper-fab: {
+         height: 40px;
+         width: 40px;
+         padding: 0;
+         margin: 8px;
+     };
+    }
+
+    .header_container
+    {
+        width: 100%;
+    }
+
+    .hader_title_container
+    {
+        float:left;
+        max-width: calc(50% - 120px);
+        overflow: hidden;
+    }
+
+    .header_title
+    {
+        line-height: 56px;
+        font-size: 18px;
+
+        max-width: 448px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        float: left;
+    }
+
+    .right_floater
+    {
+        float: right;
+        height: 56px;
+        overflow-y: auto;
+        max-width: 50%;
+    }
+
+    .hader_title_container > paper-button
+    {
+    --paper-button:{
+         background: #00BCD4;
+         height: 40px;
+         margin-left: 16px;
+     }
+    }
+
+    .content_container
+    {
+        height: calc(100vh - 158px);
+    }
+
+    .full_size_content
+    {
+        position: relative;
+
+        height: 100%;
+        width: 100%;
+    }
+
+    .full_size_card{
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        margin: 32px;
+        /*height: calc(100% - 64px - 20px);*/
+        height: calc(100% - 20px);
+        width: calc(100% - 64px);
+        display:block;
+        overflow: hidden;
+    }
+
+    .split_size_card_left{
+        margin:32px 16px 32px 32px;
+        height: calc(100% - 64px);
+        width: calc(50% - 48px);
+        /*float:left;*/
+        right: inherit;
+        left: 0px;
+    }
+
+    .split_size_card_right{
+        left: inherit;
+        right: 0px;
+        /*float: right;*/
+        margin:32px 32px 32px 16px;
+        height: calc(100% - 64px);
+        width: calc(50% - 48px);
+    }
+
+    .section_header{
+        height: 24px;
+        width: calc(100% - 24px);
+        padding: 12px;
+        background-color: #2196F3;
+        color: #FFFFFF;
+        font-weight: 700;
+        text-align: center;
+        text-transform: uppercase;
+        /*in all*/
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    paper-tabs {
+        background: #B6B6B6;
+    }
+
+    paper-tab {
+        font-weight: 700;
+        /*border-right: 2px solid #FFFFFF;*/
+    }
+
+    /*paper-tab:first-child {*/
+        /*border-right: 2px solid #FFFFFF;*/
+    /*}*/
+
+    paper-tab.iron-selected {
+        color: #FFFFFF;
+        background: #2196F3;;
+    }
+
+    paper-tab:not(.iron-selected):hover {
+        color: #2196F3;
+    }
+
+    iron-pages{
+        height: 100%;
+    }
+
+    #dataset_library{
+        height: 100%;
+    }
+
+    #add_dataset_container{
+        padding-top: 8px;
+        height: calc(100% - 48px - 8px);
+        overflow-x: scroll;
+    }
+
+    search-panel-controllet{
+        position : absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    #select_dataset_container.select-dataset-controllet .header_block.select-dataset-controllet{
+        position: relative;
+        bottom: 16px;
+    }
+
+    #addDataset{
+        position: absolute;
+        top: -60px;
+        right: 30px;
+    }
+
+    paper-toast {
+        opacity: 0.8;
+        background: #000000;
+    }
+
+    #syncToast br {
+        display: block;
+        margin-top: 8px;
+        content: " ";
+    }
+
+    #syncToast p {
+        margin: 0;
+        padding: 0;
+
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    #syncToast p .title{
+        font-size: 24px;
+        color: #2196F3;
+        padding-right: 56px;
+    }
+
+    #card_container p .description{
+    }
+
+    paper-icon-button.clear {
+        /*width: 24px;*/
+        /*height: 24px;*/
+        /*padding: 0px 4px;*/
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #F44336;
+        --paper-icon-button-ink-color: #FFFFFF;
+    }
+
+    paper-icon-button#info_provider {
+        bottom: 20px;
+    }
+
+</style>
+
+{/literal}
+
+<template id="room" is="dom-bind">
+
+    {if $isMember == false}
+    <div id="overlay">
+        <h1 style="position: relative; top: 25%; left: 10%;">{text key="cocreation+concreation_not_member"}</h1>
+    </div>
+    {/if}
+    {if $isMember == true}
+
+    <div style="height: 100%;">
+
+        <paper-drawer-panel id="paperDrawerPanel" force-narrow>
+
+            <paper-header-panel drawer>
+                <div>
+                    <paper-menu id="section_menu" selected="0">
+
+                        <paper-item id="explore_menu_item" onclick="room.handleSelectUIMode('opera')">
+                            <iron-icon  icon="description"></iron-icon>
+                            <paper-item-body two-lines title='{text key="cocreation+room_dataset_tooltip"}'>
+                                <div>{text key="cocreation+room_opera"}</div>
+                            </paper-item-body>
+                        </paper-item>
+
+                        <div class="separator"></div>
+
+                        <paper-item onclick="room.handleSelectUIMode('discussion')">
+                            <iron-icon id="discussion_icon" icon="communication:forum"></iron-icon>
+                            <paper-item-body two-lines title='{text key="cocreation+room_discussion_tab_label"}'>
+                                <div>{text key="cocreation+room_discussion_tab_label"}</div>
+                            </paper-item-body>
+                        </paper-item>
+
+                        <!--<paper-item id="datalets_menu_item" onclick="room.handleSelectUIMode('datalets')">
+                            <iron-icon icon="assessment"></iron-icon>
+                            <paper-item-body two-lines title='{text key="cocreation+room_cc_datalet"}'>
+                                <div>Datalets</div>
+                            </paper-item-body>
+                        </paper-item>-->
+
+                        <paper-item id="info_menu_item" onclick="room.handleSelectUIMode('info')">
+                            <iron-icon icon="info"></iron-icon>
+                            <paper-item-body two-lines>
+                                <div>Info</div>
+                            </paper-item-body>
+                        </paper-item>
+
+                        <div class="separator"></div>
+
+                    </paper-menu>
+
+                    <paper-item onclick="room.handleSelectUIMode('split')">
+                        <iron-icon id="screen_1" icon="av:airplay"></iron-icon>
+                        <iron-icon id="screen_2" icon="av:airplay"></iron-icon>
+                        <paper-item-body class="no_padding_item" two-lines>
+                            <div>
+                                Split screen
+                                <paper-checkbox id="split_checkbox" class="checkbox_splitscreen" onclick="room.handleSelectUIMode('split')"></paper-checkbox>
+                            </div>
+                        </paper-item-body>
+                    </paper-item>
+
+                </div>
+
+            </paper-header-panel>
+
+            <paper-header-panel main>
+                <paper-toolbar>
+                    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <div class="header_container">
+
+                        <div class="hader_title_container">
+                            <div class="header_title" title="{$room->name}">{$room->name}</div>
+                        </div>
+
+                        <div style="float: right">
+                            {if $ownerUserActive}
+                            <paper-fab icon="add" onclick="room.inviteNewUsers();" title='{text key="cocreation+room_invite_new_members_button"}'></paper-fab>
+                            {/if}
+                        </div>
+
+                        <div class="right_floater">
+                            <div class="ow_avatar style-scope" title="{$owner['title']}"><a class="style-scope" href="{$owner['url']}"><img alt="" style="max-width: 100%;" class="style-scope dataset-table-controllet" src="{$owner['src']}"></a></div>
+                            {foreach $members as $member}
+                                {if $member['isJoined']}
+                                    <div class="ow_avatar style-scope" title="{$member['title']}"><a class="style-scope" href="{$member['url']}"><img alt="" style="max-width: 100%;" class="style-scope dataset-table-controllet" src="{$member['src']}"></a></div>
+                                {/if}
+                            {/foreach}
+                        </div>
+
+                    </div>
+                </paper-toolbar>
+
+                <!-- FULL SIZE ETHERPAD -->
+                <div class="content_container">
+                    <div id="full_size_container" class="full_size_content">
+
+                        <!-- Opera -->
+                        <paper-card id="opera" class="full_size_card" style="visibility: visible;" elevation="5">
+                            <div class="section_header">{text key="cocreation+room_opera"}</div>
+                            <iframe src="{$document}?role={$role}&user={$currentUserId}&userName={$currentUser['title']}&showControls=true&showLineNumbers=false&pageview=true" style="height: 100%; width: 100%;"></iframe>
+                        </paper-card>
+
+                        <paper-card id="discussion" class="full_size_card" style="visibility:hidden;" elevation="5">
+                            <div class="section_header">{text key="cocreation+room_discussion_tab_label"}</div>
+                            <div id="discussion_container" style="height: calc(100% - 45px)">
+                                {$discussion}
+                            </div>
+                        </paper-card>
+                      <!--  &lt;!&ndash; Datalets &ndash;&gt;
+                        <paper-card id="datalets" class="full_size_card" style="visibility: hidden;" elevation="5">
+                            <datalet-slider-controllet id="datalets_slider"></datalet-slider-controllet>
+                        </paper-card>-->
+                        <!-- Info -->
+                        <paper-card id="info" class="full_size_card" style="visibility: hidden;" elevation="5">
+                            <info-list-controllet id="info_list_controllet"></info-list-controllet>
+                        </paper-card>
+
+                    </div>
+                </div>
+
+             </paper-header-panel>
+        </paper-drawer-panel>
+    </div>
+
+    <paper-toast id="syncToast" duration="0">
+        <p>
+            <span class="title">{text key="cocreation+room_sync_toast"}</span>
+            <br>
+            <span class="description" id="syncMessage">Le stanze dell'Agora sono pubbliche. Le discussioni saranno visibili anche all'esterno di SPOD.</span>
+        </p>
+        <paper-icon-button class="clear" suffix onclick="syncToast.toggle()" icon="clear"></paper-icon-button>
+    </paper-toast>
+
+    {/if}
+</template>
+

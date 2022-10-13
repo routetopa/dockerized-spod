@@ -1,0 +1,30 @@
+<input type="hidden" id="friends_info" value='{$friends_info}' />
+
+<div class="cocoreation_create_room_container">
+
+    <div class="cocoreation_create_room_header">
+        {text key="cocreation+room_create_room_title"}
+    </div>
+
+    {form name='CoCreationAddRoomForm'}
+    <div class="cocoreation_create_room_content">
+
+        <!-- ROOM NAME -->
+        <span>{text key="cocreation+room_name"}</span>
+        {input name='name' maxlength='128'}
+
+        <!-- ROOM  DESCRIPTION -->
+        <span>{text key="cocreation+room_description"}</span>
+        {input name='description' maxlength='2048'}
+
+        <!-- ROOM  METADATA -->
+        <span>{text key="cocreation+room_metadata"}</span>
+        {input name='metadata'}
+
+        <!-- SUBMIT -->
+        {submit name='submit' class=''}
+
+    </div>
+    {/form}
+
+</div>

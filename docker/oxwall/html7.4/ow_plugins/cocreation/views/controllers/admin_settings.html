@@ -1,0 +1,103 @@
+<link rel="import" href="{$components_url}bower_components/paper-toggle-button/paper-toggle-button.html">
+
+<style is="custom-style">
+    paper-toggle-button.room_toggle {
+        --paper-toggle-button-checked-bar-color: var(--paper-green-500);
+        --paper-toggle-button-checked-button-color: var(--paper-green-500);
+        --paper-toggle-button-checked-ink-color: var(--paper-green-500);
+        --paper-toggle-button-unchecked-bar-color: var(--paper-gray-500);
+        --paper-toggle-button-unchecked-button-color: var(--paper-gray-500);
+        --paper-toggle-button-unchecked-ink-color: var(--paper-gray-500);
+    }
+</style>
+{literal}
+<script>
+    $(document).ready(function () {
+        var settings = document.querySelector('#settings_form');
+        settings._toggleChanged = function (e) {
+            $("#" + e.target.id.replace("_command", "_status")).attr('value', document.querySelector('#' + e.target.id).checked);
+        };
+    });
+</script>
+{/literal}
+
+{$menu}
+
+<template id="settings_form" is="dom-bind">
+    {form name='settings'}
+    <table class="ow_table_1 ow_form ow_automargin">
+        <tr class="ow_alt1">
+            <td class="ow_value">Document server port</td>
+            <td class="ow_value">
+                <input type="number" value="{$document_server_port_preference}" min="1024" max="65535"
+                    class="server_toggle toggle" id="document_server_port" name="document_server_port" />
+            </td>
+        </tr>
+        <tr class="ow_alt1">
+            <td class="ow_value">Spreadsheet server port</td>
+            <td class="ow_value">
+                <input type="number" value="{$spreadsheet_server_port_preference}" min="1024" max="65535"
+                    class="server_toggle toggle" id="spreadsheet_server_port" name="spreadsheet_server_port" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="ow_center">
+                <h4>Active room types</h4>
+            </td>
+        </tr>
+        <tr class="ow_alt1">
+            <td class="ow_value">Knowledge room</td>
+            {if $knowledge_room_status == true}
+            <td class="ow_value">
+                <paper-toggle-button class="room_toggle toggle" id="knowledge_room_command"
+                    name="knowledge_room_command" checked on-change="_toggleChanged"></paper-toggle-button>
+            </td>
+            {/if}
+            {if $knowledge_room_status == false}
+            <td class="ow_value">
+                <paper-toggle-button class="room_toggle toggle" id="knowledge_room_command"
+                    name="knowledge_room_command" on-change="_toggleChanged"></paper-toggle-button>
+            </td>
+            {/if}
+        </tr>
+        <tr class="ow_alt1">
+            <td class="ow_value">Dataset room</td>
+            {if $dataset_room_status == true}
+            <td class="ow_value">
+                <paper-toggle-button class="room_toggle toggle" id="dataset_room_command" name="dataset_room_command"
+                    checked on-change="_toggleChanged"></paper-toggle-button>
+            </td>
+            {/if}
+            {if $dataset_room_status == false}
+            <td class="ow_value">
+                <paper-toggle-button class="room_toggle toggle" id="dataset_room_command" name="dataset_room_command"
+                    on-change="_toggleChanged"></paper-toggle-button>
+            </td>
+            {/if}
+        </tr>
+
+        <!-- Setting for publish on CKAN -->
+        <tr>
+            <td colspan="2" class="ow_center">
+                <h4>Publish on CKAN platform</h4>
+            </td>
+        </tr>
+        <tr class="ow_alt1">
+            <td class="ow_value">CKAN platform URL</td>
+            <td class="ow_value">{input name='ckan_platform_url'}</td>
+        </tr>
+        <tr class="ow_alt1">
+            <td class="ow_value">CKAN API KEY</td>
+            <td class="ow_value">{input name='ckan_api_key'}</td>
+        </tr>
+        <tr class="ow_alt1">
+            <td class="ow_value">Default Organisation ID/Key</td>
+            <td class="ow_value">{input name='ckan_def_organisation'}</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="ow_center">{submit name='add' class='ow_button ow_ic_save'}</td>
+        </tr>
+    </table>
+    {/form}
+</template>

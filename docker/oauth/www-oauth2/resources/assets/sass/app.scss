@@ -1,0 +1,74 @@
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Material+Icons|Open+Sans:400,700|Roboto:100,300,400);
+@import "font-awesome.min.css";
+
+// Variables
+@import "variables";
+
+// Materialize CSS
+@import "node_modules/materialize-css/sass/materialize.scss";
+
+/*
+ * Sticky footer
+ */
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/*
+ * THEME COLORS
+ */
+h1 { color: $main-color; }
+
+nav {
+  @extend .blue, .darken-2;
+  @extend .blue-text, .text-lighten-5;
+}
+
+footer.page-footer {
+  @extend .blue, .darken-2;
+  @extend .blue-text, .text-lighten-5;
+  a {
+    @extend .blue-text, .text-lighten-5;
+    &:hover {
+      @extend .blue-text, .text-lighten-2;
+      transition: all .3s ease-out;
+    }
+  }
+  ul.links-social {
+    margin-top: 0;
+    li {
+      display: inline-block;
+      margin-right: .5em;
+    }
+  }
+}
+
+/*
+ * TYPOGRAPHY
+ */
+h1, h2, h3 {
+  font-weight: 100;
+}
+
+/*
+ * CARDS FIXES
+ */
+.card .card-title .material-icons {
+  position: relative;
+  top: .15em; }
+
+.card.green .card-action a {
+  color: #4caf50 !important;
+  &:hover { color: #1b5e20 !important; } }
+
+.card.blue-grey .card-action a {
+  color: #607d8b !important;
+  &a:hover { color: #263238 !important; } }

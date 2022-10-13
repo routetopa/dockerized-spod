@@ -1,0 +1,116 @@
+#members_container {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+#members_container * {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#members_container .header {
+    height: 24px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 700;
+    background-color: #B6B6B6;
+}
+
+#members_container #info_list {
+    position: relative;
+    height: calc(100% - 48px - 32px);
+    width: calc(100% - 32px);
+    padding: 16px;
+    overflow-y: auto;
+}
+
+#members_container .button_add {
+    width: 36px;
+    height: 36px;
+    background: url('../images/members/create-group-button.svg');
+    background-color: #00BCD4;
+    background-size: 36px;
+    background-repeat: no-repeat;
+    padding: 2px;
+    border-radius: 50%;
+    margin: 5px;
+    border: 3px solid #00BCD4;
+    cursor: pointer;
+
+    opacity: 0.5;
+}
+
+#members_container .button_mod {
+    width: 24px;
+    height: 24px;
+    background: url('../images/members/create-new-pencil-button.svg');
+    background-size: 24px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+
+    opacity: 0.5;
+}
+#members_container .button_del {
+    width: 24px;
+    height: 24px;
+    background: url('../images/members/clear-button.svg');
+    background-size: 24px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+
+    opacity: 0.5;
+}
+
+#members_container .ow_avatar {
+    border: 3px solid #2196F3;
+    margin: 0;
+}
+
+#members_container .ow_avatar.owner {
+    border-color: #00BCD4;
+}
+
+#members_container .ow_avatar.j1 {
+    border-color: #4CAF50;
+}
+
+#members_container .ow_avatar.j0 {
+border-color: #F44336;
+}
+
+table.members_list tr {
+    height: 48px;
+    padding: 0;
+    margin: 0;
+}
+
+table.members_list tr.spacer {
+    height: 8px;
+}
+
+table.members_list td {
+    height: 48px;
+    padding: 0 12px;
+    margin: 0;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 48px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+table.members_list td.role {
+    text-transform: uppercase;
+}
+
+span.owner{
+    color: #00BCD4;
+}
+
+span.isJoined{
+    color: #4CAF50;
+}
+
+span.pending{
+    color: #F44336;
+}

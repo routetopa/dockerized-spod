@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base target="_parent" />
+
+    <title></title>
+
+    <script>
+
+        var addedJs = 0;
+        var dynamicAddedJs = [];
+        dynamicAddedJs[0] = parent.ODE.ode_webcomponents_js;
+        dynamicAddedJs[1] = parent.ODE.ode_deep_client.substring(0, parent.ODE.ode_deep_client.lastIndexOf("/")) + "/jquery-2.1.0.min.js";
+        dynamicAddedJs[2] = parent.ODE.ode_deep_client;
+
+        //Register the click on the "Import dataset" button in the wizard to import from SPOD.
+        window.addEventListener("import-dataset-controllet.doPublish", function (e) {
+            let metadata = e.detail.dataset.metadata;
+            let room = parent.room;
+            room._uploadDatasetOnEthersheet(e, function(response) {
+                if (response.success) {
+                    console.log("success");
+                    room._uploadMetadata(metadata);
+                } else {
+                    console.log("error");
+                }
+            });
+        });
+
+        function loadScript(sScriptSrc, oCallback)
+        {
+            var oHead = document.getElementsByTagName("head")[0];
+            var oScript = document.createElement('script');
+            oScript.type = 'text/javascript';
+            oScript.src = sScriptSrc;
+
+            // most browsers
+            oScript.onload = oCallback;
+
+            // IE 6 & 7
+            oScript.onreadystatechange = function() {
+                if (this.readyState == 'complete') {
+                    oCallback();
+                }
+            };
+
+            oHead.appendChild(oScript);
+        }
+
+        var onLoadCallback = function ()
+        {
+            if(addedJs == (dynamicAddedJs.length-1))
+            {
+                ComponentService.components_url = parent.ODE.deep_components;
+
+                var params =
+                    {
+                        'deep-url'          : parent.ODE.deep_url,
+                        'data-url'          : parent.ODE.ajax_coocreation_room_get_array_sheetdata,
+                        'datalets-list-url' : parent.ODE.deep_datalet_list,
+                        'localization'      : parent.ODE.user_language,
+                        'datasets'          : parent.ODE.ode_dataset_list.value
+                    };
+
+                //var iframe = parent.document.getElementById("co-datalets-creator-controllet_float");
+
+                ComponentService.getComponent({
+                    component   : "import-dataset-controllet",
+                    params      : params,
+                    fields      : Array(),
+                    placeHolder : "import-dataset-controllet_float"
+                });
+
+                return;
+            }
+
+            addedJs++;
+            loadScript(dynamicAddedJs[addedJs], onLoadCallback);
+
+        };
+
+        loadScript(dynamicAddedJs[addedJs], onLoadCallback);
+
+    </script>
+</head>
+<body style="overflow: hidden">
+
+<div id="import-dataset-controllet_float" style="width: 100%; height: 100%"></div>
+
+</body>
+</html>

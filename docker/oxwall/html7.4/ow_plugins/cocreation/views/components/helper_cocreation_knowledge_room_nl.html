@@ -1,0 +1,210 @@
+<link rel="import" href="{$components_url}bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="{$components_url}bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="{$components_url}bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="{$components_url}bower_components/paper-styles/color.html">
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<style>
+    .floatbox_header{
+        display: none;
+    }
+
+    .floatbox_body{
+        font-family: 'Roboto', sans-serif;
+        background-color: #eeeeee;
+        padding : 3px;
+    }
+
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+    .tall {
+        background-color: #2196F3;
+    }
+
+    .tall .title {
+        padding: 20px;
+        font-size: 40px;
+        color: #ffffff;
+        /*width: 30%;*/
+        position: relative;
+        float: left;
+    }
+
+    .tall .description{
+        padding: 20px;
+        font-size: 15px;
+        color: #ffffff;
+        /*width: 70%;*/
+        position: relative;
+        float: left;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+     iron-icon.myspace {
+         padding: 2px;
+         margin: 0px;
+         color: #FFFFFF;
+         height: 32px;
+         width: 32px;
+         background-color: #00BCD4;
+         border-radius: 18px;
+         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+     }
+    .button-container.postit-container-controllet {
+        height: 10px;
+        width: 10px;
+    }
+    .iron-icon-8 {
+        fill: #00BCD4;
+
+    }
+</style>
+
+<div class="layout vertical">
+
+    <div class="tall">
+        <div class="title"> Cocreation Knowledge room  helper</div>
+        <div class="description">
+            The Cocreation knowledge room  is meant to stimulate reflection on Open Data through three steps process of co-writing document (with a template) for <i>Explore</i>, <i>Ideas</i>, and <i>Outcome</i>>.
+            Datalets can be created and annotated via post-it like comments (notified in real time to participants).
+        </div>
+    </div>
+
+    <div class="content" id="scroll_content">
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/cocreation_knowledge_en.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">1</div>
+                        <div class="section-title">Features</div>
+                    </div>
+                    <div>
+                        <ul class="cell-list">
+                            <li><paper-icon-button icon="description" style='color: #2196F3;' ></paper-icon-button> Each shared document, <b>Explore </b>, <b> Ideas </b> and <b> Results </b>, allows the co-writing process.
+                            </li>
+                            <li>
+                                <paper-icon-button   icon="view-list" style="color:#212121;" ></paper-icon-button>
+                                <b>Library </b>  allows to insert the datalet for any views with charts (e.g. interactive maps, etc...)
+                            </li>
+                            <li>
+                                <paper-icon-button   icon="assessment" style="color: #212121;" ></paper-icon-button>
+                                <b>Datalets</b> allows to create visualization, i.e charts (named datalets).
+                            </li>
+                            <li>
+                                <paper-icon-button   icon="info" style="color: #212121;" ></paper-icon-button>
+                                <b>Info</b> allows to show details of the room, (i.e name, description etc.).
+                            </li>
+                            <li>
+                                <iron-icon id="screen_1" icon="av:airplay" class="x-scope iron-icon-8"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                                    <g class="style-scope iron-icon"><path d="M6 22h12l-6-6zM21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v-2H3V5h18v12h-4v2h4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" class="style-scope iron-icon"></path></g></svg>
+                                </iron-icon>
+                                <iron-icon id="screen_2" icon="av:airplay" class="x-scope iron-icon-8" style="color: #00BCD4;" >
+                                    <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;"><g class="style-scope iron-icon"><path d="M6 22h12l-6-6zM21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v-2H3V5h18v12h-4v2h4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" class="style-scope iron-icon"></path></g></svg>
+                                </iron-icon>
+                                 It is possible to choose the type of visualization, that is, you can view a feature at a time (eg only the spreadsheet), or two features at the same time (for example, the spreadsheet and discussion).
+                            </li>
+                            <li>
+                                <paper-icon-button   icon="add" style="color: #00BCD4;" ></paper-icon-button> (on the top right side)
+                                New users can be invited into the room.
+                            </li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="sect">
+        <div class="horizontal layout cell">
+            <img src="{$staticResourcesUrl}images/cocreation_knowledge_library_en.gif" style="width: 60%; height: 60%;">
+
+            <div class="cell">
+                <div class="horizontal layout cell">
+                    <div class="section-number">2</div>
+                    <div class="section-title">Library</div>
+                </div>
+                <div>
+                    Each user can add datasets of an Open Data portal (for example, @CKAN) that will be present as a list in the tab of the Controllet
+                    <br>
+                    <ul class="cell-list">
+                        <li>
+                            <b>Add datalet</b> tab allows to add a datalet in the Library. A wizard (i.e., a guide) will help to add a dataset.
+                            The list of datalets will be available when a new chart added(i.e., <paper-icon-button   icon="assessment" style="color: #212121;" ></paper-icon-button>)
+                        </li>
+                        <br>
+                        <li>
+                            <b>Library</b> tab shows all created dataset previously.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sect">
+        <div class="horizontal layout cell">
+            <img src="{$staticResourcesUrl}images/cocreation_knowledge_collab_en.gif" style="width: 60%; height: 60%;">
+
+            <div class="cell">
+                <div class="horizontal layout cell">
+                    <div class="section-number">3</div>
+                    <div class="section-title">Co-creation</div>
+                </div>
+                <div>
+                    <p>
+                        In this room, to the left, you can edit documents collaboratively, in real time and a list of features are available:
+                    <ul class="cell-list">
+                        <li> <b>Collaboration</b>: it is possible to see changes being made by other people in real time and each user is identified by color and name.</li>
+                        <li> <b>Chat</b>: a synchronous communication is available with other people who share the same document.</li>
+                        <li>
+                            <b> Export</b>: allows to export a document in HTML format, plain text, Microsoft Word, PDF and an Open Standard Format (ODF).
+                        </li>
+                        <li>
+                            <b> Recording Revision</b>: the document is saved at and participants can permanently save specific versions checkpoints at any time.
+                            A time slider Allows anyone to explore the history of the document in a very user-friendly way.
+                        </li>
+                    </ul>
+                    </p>
+                    To the right, you can create a new datalets clicking on the <paper-icon-button  icon="add" style="color: #00BCD4;"></paper-icon-button>
+                    <br>
+                    You can add notes on each datalet (like a post-it) by clicking on <div class="button-container style-scope postit-container-controllet">
+                    <p class="style-scope postit-container-controllet">Lorem. </p>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+

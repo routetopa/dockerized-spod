@@ -1,0 +1,95 @@
+###################
+### Extensions ####
+###################
+FROM ghcr.io/keitaroinc/ckan:2.9.5 as extbuild
+
+# Switch to the root user
+USER root
+
+# Install any system packages necessary to build extensions
+# Make sure we install python 3.8, cause CKAN is not compatible with 3.9
+RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/v3.13/main \
+        python3-dev=3.8.10-r0 
+
+# Fetch and build the custom CKAN extensions
+# RUN pip wheel --wheel-dir=/wheels git+https://github.com/acmecorp/ckanext-acme@0.0.1#egg=ckanext-acme
+RUN echo "- Install ckanext-pdfview" && \
+    pip wheel --wheel-dir=/wheels ckanext-pdfview 
+    #pdf_view
+    
+    # hierarchy_display, hierarchy_form 
+RUN echo "- Install hierarchy" && \
+    #dependency
+    pip wheel --wheel-dir=/wheels future==0.18.2 && \ 
+    pip wheel --wheel-dir=/wheels "git+https://github.com/davidread/ckanext-hierarchy.git#egg=ckanext-hierarchy" 
+
+
+    # open id - use old python, to check
+RUN echo "- Install opendid" && \
+    pip wheel --wheel-dir=/wheels pip install authomatic && \
+    pip wheel --wheel-dir=/wheels pip install pylons==1.0.1 && \
+    pip wheel --wheel-dir=/wheels pip install "git+https://github.com/routetopa/ckanext-openid.git#egg=ckanext-openid"
+
+
+    # scheming_datasets
+RUN echo "- Install scheming_datasets" && \
+    pip wheel --wheel-dir=/wheels pip install "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
+
+    # composite
+RUN echo "- Install composite" && \
+    pip wheel --wheel-dir=/wheels pip install ckanext-composite
+
+    # package_converter
+RUN echo "- Install package_converter" && \
+    pip wheel --wheel-dir=/wheels pip install xmltodict==0.10.2 && \ 
+    pip wheel --wheel-dir=/wheels pip install flufl.enum==4.1.1 && \ 
+    pip wheel --wheel-dir=/wheels pip install lxml && \
+    pip wheel --wheel-dir=/wheels pip install "git+https://github.com/EnviDat/ckanext-package_converter.git#egg=ckanext-package_converter"
+
+RUN echo "- Install oaipmh_repository" && \
+    pip wheel --wheel-dir=/wheels pip install pytz==2016.4 && \
+    pip wheel --wheel-dir=/wheels pip install xmltodict && \
+    pip wheel --wheel-dir=/wheels pip install "git+https://github.com/EnviDat/ckanext-oaipmh_repository.git#egg=ckanext-oaipmh_repository"
+
+# RUN echo "- Install opendatabenc theme" && \
+#     pip wheel --wheel-dir=/wheels pip install "git+https://github.com/zioposty/ckanext-opendatabenc_theme.git#egg=ckanext-opendatabenc_theme"
+
+
+############
+### MAIN ###
+############
+FROM ghcr.io/keitaroinc/ckan:2.9.5
+
+# Add the custom extensions to the plugins list
+ENV CKAN__PLUGINS envvars stats image_view pdf_view text_view recline_view datastore datapusher hierarchy_display hierarchy_form scheming_datasets composite package_converter oaipmh_repository 
+
+# Switch to the root user
+USER root
+
+COPY --from=extbuild /wheels /srv/app/ext_wheels
+
+# Install and enable the custom extensions
+RUN pip install --no-index --find-links=/srv/app/ext_wheels ckanext-pdfview && \
+    pip install --no-index --find-links=/srv/app/ext_wheels future==0.18.2 && \
+    pip install --no-index --find-links=/srv/app/ext_wheels ckanext-hierarchy && \
+    pip install --no-index --find-links=/srv/app/ext_wheels authomatic && \
+    pip install --no-index --find-links=/srv/app/ext_wheels pylons==1.0.1 && \
+    pip install --no-index --find-links=/srv/app/ext_wheels ckanext-openid && \
+    pip install --no-index --find-links=/srv/app/ext_wheels ckanext-scheming && \
+    pip install --no-index --find-links=/srv/app/ext_wheels ckanext-composite && \
+    pip install --no-index --find-links=/srv/app/ext_wheels xmltodict==0.10.2 && \
+    pip install --no-index --find-links=/srv/app/ext_wheels flufl.enum==4.1.1 && \
+    pip install --no-index --find-links=/srv/app/ext_wheels lxml && \
+    pip install --no-index --find-links=/srv/app/ext_wheels ckanext-package_converter && \
+    pip install --no-index --find-links=/srv/app/ext_wheels pytz==2016.4 && \
+    pip install --no-index --find-links=/srv/app/ext_wheels xmltodict && \
+    pip install --no-index --find-links=/srv/app/ext_wheels ckanext-oaipmh_repository && \
+    # pip install --no-index --find-links=/srv/app/ext_wheels ckanext-opendatabenc_theme && \
+    ckan config-tool ${APP_DIR}/production.ini "ckan.plugins = ${CKAN__PLUGINS}" && \
+    chown -R ckan:ckan /srv/app
+
+# Remove wheels
+RUN rm -rf /srv/app/ext_wheels
+
+# Switch to the ckan user
+USER ckan

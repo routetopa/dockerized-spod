@@ -1,0 +1,56 @@
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="{$components_url}controllets/paper-card-controllet/paper-card-controllet.html"/>
+<link rel="import" href="{$components_url}datalets/datatable-datalet/datatable-datalet.html">
+
+{literal}
+<style>
+
+    paper-fab.modify{
+        display: none;
+    }
+
+    paper-fab.delete{
+        display: none;
+    }
+
+    :host .legend.paper-card-controllet {
+        height: 60px;
+    }
+    paper-card-controllet{
+        margin: 20px;
+        position: relative;
+        float: left;
+    }
+
+    #dataset-grid-container{
+        position: relative;
+        height: calc(100% - 48px);
+        overflow-x: auto;
+    }
+</style>
+
+<script>
+    $(document).ready(function(){
+        $("#dataset-grid-container").perfectScrollbar();
+    });
+
+</script>
+{/literal}
+
+<div id="dataset-grid-container">
+    {foreach $datasets as $dataset name=cycle}
+    <paper-card-controllet
+            card-type="datalet"
+            card-title="{$dataset->name}"
+            class="dataset-grid-item"
+            width="300"
+            height="300">
+        <datatable-datalet
+                data-url="{$dataset->url}"
+                description="{$dataset->description}"
+                title="{$dataset->name}"
+                selectedfields='{$dataset->selectedfields}'>
+        </datatable-datalet>
+    </paper-card-controllet>
+    {/foreach}
+</div>

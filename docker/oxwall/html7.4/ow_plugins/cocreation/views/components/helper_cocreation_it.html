@@ -1,0 +1,250 @@
+
+<link rel="import" href="{$components_url}bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="{$components_url}bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="{$components_url}bower_components/paper-styles/color.html">
+<link rel="import" href="{$components_url}bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="{$components_url}bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="{$components_url}bower_components/iron-icons/iron-icons.html">
+
+
+<style>
+    .floatbox_header{
+        display: none;
+    }
+
+    .floatbox_body{
+        font-family: 'Roboto', sans-serif;
+        background-color: #eeeeee;
+        padding : 3px;
+    }
+
+
+    #scroll_content{
+        position: relative;
+        overflow: scroll;
+    }
+    div.cell{
+        padding: 20px;
+        margin-left: 20px;
+    }
+
+    ul.cell-list {
+        list-style-type: circle;
+    }
+
+    li{
+        margin-left: 20px;
+    }
+
+    .tall {
+        background-color: #2196F3;
+    }
+
+    .tall .title {
+        padding: 20px;
+        font-size: 40px;
+        color: #ffffff;
+        /*width: 30%;*/
+        position: relative;
+        float: left;
+    }
+
+    .tall .description{
+        padding: 20px;
+        font-size: 15px;
+        color: #ffffff;
+        /*width: 70%;*/
+        position: relative;
+        float: left;
+    }
+
+    .sect{
+        border: 1px solid #bebebe; padding: 16px; margin: 16px; border-radius: 5px; background-color: #fff; color: #555;
+    }
+
+    .section-number{
+        display: inline-block; height: 64px; width: 64px; border-radius: 50%; background: #ddd; line-height: 64px; font-size: 30px; color: #666; text-align: center;
+    }
+
+    .section-title{
+        font-size: 22px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+
+    .section-paragraph{
+        font-size: 18px; padding-top: 18px; color: #888;margin-left: 20px;
+    }
+
+    paper-fab
+    {
+        --paper-fab-background : #00BCD4;
+        --paper-fab: {
+
+            padding: 0;
+            margin: 8px;
+        };
+    }
+
+    paper-fab#assessment_fab
+    {
+        background:#00BCD4;
+    }
+
+</style>
+
+<div class="layout vertical">
+
+    <div class="tall">
+        <div class="title">Helper per la Cocreazione</div>
+        <div class="description">
+            La CoCreazione è uno spazio collaborativo per guidare gli utenti a collaborare  nella costruzione della conoscenza e dei dati.
+            Lo spazio è pensato per essere utilizzato da piccoli gruppi, dove l'utente è invitato, dal creatore della stanza, a partecipare.
+            Ci sono tre tipi di stanze: la stanza di co-creazione della conoscenza, la stanza di co-creazione di dati e la stanza dei media.
+            Nella prima stanza, ogni gruppo di persone  è invitato a riflettere su gli Open Data per rispondere a problemi
+            e creare consapevolezza dei dati;  nella seconda stanza si possono co-creare datasets (insieme di dati);
+            la terza stanza presenta dati di tipo media sincronizzati con l'applicazione mobile di SPOD.
+        </div>
+    </div>
+
+    <div class="content" id="scroll_content">
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/cocreationroom_it.png" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">1</div>
+                        <div class="section-title">Cocreazione</div>
+                    </div>
+                    <div>
+                        <p>
+                            Nella Cocreazione ci sono:</p>
+                    </div>
+
+                    <div class="horizontal layout cell">
+                        <paper-fab id="description_fab" mini="" icon="description"></paper-fab>
+                        <p>Stanza della cocreazione della conoscenza</p>
+                    </div>
+
+                    <div class="horizontal layout cell">
+                        <paper-fab id="assessment_fab"  mini="" icon="assessment"></paper-fab>
+                        <p> Stanza della cocreazione dei dati<p>
+                    </div>
+                    <div class="horizontal layout cell">
+                        <paper-fab id="media_fab"  mini="" icon="image:collections"  ></paper-fab>
+                        <p> Stanza della cocreazione dei dati di tipo "media"<p>
+                    </div>
+
+
+                    <div class="horizontal layout cell">
+                        <paper-fab id="view_datasets"  mini icon="view-list"> </paper-fab>
+                        <p>Mostra tutti i dataset creati</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/viewalldatasets_it.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                        <div class="horizontal layout cell">
+                            <div class="section-number">2</div>
+                            <paper-fab id="view_datasets"  mini icon="view-list"> </paper-fab>
+                            <div class="section-title">Mostra tutti i datasets</div>
+                        </div>
+                        <div>
+                            Questo pulsante visualizza tutti i datasets creati nella stanza dei dati.<br>
+                            Per ogni dataset puoi:
+                        </div>
+
+                        <ul class="cell-list">
+                            <li> Mostrare il dataset pubblicato nella stanza di co-creazione dei dati, </li>
+                            <li> Scaricare un documento nel formato CSV,</li>
+                            <li> Copiare (e più tardi incollare) l’indirizzo (URL) del dataset,</li>
+                            <li> Scaricare le note del dataset in un documento HTML.</li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/createroom_it.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">3</div>
+                        <div class="section-title">Crea una stanza</div>
+                    </div>
+                    <div>
+                        <p>
+                            Per creare una stanza basta premere sul pulsante  "+" (Aggiungi) in blu, posizionato in basso a destra,
+                            e inserire le informazioni richieste:
+                        </p>
+                        <ul class="cell-list">
+                            <li> Nome della stanza, </li>
+                            <li> Soggetto,</li>
+                            <li> Descrizione,</li>
+                            <li> Periodo: è solo un' indicazione dell'attività prevista nella stanza, non una prescrizione,</li>
+                            <li> Obiettivo,</li>
+                            <li> Invito da inviare ai partecipanti invitati,</li>
+                            <li> Lista iniziale di partecipanti (puoi invitare altri in un qualsiasi momento)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/explore_it.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">4</div>
+                        <div class="section-title">Entra nella stanza</div>
+                    </div>
+                    <div>
+                        Questo pulsante permette di entrare nella stanza.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="content" id="scroll_content">
+        <div class="sect">
+            <div class="horizontal layout cell">
+                <img src="{$staticResourcesUrl}images/aboutroom_it.gif" style="width: 60%; height: 60%;">
+
+                <div class="cell">
+                    <div class="horizontal layout cell">
+                        <div class="section-number">5</div>
+                        <div class="section-title">Cosa si può fare in una stanza: </div>
+                    </div>
+
+                    <ul class="cell-list">
+                        <li>
+                            <paper-icon-button icon="menu" style=" width: 50px; height: 50px;"></paper-icon-button>
+                             Menù delle funzionalità (crea un dataset, metadata, note, discussione, datalets etc...)
+                        </li>
+
+                        <li>
+                            <paper-icon-button id="info_room_button" icon="info" on-tap="_openInfo"  style="color: #212121; width: 50px; height: 50px;"></paper-icon-button>
+                            Informazioni relative alla stanza</p>
+                        </li>
+
+                         <li>
+                             <paper-icon-button   icon="add" style="color: #00BCD4;" ></paper-icon-button> Invita un utente nella stanza
+                         </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,43 @@
+ {literal}
+<link rel="import" href="http://172.16.15.77/DEEalerProvider/COMPONENTS/bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="http://172.16.15.77/DEEalerProvider/COMPONENTS/bower_components/iron-icons/iron-icons.html">
+
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<!--<script src="http://code.jquery.com/jquery-1.11.1.js"></script>-->
+<script>
+    var socket = io("http://172.16.15.77:3000");
+    $('form').submit(function(){
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+    });
+    socket.on('chat message', function(rawData){
+
+        data = JSON.parse(rawData);
+
+        if(data.error){
+            OW.error(data.error);
+            return;
+        }
+        //OW.trigger('base.comments_list_update', {entityType: data.entityType, entityId: data.entityId, id:this.uid});
+        if(data.entityId == 4096)
+        {
+            alert('TOP LEVEL');
+            $('.comments_list_cont', this.$cmpContext).empty().append($(data.commentList));
+            OW.addScript(data.onloadScript);
+        }
+        else
+        {
+            var elem = $("#comment_"+data.entityId).parent();
+            elem.empty().append($(data.commentList));
+            alert('CHILD LEVEL');
+        }
+
+
+        //alert(msg);
+        //$('#messages').append($('<li>').text(msg));
+    });
+</script>
+{/literal}
+
+{$comments}
