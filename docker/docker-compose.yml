@@ -79,7 +79,9 @@ services:
     image: isislab/etherpad:1.0
     environment:
       TZ: "Europe/Rome"
-      VIRTUAL_HOST: ${HOST_URL}isislab"
+      VIRTUAL_HOST: ${HOST_URL}"
+      VIRTUAL_PORT: 9001
+      VIRTUAL_PATH: "/etherpad/"
       VIRTUAL_DEST: "/"
     expose:
       - 9001
