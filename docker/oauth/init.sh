@@ -15,11 +15,14 @@ php artisan migrate
 
 echo "Populating oauth2 db..."
 sed -i "s/localhost/$HOST_URL/g" init.sql 
-mysql -h mysql -p$PASSWORD -e"set @client_secret= '${PASSWORD}'; \. init.sql" && rm -f init.sql
+mysql -h mysql -p$PASSWORD -e"set @client_secret= '${PASSWORD}';
+                              set @redirect_uri= 'http://${HOST_URL}/spodoauth2connect/oauth';
+                              set @init_oauth_uri= 'http://${HOST_URL}/spodoauth2connect/begin';
+                              \. init.sql" && rm -f init.sql
 
 echo "Creating admin user with email $EMAIL"
 
 sed -i "s/DEFMAIL/$EMAIL/g" init.php
 sed -i "s/DEFPASS/$PASSWORD/g" init.php
 more init.php | php artisan tinker
-# rm -f init.php
+rm -f init.php

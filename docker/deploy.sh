@@ -22,6 +22,7 @@ docker-compose up -d --build
 docker restart oauth > /dev/null
 
 echo "-----"
+docker exec etherpad bash -c "sed -i 's/0.0.0.0/$HOST_URL/g' settings.json"
 docker exec oauth bash -c "sh init.sh $EMAIL $PASSWORD $HOST_URL"
 
 # echo "Oxwall is ready"

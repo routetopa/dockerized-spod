@@ -11,7 +11,7 @@ insert into oauth_scopes (scope, is_default) values ('authenticate', 1);
 
 insert into oauth_clients (client_id, client_secret, redirect_uri,
             grant_types, scope, title, home_uri,
-            init_oauth_uri, auto_authorize) values ('spod-website', @client_secret, 'http://localhost/spodoauth2connect/oauth',
+            init_oauth_uri, auto_authorize) values ('spod-website', @client_secret, @redirect_uri, 
         'authorization_code', 'authenticate', ' ', ' ',
-        'http://localhost/spodoauth2connect/begin', 1);
+        @init_oauth_uri, 1);
 
