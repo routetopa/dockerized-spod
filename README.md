@@ -19,8 +19,9 @@ This is a full guide for SPOD installation as Dockerized application. You can in
 - [Post-installation configuration](#post-installation-configuration)
   - [First Admin Access](#first-admin-access)
   - [Plugins](#plugins)
-  - [CKAN](#ckan-1)
+  - [CKAN usage](#ckan-usage)
   - [SMTP service](#smtp-service)
+  - [Manage pages](#manage-pages)
   - [SPOD language](#spod-language)
   
   
@@ -144,7 +145,8 @@ When the installation is completed, you can access the SPOD application at `http
 
 Completed the web-based installation, you can access to the SPOD admin panel at `http://yourdomain/admin` and complete the configuration of the SPOD plugins. By default, all the plugins are enabled. You can disable the plugins that you don't need.
 
-You have to activate `SPOD Theme` in the `Appearance` section of the admin panel. It is the theme of the SPOD application.
+The `SPOD Theme Matter` is automatically enabled and configured.
+It is the theme of the SPOD application.
 
 
 ### Plugins
@@ -155,7 +157,7 @@ There are some plugins that require some additional configuration. The following
 | ODE| *DEEP* paths are already configured. You need to change the URL from `http://deep.routetopa.eu` to `http://yourdomain`, leaving the rest of the path unchanged. In `Providers` section you have to add dataset provider url and click `Create cache`. You can also add CKAN service created before. The url should be like `http://yourdomain:5000` (or `http://ckan:5000` if you configured `/etc/hosts` in a local installation)|
 | OAuth2 | Fill the entries with:  <ul> <li> `Client ID` = `spod-website`</li> `Client secret` = Your password in the `.env` file </li> <li>`Grant Type`= `authorization_code`</li> <li> `Scope` = `authenticate` </li> <li> `base URL` = `http://yourdomain/oauht2/`  </li> <li> `Authorize endpoint` = `http://yourdomain/oauth2/oauth/authorize` </li> <li> `Request token` = `http://yourdomain/oauth2/oauth/token` </li> <li> `User info` = `http://yourdomain/oauth2/oauth/v1/userinfo` </li> </ul> |
 
-### CKAN
+### CKAN usage
 SPOD can retrieve dataset from different sources. You can add CKAN services in the `Providers` section of the `ODE` plugin as described in the previous section.
 
 From `http://yourdomain:5000` (or `http://ckan:5000` if you configured `/etc/hosts`) you can access to the CKAN web interface. For first access, you can use the credentials of the CKAN sysadmin user that you configured in the `.ckan-env` file. 
@@ -167,6 +169,10 @@ These datasets will be available when you create a datalet. If you can't find th
 To send emails, expecially to sign-up users, you have to configure it in the `SMTP` section of `Settings Admin Panel`. You have to enable the SMTP service and fill the entries with your SMTP server configuration. You can use a SMTP service like [Elastic Email](https://elasticemail.com/). 
 You can test the SMTP service using the `Test` button before saving the configuration.
 
+### Manage pages
+Oxwall has a page management system. Some pages are already created and you can edit them in the `Pages` section of the `Settings Admin Panel`. You can also create new pages and add them to the menu. Plugins can also create pages. You can edit the content of the pages using the WYSIWYG editor.
+Some plugins, like `Agora`, require a page created manually from the admin panel. You have to provide general information about the plugin and the URL of the page. The URL of the page must be unique and it is used to access to the plugin. For example, if you create a page for `Agora`, you can access to the plugin at `http://yourdomain/agora` because is the `Key Value` of the plugin.
 
 ### SPOD language
 Oxwall by default is in English. You can change the language in the `Settings` section of the admin panel. You could manually add a new language, but it is not recommended. We provide a zip file with the translation of the SPOD application in Italian. To add the `ita-ln-pack.zip` file, you have to click `other languages` and then `Add new language pack`. The zip file is available in this repository. 
+
